@@ -262,6 +262,11 @@ export default function ShopPage() {
               <div className="showcase-card-content" key={currentSlide}>
                 {/* Left side text info */}
                 <div className="showcase-card-left">
+                  <div className="showcase-sponsor-logos">
+                    <span className="sponsor-brand">SAYONA</span>
+                    <div className="sponsor-divider" />
+                    <span className="sponsor-tag">OFFICIAL DEAL</span>
+                  </div>
                   <span className="showcase-tag">{slides[currentSlide].tag}</span>
                   <h2 className="showcase-title">{slides[currentSlide].title}</h2>
                   <p className="showcase-subtitle">{slides[currentSlide].subtitle}</p>
