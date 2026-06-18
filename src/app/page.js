@@ -257,7 +257,7 @@ export default function ShopPage() {
                   <span className="item-arrow">&rsaquo;</span>
                 </button>
                 <a 
-                  href="https://gifthaus-ke.vercel.app" 
+                  href="https://gifthaus.netlify.app" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="sidebar-item"

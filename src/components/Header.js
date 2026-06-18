@@ -237,7 +237,7 @@ export default function Header() {
                 </li>
                 <li>
                   <a 
-                    href="https://gifthaus-ke.vercel.app" 
+                    href="https://gifthaus.netlify.app" 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
