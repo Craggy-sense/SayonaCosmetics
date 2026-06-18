@@ -102,10 +102,10 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="logo-container" aria-label="Sayona Cosmetics Homepage" onClick={() => handleCategoryClick('all')}>
               <img 
-                src="/SayonaCosmeticsLogo.png" 
+                src="/SayonaCosmeticsLogoOnly.png" 
                 alt="Sayona Cosmetics Logo" 
                 className="brand-logo" 
-                onError={(e) => { e.target.src = 'SayonaCosmeticsLogo.png'; }}
+                onError={(e) => { e.target.src = 'SayonaCosmeticsLogoOnly.png'; }}
               />
               <span className="brand-name">
                 SAYONA <span className="brand-sub">COSMETICS</span>

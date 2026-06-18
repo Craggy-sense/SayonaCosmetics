@@ -93,10 +93,10 @@ export default function ShopPage() {
           <div className="hero-left-col">
             <span className="hero-tagline-pill">Kenya's Home of Beauty</span>
             <h1 className="hero-title">
-              WHERE QUALITY MEETS <span className="text-orange">YOUR HAIR</span>
+              REDEFINE YOUR <span className="text-orange">NATURAL BEAUTY</span>
             </h1>
             <p className="hero-desc">
-              Sayona Cosmetics brings you Africa's most trusted professional hair care and appliances. Enriched with natural botanical oils, formulated for healthy growth. Durable. Affordable. Built for you.
+              Indulge in the luxury of professional hair care. Formulated with organic botanical oils to restore, strengthen, and illuminate your hair from root to tip. Designed for raw elegance, health, and lasting radiance.
             </p>
             <div className="hero-ctas">
               <a href="#catalogue" className="btn btn-primary" id="hero-cta-shop">Browse Products &rarr;</a>
@@ -107,15 +107,15 @@ export default function ShopPage() {
             <div className="hero-stats-row">
               <div className="stat-box">
                 <span className="stat-number">15+</span>
-                <span className="stat-label">Years Trusted</span>
+                <span className="stat-label">Years of Radiance</span>
               </div>
               <div className="stat-box">
                 <span className="stat-number">5k+</span>
-                <span className="stat-label">Happy Clients</span>
+                <span className="stat-label">Glowing Clients</span>
               </div>
               <div className="stat-box">
                 <span className="stat-number">100%</span>
-                <span className="stat-label">Natural Oils</span>
+                <span className="stat-label">Pure Botanical Oils</span>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function ShopPage() {
             <div className="showcase-card">
               <span className="showcase-tag">SAYONA BEAUTY</span>
               <h2 className="showcase-title">ARGAN DEEP TREATMENT</h2>
-              <p className="showcase-subtitle">Intense restoration & hydration for natural hair. Rich in organic oils.</p>
+              <p className="showcase-subtitle">Restore your hair's natural luster and softness. Infused with organic liquid gold.</p>
               
               <div className="showcase-price-row">
                 <span className="showcase-old-price">KSh 1,500</span>
@@ -156,36 +156,36 @@ export default function ShopPage() {
           </div>
         </div>
       </section>
-
+ 
       {/* Value Propositions */}
       <section className="value-props" id="value-props">
         <div className="container">
           <div className="props-grid">
             <div className="prop-card">
               <div className="prop-icon">🌿</div>
-              <h3>Enriched with Natural Oils</h3>
-              <p>Infused with Argan, Castor, Tea Tree, Eucalyptus, Mint, and Coconut essential oils.</p>
+              <h3>Nourished by Pure Nature</h3>
+              <p>Infused with rich organic botanical oils including Argan, Castor, Tea Tree, and Mint to cultivate natural hair health.</p>
             </div>
             <div className="prop-card">
               <div className="prop-icon">👑</div>
-              <h3>Formulated for African Hair</h3>
-              <p>Tailored molecular formulas that restore elasticity, detangle, and deeply hydrate curly and coily textures.</p>
+              <h3>Celebrating Textured Beauty</h3>
+              <p>Custom molecular formulas designed to deeply hydrate, define, and honor the unique beauty of natural curls and coils.</p>
             </div>
             <div className="prop-card">
               <div className="prop-icon">💎</div>
-              <h3>Professional Standard</h3>
-              <p>Salon-tested formulas and high-performance, durable ceramic and titanium styling tools.</p>
+              <h3>Salon-Grade Sophistication</h3>
+              <p>Experience professional-grade performance and durability, trusted by hair stylists to deliver runway-ready results.</p>
             </div>
           </div>
         </div>
       </section>
-
+ 
       {/* Main Catalogue Section */}
       <section className="catalogue-section" id="catalogue">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Our Product Catalogue</h2>
-            <p className="section-subtitle">Browse Recommended Retail Prices (RRP) and find the perfect match for your hair goals.</p>
+            <h2 className="section-title">The Beauty Collection</h2>
+            <p className="section-subtitle">Discover our premium formulas and professional tools designed to manifest your ultimate hair goals.</p>
           </div>
 
           {/* Filter Controls */}
