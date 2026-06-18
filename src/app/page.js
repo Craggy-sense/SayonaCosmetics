@@ -87,20 +87,71 @@ export default function ShopPage() {
   return (
     <div className="shop-page-wrapper">
       {/* Hero Banner Section */}
-      <section 
-        className="hero-section" 
-        id="hero" 
-        style={{ backgroundImage: "url('/sayona_hero_bg.png')" }}
-      >
-        <div className="hero-bg-overlay"></div>
-        <div className="hero-container">
-          <div className="hero-content">
-            <span className="hero-tagline">Formulated for African Hair</span>
-            <h1 className="hero-title">{settings.heroTitle}</h1>
-            <p className="hero-desc">{settings.heroDesc}</p>
+      <section className="hero-section" id="hero">
+        <div className="hero-grid-container">
+          {/* Left Column */}
+          <div className="hero-left-col">
+            <span className="hero-tagline-pill">Kenya's Home of Beauty</span>
+            <h1 className="hero-title">
+              WHERE QUALITY MEETS <span className="text-orange">YOUR HAIR</span>
+            </h1>
+            <p className="hero-desc">
+              Sayona Cosmetics brings you Africa's most trusted professional hair care and appliances. Enriched with natural botanical oils, formulated for healthy growth. Durable. Affordable. Built for you.
+            </p>
             <div className="hero-ctas">
-              <a href="#catalogue" className="btn btn-primary" id="hero-cta-shop">Shop Hair Care</a>
-              <a href="#catalogue" className="btn btn-outline" id="hero-cta-appliances">Explore Appliances</a>
+              <a href="#catalogue" className="btn btn-primary" id="hero-cta-shop">Browse Products &rarr;</a>
+              <a href="/about" className="btn btn-outline" id="hero-cta-about">Our Story</a>
+            </div>
+            
+            {/* Stats Row */}
+            <div className="hero-stats-row">
+              <div className="stat-box">
+                <span className="stat-number">15+</span>
+                <span className="stat-label">Years Trusted</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-number">5k+</span>
+                <span className="stat-label">Happy Clients</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-number">100%</span>
+                <span className="stat-label">Natural Oils</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right Column: Premium Showcase Card */}
+          <div className="hero-right-col">
+            <div className="showcase-card">
+              <span className="showcase-tag">SAYONA BEAUTY</span>
+              <h2 className="showcase-title">ARGAN DEEP TREATMENT</h2>
+              <p className="showcase-subtitle">Intense restoration & hydration for natural hair. Rich in organic oils.</p>
+              
+              <div className="showcase-price-row">
+                <span className="showcase-old-price">KSh 1,500</span>
+                <span className="showcase-price">KSh 950</span>
+              </div>
+              
+              <div className="showcase-rating">
+                <span className="stars">★★★★★</span>
+                <span className="rating-val">4.9 (142 reviews)</span>
+              </div>
+              
+              <button 
+                type="button" 
+                className="btn btn-primary showcase-buy-btn" 
+                onClick={() => {
+                  const catalog = document.getElementById('catalogue');
+                  if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Shop Now
+              </button>
+              
+              <div className="delivery-pill">
+                <span className="delivery-icon">🚚</span>
+                <span className="delivery-text">Same-day Nairobi <strong>Free Delivery</strong></span>
+              </div>
             </div>
           </div>
         </div>
