@@ -151,76 +151,157 @@ export default function ShopPage() {
     <div className="shop-page-wrapper">
       {/* Hero Banner Section */}
       <section className="hero-section" id="hero">
-        <div className="hero-grid-container">
-          {/* Left Column */}
-          <div className="hero-left-col">
-            <span className="hero-tagline-pill">Kenya's Home of Beauty</span>
-            <h1 className="hero-title">
-              REDEFINE YOUR <span className="text-orange">NATURAL BEAUTY</span>
-            </h1>
-            <p className="hero-desc">
-              Indulge in the luxury of professional hair care. Formulated with organic botanical oils to restore, strengthen, and illuminate your hair from root to tip. Designed for raw elegance, health, and lasting radiance.
-            </p>
-            <div className="hero-ctas">
-              <a href="#catalogue" className="btn btn-primary" id="hero-cta-shop">Browse Products &rarr;</a>
-              <a href="/about" className="btn btn-outline" id="hero-cta-about">Our Story</a>
+        {/* Horizontal Benefits Bar */}
+        <div className="benefits-bar">
+          <div className="benefit-item">
+            <div className="benefit-icon-badge">🚚</div>
+            <div className="benefit-text">
+              <span className="benefit-title">Free Nairobi Delivery</span>
+              <span className="benefit-desc">On orders above KSh 3,000</span>
             </div>
-            
-            {/* Stats Row */}
-            <div className="hero-stats-row">
-              <div className="stat-box">
-                <span className="stat-number">15+</span>
-                <span className="stat-label">Years of Radiance</span>
+          </div>
+          <div className="benefit-divider" />
+          <div className="benefit-item">
+            <div className="benefit-icon-badge">📦</div>
+            <div className="benefit-text">
+              <span className="benefit-title">Country-wide Courier</span>
+              <span className="benefit-desc">Dispatched same-day</span>
+            </div>
+          </div>
+          <div className="benefit-divider" />
+          <div className="benefit-item">
+            <div className="benefit-icon-badge">💬</div>
+            <div className="benefit-text">
+              <span className="benefit-title">WhatsApp Orders</span>
+              <span className="benefit-desc">Chat &amp; order instantly</span>
+            </div>
+          </div>
+          <div className="benefit-divider" />
+          <div className="benefit-item">
+            <div className="benefit-icon-badge">👑</div>
+            <div className="benefit-text">
+              <span className="benefit-title">Salon-Grade Quality</span>
+              <span className="benefit-desc">100% genuine products</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Split Grid */}
+        <div className="hero-split-grid">
+          {/* Left Column: Category Sidebar */}
+          <div className="hero-sidebar-col">
+            <div className="sidebar-card">
+              <div className="sidebar-header">
+                <h3>Shop By Category</h3>
+                <p>Everything you need for beautiful hair.</p>
               </div>
-              <div className="stat-box">
-                <span className="stat-number">5k+</span>
-                <span className="stat-label">Glowing Clients</span>
-              </div>
-              <div className="stat-box">
-                <span className="stat-number">100%</span>
-                <span className="stat-label">Pure Botanical Oils</span>
+              <div className="sidebar-list">
+                <button 
+                  className={`sidebar-item ${activeCategory === 'shampoo-conditioner' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveCategory('shampoo-conditioner');
+                    const catalog = document.getElementById('catalogue');
+                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span className="item-label">🧴 Shampoo &amp; Conditioner</span>
+                  <span className="item-arrow">&rarr;</span>
+                </button>
+                <button 
+                  className={`sidebar-item ${activeCategory === 'treatments' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveCategory('treatments');
+                    const catalog = document.getElementById('catalogue');
+                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span className="item-label">🌿 Hair Treatments</span>
+                  <span className="item-arrow">&rarr;</span>
+                </button>
+                <button 
+                  className={`sidebar-item ${activeCategory === 'styling' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveCategory('styling');
+                    const catalog = document.getElementById('catalogue');
+                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span className="item-label">👑 Hair Styling</span>
+                  <span className="item-arrow">&rarr;</span>
+                </button>
+                <button 
+                  className={`sidebar-item ${activeCategory === 'appliances' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveCategory('appliances');
+                    const catalog = document.getElementById('catalogue');
+                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span className="item-label">✂️ Appliances &amp; Tools</span>
+                  <span className="item-arrow">&rarr;</span>
+                </button>
+                <button 
+                  className={`sidebar-item ${activeCategory === 'all' ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveCategory('all');
+                    const catalog = document.getElementById('catalogue');
+                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <span className="item-label">🛍️ All Products</span>
+                  <span className="item-arrow">&rarr;</span>
+                </button>
               </div>
             </div>
           </div>
-          
-          {/* Right Column: Premium Showcase Card */}
-          <div className="hero-right-col">
-            <div className="showcase-card">
+
+          {/* Right Column: Wide Showcase Banner Slider */}
+          <div className="hero-banner-col">
+            <div className="wide-showcase-card">
               {/* Fade content wrapper */}
               <div className="showcase-card-content" key={currentSlide}>
-                <span className="showcase-tag">{slides[currentSlide].tag}</span>
+                {/* Left side text info */}
+                <div className="showcase-card-left">
+                  <span className="showcase-tag">{slides[currentSlide].tag}</span>
+                  <h2 className="showcase-title">{slides[currentSlide].title}</h2>
+                  <p className="showcase-subtitle">{slides[currentSlide].subtitle}</p>
+                  
+                  <div className="showcase-price-row">
+                    <span className="showcase-old-price">{slides[currentSlide].oldPrice}</span>
+                    <span className="showcase-price">{slides[currentSlide].price}</span>
+                  </div>
+                  
+                  <div className="showcase-rating">
+                    <span className="stars">{slides[currentSlide].stars}</span>
+                    <span className="rating-val">{slides[currentSlide].ratingVal}</span>
+                  </div>
+                  
+                  <div className="showcase-actions-row">
+                    <button 
+                      type="button" 
+                      className="btn btn-primary showcase-buy-btn" 
+                      onClick={slides[currentSlide].action}
+                    >
+                      {slides[currentSlide].buttonText}
+                    </button>
+                    
+                    <div className="delivery-pill">
+                      <span className="delivery-icon">🚚</span>
+                      <span className="delivery-text" dangerouslySetInnerHTML={{ __html: slides[currentSlide].deliveryText }}></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side banner image */}
                 {slides[currentSlide].image && (
-                  <img 
-                    src={slides[currentSlide].image} 
-                    alt={slides[currentSlide].title} 
-                    className="showcase-slide-img" 
-                  />
+                  <div className="showcase-card-right">
+                    <img 
+                      src={slides[currentSlide].image} 
+                      alt={slides[currentSlide].title} 
+                      className="showcase-wide-img" 
+                    />
+                  </div>
                 )}
-                <h2 className="showcase-title">{slides[currentSlide].title}</h2>
-                <p className="showcase-subtitle">{slides[currentSlide].subtitle}</p>
-                
-                <div className="showcase-price-row">
-                  <span className="showcase-old-price">{slides[currentSlide].oldPrice}</span>
-                  <span className="showcase-price">{slides[currentSlide].price}</span>
-                </div>
-                
-                <div className="showcase-rating">
-                  <span className="stars">{slides[currentSlide].stars}</span>
-                  <span className="rating-val">{slides[currentSlide].ratingVal}</span>
-                </div>
-                
-                <button 
-                  type="button" 
-                  className="btn btn-primary showcase-buy-btn" 
-                  onClick={slides[currentSlide].action}
-                >
-                  {slides[currentSlide].buttonText}
-                </button>
-                
-                <div className="delivery-pill">
-                  <span className="delivery-icon">🚚</span>
-                  <span className="delivery-text" dangerouslySetInnerHTML={{ __html: slides[currentSlide].deliveryText }}></span>
-                </div>
               </div>
 
               {/* Slider Navigation Controls */}
