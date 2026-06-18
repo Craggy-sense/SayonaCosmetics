@@ -20,30 +20,14 @@ export default function ShopPage() {
 
   const slides = [
     {
-      tag: "SAYONA BEAUTY",
-      title: "ARGAN DEEP TREATMENT",
-      subtitle: "Restore your scalp's health, retain intense moisture, and nourish natural textures.",
-      oldPrice: "KSh 1,500",
-      price: "KSh 950",
-      stars: "★★★★★",
-      ratingVal: "4.9 (142 reviews)",
-      buttonText: "Shop Treatments",
-      action: () => {
-        setActiveCategory('treatments');
-        const catalog = document.getElementById('catalogue');
-        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-      },
-      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
-    },
-    {
-      tag: "NEW ARRIVAL",
-      title: "PRO-CLIPPER SERIES",
-      subtitle: "Premium styling tools for professional results. High-torque motor and carbon-steel precision.",
+      tag: "WORLD CUP SPECIAL",
+      title: "CHAMPIONSHIP GROOMING",
+      subtitle: "Score big with KSh 700 off on our Pro-Clipper Series. Get the sharp, match-day fade like the pros.",
       oldPrice: "KSh 3,500",
       price: "KSh 2,800",
       stars: "★★★★★",
-      ratingVal: "4.8 (85 reviews)",
-      buttonText: "Shop Appliances",
+      ratingVal: "4.8 (114 reviews)",
+      buttonText: "Claim Clipper Deal",
       action: () => {
         setActiveCategory('appliances');
         const catalog = document.getElementById('catalogue');
@@ -52,9 +36,25 @@ export default function ShopPage() {
       deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
     },
     {
+      tag: "HAIR MAINTENANCE",
+      title: "DEEP MOISTURE ROUTINE",
+      subtitle: "Restore your scalp's health and maintain strong, hydrated locks with our organic Argan Deep Treatment.",
+      oldPrice: "KSh 1,500",
+      price: "KSh 950",
+      stars: "★★★★★",
+      ratingVal: "4.9 (142 reviews)",
+      buttonText: "Shop Maintenance",
+      action: () => {
+        setActiveCategory('treatments');
+        const catalog = document.getElementById('catalogue');
+        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+      },
+      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
+    },
+    {
       tag: "BESTSELLER",
       title: "HERBAL SCALP POMADE",
-      subtitle: "Nourishing tea tree and cool mint styling pomade. Promotes growth and lock styling.",
+      subtitle: "Nourishing organic tea tree and cooling mint formula. Promotes hair growth and smooth styling.",
       oldPrice: "KSh 600",
       price: "KSh 450",
       stars: "★★★★★",
