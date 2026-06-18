@@ -205,7 +205,7 @@ export default function ShopPage() {
                   }}
                 >
                   <span className="item-label">🧴 Shampoo &amp; Conditioner</span>
-                  <span className="item-arrow">&rarr;</span>
+                  <span className="item-arrow">&rsaquo;</span>
                 </button>
                 <button 
                   className={`sidebar-item ${activeCategory === 'treatments' ? 'active' : ''}`}
@@ -216,7 +216,7 @@ export default function ShopPage() {
                   }}
                 >
                   <span className="item-label">🌿 Hair Treatments</span>
-                  <span className="item-arrow">&rarr;</span>
+                  <span className="item-arrow">&rsaquo;</span>
                 </button>
                 <button 
                   className={`sidebar-item ${activeCategory === 'styling' ? 'active' : ''}`}
@@ -227,7 +227,7 @@ export default function ShopPage() {
                   }}
                 >
                   <span className="item-label">👑 Hair Styling</span>
-                  <span className="item-arrow">&rarr;</span>
+                  <span className="item-arrow">&rsaquo;</span>
                 </button>
                 <button 
                   className={`sidebar-item ${activeCategory === 'appliances' ? 'active' : ''}`}
@@ -238,7 +238,7 @@ export default function ShopPage() {
                   }}
                 >
                   <span className="item-label">✂️ Appliances &amp; Tools</span>
-                  <span className="item-arrow">&rarr;</span>
+                  <span className="item-arrow">&rsaquo;</span>
                 </button>
                 <button 
                   className={`sidebar-item ${activeCategory === 'all' ? 'active' : ''}`}
@@ -249,7 +249,7 @@ export default function ShopPage() {
                   }}
                 >
                   <span className="item-label">🛍️ All Products</span>
-                  <span className="item-arrow">&rarr;</span>
+                  <span className="item-arrow">&rsaquo;</span>
                 </button>
               </div>
             </div>

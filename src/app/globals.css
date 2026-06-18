@@ -493,6 +493,7 @@
     position: relative;
     background-color: #ffffff;
     display: flex;
+    flex-direction: column; /* Stack benefits bar on top and main content below */
     align-items: center;
     padding-block: 60px;
     z-index: 1;
@@ -508,8 +509,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    max-width: var(--max-width);
+    width: calc(100% - 48px); /* Matches the outer grid width including padding */
+    max-width: calc(var(--max-width) - 48px);
     margin: 0 auto 30px auto;
     background: #ffffff;
     border: 1px solid #e2e8f0;
