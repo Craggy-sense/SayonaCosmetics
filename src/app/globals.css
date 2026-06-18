@@ -276,8 +276,10 @@
     max-inline-size: 180px;
     block-size: 45px;
     object-fit: contain;
-    border-radius: 0;
-    box-shadow: none;
+    background-color: #ffffff; /* Solid white background */
+    padding: 6px;
+    border-radius: 6px; /* Smooth corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .brand-name {
