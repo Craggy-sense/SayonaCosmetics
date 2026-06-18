@@ -20,6 +20,19 @@ export default function AdminLayout({ children }) {
     return () => unsubscribe();
   }, []);
 
+  const isLoginPage = pathname === '/admin/login';
+
+  // Auth guard redirects at top level (complying with React's Rules of Hooks)
+  useEffect(() => {
+    if (!loading) {
+      if (!user && !isLoginPage) {
+        router.replace('/admin/login');
+      } else if (user && isLoginPage) {
+        router.replace('/admin/dashboard');
+      }
+    }
+  }, [user, loading, isLoginPage, router]);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -50,29 +63,18 @@ export default function AdminLayout({ children }) {
     );
   }
 
-  const isLoginPage = pathname === '/admin/login';
+  // If user is not logged in and is on the login page, render login page children
+  if (!user && isLoginPage) {
+    return <>{children}</>;
+  }
 
-  // Auth guard redirects
+  // If user is not logged in and not on login page, wait for redirect
   if (!user) {
-    if (isLoginPage) {
-      return <>{children}</>;
-    }
-    // Redirect anonymous visitors to login page
-    useEffect(() => {
-      if (!loading && !user && !isLoginPage) {
-        router.replace('/admin/login');
-      }
-    }, [user, loading, isLoginPage]);
     return null;
   }
 
-  // If user is authenticated and tries to visit login page, redirect to dashboard
+  // If user is logged in and on login page, wait for redirect
   if (isLoginPage) {
-    useEffect(() => {
-      if (user) {
-        router.replace('/admin/dashboard');
-      }
-    }, [user]);
     return null;
   }
 
