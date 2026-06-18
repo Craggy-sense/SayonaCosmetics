@@ -282,23 +282,24 @@
 
   .brand-name {
     font-family: var(--font-heading);
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--color-primary); /* Vibrant Orange */
     letter-spacing: 1px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
     line-height: 1;
   }
 
   .brand-sub {
     font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    letter-spacing: 2px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #ffffff; /* White */
+    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: 2px;
   }
 
   /* Search Engine Styling */
