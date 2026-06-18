@@ -195,46 +195,37 @@ export default function Header() {
                 <li>
                   <button 
                     type="button" 
+                    onClick={() => handleCategoryClick('offers')}
+                    className={pathname === '/' && activeCategory === 'offers' ? 'active' : ''}
+                  >
+                    Offers
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    type="button" 
                     onClick={() => handleCategoryClick('all')}
                     className={pathname === '/' && activeCategory === 'all' ? 'active' : ''}
                   >
-                    Shop All
+                    All Products
                   </button>
                 </li>
                 <li>
                   <button 
                     type="button" 
-                    onClick={() => handleCategoryClick('shampoo-conditioner')}
-                    className={pathname === '/' && activeCategory === 'shampoo-conditioner' ? 'active' : ''}
+                    onClick={() => handleCategoryClick('new-arrivals')}
+                    className={pathname === '/' && activeCategory === 'new-arrivals' ? 'active' : ''}
                   >
-                    Shampoos &amp; Conditioners
+                    New Arrivals
                   </button>
                 </li>
                 <li>
                   <button 
                     type="button" 
-                    onClick={() => handleCategoryClick('treatments')}
-                    className={pathname === '/' && activeCategory === 'treatments' ? 'active' : ''}
+                    onClick={() => handleCategoryClick('clearance')}
+                    className={pathname === '/' && activeCategory === 'clearance' ? 'active' : ''}
                   >
-                    Hair Treatments
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    type="button" 
-                    onClick={() => handleCategoryClick('styling')}
-                    className={pathname === '/' && activeCategory === 'styling' ? 'active' : ''}
-                  >
-                    Dreadlock &amp; Pomades
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    type="button" 
-                    onClick={() => handleCategoryClick('appliances')}
-                    className={pathname === '/' && activeCategory === 'appliances' ? 'active' : ''}
-                  >
-                    Styling Appliances
+                    Clearance
                   </button>
                 </li>
                 <li className="nav-separator">|</li>

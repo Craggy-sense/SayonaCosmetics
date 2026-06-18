@@ -108,8 +108,21 @@ export default function ShopPage() {
   // Filter products dynamically
   const filteredProducts = products.filter((prod) => {
     // 1. Category Filter
-    if (activeCategory !== 'all' && prod.category !== activeCategory) {
-      return false;
+    if (activeCategory !== 'all') {
+      if (activeCategory === 'offers') {
+        const isOffer = ['argan-shampoo', 'indian-hemp-pomade', 'coconut-conditioner', 'cordless-clippers', 'deep-penetrating-treatment'].includes(prod.id) || 
+                        ['BESTSELLER', 'HOT', 'POPULAR'].includes(prod.tag);
+        if (!isOffer) return false;
+      } else if (activeCategory === 'new-arrivals') {
+        const isNew = prod.tag === 'NEW' || ['olive-shampoo', 'foam-wrap', 'cordless-clippers'].includes(prod.id);
+        if (!isNew) return false;
+      } else if (activeCategory === 'clearance') {
+        const isClearance = ['straightener', 'hair-dryer', 'corded-clippers'].includes(prod.id) || 
+                            ['HEAVY DUTY', 'ELECTRONIC'].includes(prod.tag);
+        if (!isClearance) return false;
+      } else if (prod.category !== activeCategory) {
+        return false;
+      }
     }
     // 2. Search Query Filter
     if (searchQuery.trim() !== '') {
@@ -142,7 +155,10 @@ export default function ShopPage() {
       "shampoo-conditioner": "Shampoo & Conditioner",
       "treatments": "Hair Treatment",
       "styling": "Hair Styling",
-      "appliances": "Appliance & Tool"
+      "appliances": "Appliance & Tool",
+      "offers": "Offers",
+      "new-arrivals": "New Arrivals",
+      "clearance": "Clearance"
     };
     return mapping[cat] || "All Categories";
   };
