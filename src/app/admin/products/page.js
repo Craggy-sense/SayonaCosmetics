@@ -23,6 +23,8 @@ export default function AdminProductsPage() {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [sizes, setSizes] = useState([{ size: '', price: '' }]);
+  const [inStock, setInStock] = useState(true);
+  const [imagePreview, setImagePreview] = useState('');
   
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -47,6 +49,18 @@ export default function AdminProductsPage() {
     loadProducts();
   }, []);
 
+  useEffect(() => {
+    if (imageFile) {
+      const objectUrl = URL.createObjectURL(imageFile);
+      setImagePreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } else if (imageUrl) {
+      setImagePreview(imageUrl);
+    } else {
+      setImagePreview('');
+    }
+  }, [imageFile, imageUrl]);
+
   const openAddModal = () => {
     setEditingProduct(null);
     setTitle('');
@@ -58,6 +72,7 @@ export default function AdminProductsPage() {
     setImageFile(null);
     setImageUrl('');
     setSizes([{ size: '', price: '' }]);
+    setInStock(true);
     setError('');
     setIsModalOpen(true);
   };
@@ -73,6 +88,7 @@ export default function AdminProductsPage() {
     setImageFile(null);
     setImageUrl(product.image || '');
     setSizes(product.sizes && product.sizes.length > 0 ? product.sizes.map(s => ({ size: s.size, price: s.price.toString() })) : [{ size: '', price: '' }]);
+    setInStock(product.inStock !== false);
     setError('');
     setIsModalOpen(true);
   };
@@ -177,7 +193,8 @@ export default function AdminProductsPage() {
         usage: usage.trim(),
         tag: tag.trim(),
         image: finalImageUrl,
-        sizes: validSizes
+        sizes: validSizes,
+        inStock
       };
 
       if (editingProduct) {
@@ -255,6 +272,7 @@ export default function AdminProductsPage() {
                   <th>Category</th>
                   <th>Price Ranges</th>
                   <th>Tag</th>
+                  <th>Status</th>
                   <th style={{ width: '150px', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
@@ -323,6 +341,21 @@ export default function AdminProductsPage() {
                           {product.tag}
                         </span>
                       ) : '-'}
+                    </td>
+                    <td>
+                      <span 
+                        style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: 'bold',
+                          backgroundColor: product.inStock !== false ? 'rgba(40,167,69,0.1)' : 'rgba(220,53,69,0.1)', 
+                          color: product.inStock !== false ? '#28a745' : '#dc3545',
+                          padding: '4px 8px', 
+                          borderRadius: '10px',
+                          display: 'inline-block'
+                        }}
+                      >
+                        {product.inStock !== false ? 'In Stock' : 'Out of Stock'}
+                      </span>
                     </td>
                     <td style={{ textAlign: 'right' }}>
                       <button 
@@ -400,7 +433,7 @@ export default function AdminProductsPage() {
             )}
 
             <form onSubmit={handleSaveProduct} className="admin-form-grid" style={{ border: 'none', padding: 0, boxShadow: 'none' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1.5fr 1fr', gap: '20px', alignItems: 'end' }}>
                 <div className="admin-form-group">
                   <label htmlFor="prod_title">Product Title *</label>
                   <input 
@@ -426,6 +459,19 @@ export default function AdminProductsPage() {
                     <option value="styling">Hair Styling</option>
                     <option value="appliances">Appliance &amp; Tool</option>
                   </select>
+                </div>
+
+                <div className="admin-form-group" style={{ paddingBottom: '12px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: '600', color: 'var(--color-primary)' }}>
+                    <input 
+                      type="checkbox" 
+                      id="prod_instock" 
+                      checked={inStock}
+                      onChange={(e) => setInStock(e.target.checked)}
+                      style={{ width: '18px', height: '18px', accentColor: 'var(--color-primary)', cursor: 'pointer' }}
+                    />
+                    <span>In Stock</span>
+                  </label>
                 </div>
               </div>
 
@@ -502,6 +548,26 @@ export default function AdminProductsPage() {
                   onChange={(e) => setImageUrl(e.target.value)}
                 />
               </div>
+
+              {imagePreview && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', backgroundColor: 'rgba(74,0,31,0.02)', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
+                  <div style={{ width: '60px', height: '60px', borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--color-border)', backgroundColor: '#fff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img 
+                      src={imagePreview} 
+                      alt="Product Preview" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }}
+                    />
+                    <span style={{ display: 'none', fontSize: '1.2rem' }}>⚠️</span>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--color-primary)' }}>Image Preview</span>
+                    <p style={{ fontSize: '0.75rem', color: 'rgba(31,27,28,0.6)', margin: '2px 0 0 0', wordBreak: 'break-all' }}>
+                      {imageFile ? `Local upload: ${imageFile.name}` : imageUrl}
+                    </p>
+                  </div>
+                </div>
+              )}
 
               <div className="admin-form-group">
                 <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

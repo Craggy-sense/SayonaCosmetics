@@ -2919,3 +2919,47 @@
   text-align: left;
 }
 
+/* Out of Stock Card Overlay Styles */
+.card-image-wrapper.out-of-stock {
+  position: relative;
+}
+
+.card-image-wrapper.out-of-stock img,
+.card-image-wrapper.out-of-stock svg {
+  filter: grayscale(0.85) contrast(0.8);
+  opacity: 0.65;
+}
+
+.out-of-stock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(31, 27, 28, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.out-of-stock-text {
+  background: rgba(74, 0, 31, 0.9);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-cta-btn.out-of-stock-btn {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+

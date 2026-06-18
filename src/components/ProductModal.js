@@ -136,6 +136,7 @@ export default function ProductModal() {
                       value={selectedSizeIdx}
                       onChange={(e) => setSelectedSizeIdx(parseInt(e.target.value))}
                       aria-label="Select product size"
+                      disabled={product.inStock === false}
                     >
                       {product.sizes.map((s, idx) => (
                         <option key={`${product.id}-opt-${idx}`} value={idx}>
@@ -148,42 +149,76 @@ export default function ProductModal() {
               )}
 
               {/* Quantity selectors */}
-              <div className="purchase-actions-row">
-                <div className="qty-controller">
-                  <button 
-                    type="button" 
-                    className="qty-btn" 
-                    onClick={() => setQty(prev => Math.max(prev - 1, 1))}
-                    aria-label="Decrease quantity"
-                  >
-                    −
-                  </button>
-                  <input 
-                    type="number" 
-                    id="modal-qty-input" 
-                    value={qty} 
-                    onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
-                    min="1" 
-                    max="99" 
-                    aria-label="Product quantity"
-                  />
-                  <button 
-                    type="button" 
-                    className="qty-btn" 
-                    onClick={() => setQty(prev => Math.min(prev + 1, 99))}
-                    aria-label="Increase quantity"
-                  >
-                    +
-                  </button>
-                </div>
+              <div className="purchase-actions-row" style={{ flexDirection: product.inStock === false ? 'column' : 'row', alignItems: 'stretch', gap: '12px' }}>
+                {product.inStock !== false && (
+                  <div className="qty-controller">
+                    <button 
+                      type="button" 
+                      className="qty-btn" 
+                      onClick={() => setQty(prev => Math.max(prev - 1, 1))}
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+                    <input 
+                      type="number" 
+                      id="modal-qty-input" 
+                      value={qty} 
+                      onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
+                      min="1" 
+                      max="99" 
+                      aria-label="Product quantity"
+                    />
+                    <button 
+                      type="button" 
+                      className="qty-btn" 
+                      onClick={() => setQty(prev => Math.min(prev + 1, 99))}
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
                 
-                <button 
-                  type="button" 
-                  className="btn btn-primary btn-add-to-cart" 
-                  onClick={handleAddToCart}
-                >
-                  <span>Add to Cart</span>
-                </button>
+                {product.inStock === false ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
+                    <div style={{ 
+                      backgroundColor: 'rgba(220,53,69,0.08)', 
+                      color: '#dc3545', 
+                      padding: '10px 14px', 
+                      borderRadius: '6px', 
+                      fontSize: '0.85rem', 
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      border: '1px solid rgba(220,53,69,0.15)'
+                    }}>
+                      ⚠️ This item is currently out of stock
+                    </div>
+                    <button 
+                      type="button" 
+                      className="btn btn-primary btn-add-to-cart" 
+                      disabled
+                      style={{ 
+                        width: '100%',
+                        backgroundColor: '#ccc', 
+                        color: '#666', 
+                        cursor: 'not-allowed',
+                        pointerEvents: 'none',
+                        border: 'none'
+                      }}
+                    >
+                      <span>Out of Stock</span>
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    type="button" 
+                    className="btn btn-primary btn-add-to-cart" 
+                    onClick={handleAddToCart}
+                  >
+                    <span>Add to Cart</span>
+                  </button>
+                )}
               </div>
             </div>
 

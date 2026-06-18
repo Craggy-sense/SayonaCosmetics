@@ -40,8 +40,16 @@ export default function ProductCard({ product }) {
   return (
     <article className="product-card">
       {/* Click wrapper for detail modal */}
-      <div className="card-image-wrapper" onClick={() => setSelectedProduct(product)}>
+      <div 
+        className={`card-image-wrapper ${product.inStock === false ? 'out-of-stock' : ''}`} 
+        onClick={() => setSelectedProduct(product)}
+      >
         {badgeHtml}
+        {product.inStock === false && (
+          <div className="out-of-stock-overlay">
+            <span className="out-of-stock-text">Out of Stock</span>
+          </div>
+        )}
         {product.image ? (
           <img 
             src={product.image} 
@@ -93,14 +101,36 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Permanent bottom CTA trigger button */}
-        <button 
-          type="button" 
-          className="btn btn-primary card-cta-btn" 
-          onClick={() => setSelectedProduct(product)}
-          style={{ width: '100%', paddingBlock: '10px', marginTop: '12px', fontSize: '0.85rem', fontWeight: 'bold' }}
-        >
-          Choose Options
-        </button>
+        {product.inStock === false ? (
+          <button 
+            type="button" 
+            className="btn btn-secondary card-cta-btn out-of-stock-btn" 
+            disabled
+            style={{ 
+              width: '100%', 
+              paddingBlock: '10px', 
+              marginTop: '12px', 
+              fontSize: '0.85rem', 
+              fontWeight: 'bold',
+              backgroundColor: '#ccc',
+              color: '#666',
+              cursor: 'not-allowed',
+              border: 'none',
+              pointerEvents: 'none'
+            }}
+          >
+            Out of Stock
+          </button>
+        ) : (
+          <button 
+            type="button" 
+            className="btn btn-primary card-cta-btn" 
+            onClick={() => setSelectedProduct(product)}
+            style={{ width: '100%', paddingBlock: '10px', marginTop: '12px', fontSize: '0.85rem', fontWeight: 'bold' }}
+          >
+            Choose Options
+          </button>
+        )}
       </div>
     </article>
   );
