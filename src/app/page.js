@@ -20,9 +20,10 @@ export default function ShopPage() {
 
   const slides = [
     {
-      tag: "WORLD CUP SPECIAL",
-      title: "CHAMPIONSHIP GROOMING",
+      tag: "🏆 WORLD CUP 2026 SPECIAL 🏆",
+      title: "CHAMPIONSHIP GROOMING ⚽",
       subtitle: "Score big with KSh 700 off on our Pro-Clipper Series. Get the sharp, match-day fade like the pros.",
+      image: "/world_cup_grooming.png",
       oldPrice: "KSh 3,500",
       price: "KSh 2,800",
       stars: "★★★★★",
@@ -36,9 +37,10 @@ export default function ShopPage() {
       deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
     },
     {
-      tag: "HAIR MAINTENANCE",
+      tag: "HAIR MAINTENANCE SPECIAL",
       title: "DEEP MOISTURE ROUTINE",
       subtitle: "Restore your scalp's health and maintain strong, hydrated locks with our organic Argan Deep Treatment.",
+      image: "/hair_maintenance.png",
       oldPrice: "KSh 1,500",
       price: "KSh 950",
       stars: "★★★★★",
@@ -52,9 +54,10 @@ export default function ShopPage() {
       deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
     },
     {
-      tag: "BESTSELLER",
+      tag: "BESTSELLER FORMULA",
       title: "HERBAL SCALP POMADE",
       subtitle: "Nourishing organic tea tree and cooling mint formula. Promotes hair growth and smooth styling.",
+      image: "/scalp_pomade.png",
       oldPrice: "KSh 600",
       price: "KSh 450",
       stars: "★★★★★",
@@ -186,6 +189,13 @@ export default function ShopPage() {
               {/* Fade content wrapper */}
               <div className="showcase-card-content" key={currentSlide}>
                 <span className="showcase-tag">{slides[currentSlide].tag}</span>
+                {slides[currentSlide].image && (
+                  <img 
+                    src={slides[currentSlide].image} 
+                    alt={slides[currentSlide].title} 
+                    className="showcase-slide-img" 
+                  />
+                )}
                 <h2 className="showcase-title">{slides[currentSlide].title}</h2>
                 <p className="showcase-subtitle">{slides[currentSlide].subtitle}</p>
                 
