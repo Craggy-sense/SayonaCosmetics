@@ -332,8 +332,8 @@ export default function AdminProductsPage() {
                           style={{ 
                             fontSize: '0.75rem', 
                             fontWeight: 'bold',
-                            backgroundColor: 'var(--color-accent)', 
-                            color: 'var(--color-primary)',
+                            backgroundColor: 'var(--color-primary)', 
+                            color: '#fff',
                             padding: '3px 8px', 
                             borderRadius: '10px'
                           }}
