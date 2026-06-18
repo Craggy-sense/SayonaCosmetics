@@ -67,22 +67,22 @@
     --color-primary-light: hsl(var(--color-primary-hue), var(--color-primary-sat), 65%);
     --color-primary-dark: hsl(var(--color-primary-hue), var(--color-primary-sat), 42%);
     
-    /* Baby Pink Palette (mapping to navy variables to preserve selectors) */
-    --color-navy: #ffe5ec; /* Lightest baby pink background */
-    --color-navy-light: #ffcad4; /* Soft baby pink */
-    --color-navy-dark: #ff4d6d; /* Rich pink for contrast */
+    /* Crimson & Orange Palette (replacing baby pink to preserve selectors) */
+    --color-navy: #B41A00; /* Deep Crimson Red */
+    --color-navy-light: #9a1600; /* Medium Crimson */
+    --color-navy-dark: #7d1200; /* Darkest Crimson */
     
-    --color-accent-hue: 345;
-    --color-accent-sat: 100%;
-    --color-accent-lig: 65%; /* Rose Pink */
+    --color-accent-hue: 15;
+    --color-accent-sat: 98%;
+    --color-accent-lig: 55%; 
     
     --color-accent: hsl(var(--color-accent-hue), var(--color-accent-sat), var(--color-accent-lig));
-    --color-accent-light: hsl(var(--color-accent-hue), var(--color-accent-sat), 80%);
-    --color-accent-dark: #ff4d6d; /* Deep pink accent */
+    --color-accent-light: hsl(var(--color-accent-hue), var(--color-accent-sat), 65%);
+    --color-accent-dark: #fd561e; /* Vibrant Orange accent */
     
     --color-neutral-dark: #1f1b1c; /* Soft charcoal */
     --color-neutral-light: #fcfafb; /* Pearlescent light-grey background */
-    --color-border: #ffd1dc; /* Soft pink borders */
+    --color-border: rgba(255, 255, 255, 0.08); /* White transparent borders */
     
     /* Layout Tokens */
     --max-width: 1280px;
@@ -181,21 +181,21 @@
 
   .main-header {
     background: var(--color-navy);
-    border-bottom: 1px solid rgba(255, 77, 109, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     position: sticky;
     top: 0;
     z-index: 90;
     display: flex;
     flex-direction: column;
     transition: var(--transition-smooth);
-    box-shadow: 0 4px 20px rgba(255, 117, 143, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
   .header-top-row {
     height: 75px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 77, 109, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     width: 100%;
   }
 
@@ -228,7 +228,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    color: var(--color-neutral-dark);
+    color: rgba(255, 255, 255, 0.85);
     padding: 8px 4px;
     border-bottom: 2px solid transparent;
     transition: var(--transition-fast);
@@ -246,7 +246,7 @@
   }
 
   .nav-separator {
-    color: rgba(255, 77, 109, 0.35);
+    color: rgba(255, 255, 255, 0.2);
     font-size: 0.9rem;
     font-weight: 300;
     user-select: none;
@@ -297,7 +297,7 @@
     font-family: var(--font-body);
     font-size: 1.05rem;
     font-weight: 500;
-    color: var(--color-neutral-dark); /* Charcoal */
+    color: #ffffff; /* White */
     letter-spacing: 1px;
     text-transform: uppercase;
   }
@@ -312,17 +312,17 @@
   .search-form {
     display: flex;
     align-items: center;
-    background: #ffffff;
-    border: 1px solid rgba(255, 77, 109, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     padding: 2px 6px 2px 18px;
     transition: var(--transition-smooth);
   }
 
   .search-form:focus-within {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
     border-color: var(--color-primary);
-    box-shadow: 0 4px 15px rgba(255, 117, 143, 0.12);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   }
 
   .search-form input {
@@ -332,15 +332,15 @@
     outline: none;
     padding-block: 8px;
     font-size: 0.9rem;
-    color: var(--color-neutral-dark);
+    color: #ffffff;
   }
 
   .search-form input::placeholder {
-    color: rgba(31, 27, 28, 0.45);
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .clear-search-btn {
-    color: rgba(31, 27, 28, 0.4);
+    color: rgba(255, 255, 255, 0.4);
     padding: 8px;
     font-size: 0.85rem;
     transition: var(--transition-fast);
@@ -435,28 +435,28 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #ffffff;
-    border: 1px solid rgba(255, 77, 109, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     padding: 8px 18px;
     box-shadow: none;
     transition: var(--transition-smooth);
     position: relative;
-    color: var(--color-neutral-dark);
+    color: #ffffff;
   }
 
   .cart-trigger-btn:hover {
     border-color: var(--color-primary);
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(255, 117, 143, 0.12);
+    box-shadow: none;
   }
 
   .cart-icon-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    color: var(--color-neutral-dark);
+    color: #ffffff;
   }
 
   .cart-badge {
@@ -548,7 +548,7 @@
     margin-bottom: 24px;
     font-weight: 800;
     font-family: var(--font-body); /* Modern condensed look */
-    color: var(--color-neutral-dark);
+    color: var(--color-navy);
     letter-spacing: -0.5px;
     text-transform: uppercase;
   }
