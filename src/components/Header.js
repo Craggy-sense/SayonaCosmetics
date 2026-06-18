@@ -107,8 +107,8 @@ export default function Header() {
                 className="brand-logo" 
                 onError={(e) => { e.target.src = 'SayonaCosmeticsLogo.png'; }}
               />
-              <span className="brand-name sr-only">
-                SAYONA COSMETICS
+              <span className="brand-name">
+                SAYONA <span className="brand-sub">COSMETICS</span>
               </span>
             </Link>
 
