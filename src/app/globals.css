@@ -299,7 +299,7 @@
     font-family: var(--font-body);
     font-size: 0.72rem;
     font-weight: 700;
-    color: var(--color-primary); /* Vibrant Orange */
+    color: #d4af37; /* Premium Gold Accent */
     letter-spacing: 2.5px;
     text-transform: uppercase;
   }
@@ -2518,6 +2518,26 @@
 
   .benefits-bar {
     display: none; /* Hide benefits row on small phones to save space */
+  }
+
+  /* --------------------------------------------------------------------------
+     ANNOUNCEMENT BAR MOBILE AUTO-HEIGHT FIX
+     -------------------------------------------------------------------------- */
+  .announcement-bar {
+    height: auto !important;
+    min-height: 40px !important;
+    padding-block: 8px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .announcement-bar p {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
+    font-size: 0.8rem !important;
   }
 
   /* --------------------------------------------------------------------------
