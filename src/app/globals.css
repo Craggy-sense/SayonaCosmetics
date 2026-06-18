@@ -67,22 +67,22 @@
     --color-primary-light: hsl(var(--color-primary-hue), var(--color-primary-sat), 65%);
     --color-primary-dark: hsl(var(--color-primary-hue), var(--color-primary-sat), 42%);
     
-    /* Dark Navy Palette */
-    --color-navy: #0c1624;
-    --color-navy-light: #162438;
-    --color-navy-dark: #060c14;
+    /* Baby Pink Palette (mapping to navy variables to preserve selectors) */
+    --color-navy: #ffe5ec; /* Lightest baby pink background */
+    --color-navy-light: #ffcad4; /* Soft baby pink */
+    --color-navy-dark: #ff4d6d; /* Rich pink for contrast */
     
-    --color-accent-hue: 47;
-    --color-accent-sat: 65%;
-    --color-accent-lig: 52%; /* Rich Champagne Gold */
+    --color-accent-hue: 345;
+    --color-accent-sat: 100%;
+    --color-accent-lig: 65%; /* Rose Pink */
     
     --color-accent: hsl(var(--color-accent-hue), var(--color-accent-sat), var(--color-accent-lig));
-    --color-accent-light: hsl(var(--color-accent-hue), var(--color-accent-sat), 75%);
-    --color-accent-dark: hsl(var(--color-accent-hue), var(--color-accent-sat), 40%);
+    --color-accent-light: hsl(var(--color-accent-hue), var(--color-accent-sat), 80%);
+    --color-accent-dark: #ff4d6d; /* Deep pink accent */
     
     --color-neutral-dark: #1f1b1c; /* Soft charcoal */
     --color-neutral-light: #fcfafb; /* Pearlescent light-grey background */
-    --color-border: #e8e6e8; /* Crisp thin grey borders */
+    --color-border: #ffd1dc; /* Soft pink borders */
     
     /* Layout Tokens */
     --max-width: 1280px;
@@ -181,21 +181,21 @@
 
   .main-header {
     background: var(--color-navy);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 77, 109, 0.15);
     position: sticky;
     top: 0;
     z-index: 90;
     display: flex;
     flex-direction: column;
     transition: var(--transition-smooth);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(255, 117, 143, 0.08);
   }
 
   .header-top-row {
     height: 75px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 77, 109, 0.1);
     width: 100%;
   }
 
@@ -228,7 +228,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--color-neutral-dark);
     padding: 8px 4px;
     border-bottom: 2px solid transparent;
     transition: var(--transition-fast);
@@ -246,7 +246,7 @@
   }
 
   .nav-separator {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 77, 109, 0.35);
     font-size: 0.9rem;
     font-weight: 300;
     user-select: none;
@@ -297,7 +297,7 @@
     font-family: var(--font-body);
     font-size: 1.05rem;
     font-weight: 500;
-    color: #ffffff; /* White */
+    color: var(--color-neutral-dark); /* Charcoal */
     letter-spacing: 1px;
     text-transform: uppercase;
   }
@@ -312,17 +312,17 @@
   .search-form {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(255, 77, 109, 0.2);
     border-radius: 50px;
     padding: 2px 6px 2px 18px;
     transition: var(--transition-smooth);
   }
 
   .search-form:focus-within {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--color-primary-light);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 15px rgba(255, 117, 143, 0.12);
   }
 
   .search-form input {
@@ -332,15 +332,15 @@
     outline: none;
     padding-block: 8px;
     font-size: 0.9rem;
-    color: #ffffff;
+    color: var(--color-neutral-dark);
   }
 
   .search-form input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(31, 27, 28, 0.45);
   }
 
   .clear-search-btn {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(31, 27, 28, 0.4);
     padding: 8px;
     font-size: 0.85rem;
     transition: var(--transition-fast);
@@ -435,27 +435,28 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(255, 77, 109, 0.2);
     border-radius: 50px;
     padding: 8px 18px;
     box-shadow: none;
     transition: var(--transition-smooth);
     position: relative;
-    color: #ffffff;
+    color: var(--color-neutral-dark);
   }
 
   .cart-trigger-btn:hover {
-    border-color: var(--color-primary-light);
-    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-primary);
+    background: #ffffff;
     transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(255, 117, 143, 0.12);
   }
 
   .cart-icon-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    color: #ffffff;
+    color: var(--color-neutral-dark);
   }
 
   .cart-badge {
@@ -478,7 +479,7 @@
   .cart-text {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #ffffff;
+    color: inherit;
   }
 }
 
@@ -547,7 +548,7 @@
     margin-bottom: 24px;
     font-weight: 800;
     font-family: var(--font-body); /* Modern condensed look */
-    color: var(--color-navy);
+    color: var(--color-neutral-dark);
     letter-spacing: -0.5px;
     text-transform: uppercase;
   }
@@ -601,12 +602,12 @@
 
   /* Right Column Premium Product Showcase Card */
   .showcase-card {
-    background-color: var(--color-navy);
+    background-color: var(--color-navy-dark); /* Rich deep pink background */
     border-top: 4px solid var(--color-primary);
     border-radius: 12px;
     padding: 40px;
     color: #ffffff;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    box-shadow: 0 20px 40px rgba(255, 117, 143, 0.15);
     width: 100%;
     max-width: 440px;
     position: relative;
