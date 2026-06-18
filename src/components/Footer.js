@@ -79,6 +79,7 @@ export default function Footer() {
             <h4>Customer Care</h4>
             <ul>
               <li><Link href="/about">About Our Brand</Link></li>
+              <li><Link href="/blog">Our Beauty Blog</Link></li>
               <li><Link href="/contact">Contact Support</Link></li>
               <li><Link href="/contact#contact">Bulk Distributor Orders</Link></li>
               <li><Link href="/#announcement-bar">Delivery &amp; Returns</Link></li>

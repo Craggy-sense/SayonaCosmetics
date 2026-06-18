@@ -251,6 +251,11 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/blog" className={pathname.startsWith('/blog') ? 'active' : ''}>
+                    Blog
+                  </Link>
+                </li>
+                <li>
                   <Link href="/contact" className={pathname === '/contact' ? 'active' : ''}>
                     Contact Us
                   </Link>
