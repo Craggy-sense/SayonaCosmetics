@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '@/components/CartContext';
 import ProductCard from '@/components/ProductCard';
 
@@ -15,6 +15,66 @@ export default function ShopPage() {
     setSortBy,
     settings 
   } = useCart();
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      tag: "SAYONA BEAUTY",
+      title: "ARGAN DEEP TREATMENT",
+      subtitle: "Restore your scalp's health, retain intense moisture, and nourish natural textures.",
+      oldPrice: "KSh 1,500",
+      price: "KSh 950",
+      stars: "★★★★★",
+      ratingVal: "4.9 (142 reviews)",
+      buttonText: "Shop Treatments",
+      action: () => {
+        setActiveCategory('treatments');
+        const catalog = document.getElementById('catalogue');
+        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+      },
+      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
+    },
+    {
+      tag: "NEW ARRIVAL",
+      title: "PRO-CLIPPER SERIES",
+      subtitle: "Premium styling tools for professional results. High-torque motor and carbon-steel precision.",
+      oldPrice: "KSh 3,500",
+      price: "KSh 2,800",
+      stars: "★★★★★",
+      ratingVal: "4.8 (85 reviews)",
+      buttonText: "Shop Appliances",
+      action: () => {
+        setActiveCategory('appliances');
+        const catalog = document.getElementById('catalogue');
+        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+      },
+      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
+    },
+    {
+      tag: "BESTSELLER",
+      title: "HERBAL SCALP POMADE",
+      subtitle: "Nourishing tea tree and cool mint styling pomade. Promotes growth and lock styling.",
+      oldPrice: "KSh 600",
+      price: "KSh 450",
+      stars: "★★★★★",
+      ratingVal: "4.9 (96 reviews)",
+      buttonText: "Shop Styling",
+      action: () => {
+        setActiveCategory('styling');
+        const catalog = document.getElementById('catalogue');
+        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+      },
+      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   // Parse search/category query params from URL (e.g. on navigation redirect)
   useEffect(() => {
@@ -123,34 +183,67 @@ export default function ShopPage() {
           {/* Right Column: Premium Showcase Card */}
           <div className="hero-right-col">
             <div className="showcase-card">
-              <span className="showcase-tag">SAYONA BEAUTY</span>
-              <h2 className="showcase-title">ARGAN DEEP TREATMENT</h2>
-              <p className="showcase-subtitle">Restore your hair's natural luster and softness. Infused with organic liquid gold.</p>
-              
-              <div className="showcase-price-row">
-                <span className="showcase-old-price">KSh 1,500</span>
-                <span className="showcase-price">KSh 950</span>
+              {/* Fade content wrapper */}
+              <div className="showcase-card-content" key={currentSlide}>
+                <span className="showcase-tag">{slides[currentSlide].tag}</span>
+                <h2 className="showcase-title">{slides[currentSlide].title}</h2>
+                <p className="showcase-subtitle">{slides[currentSlide].subtitle}</p>
+                
+                <div className="showcase-price-row">
+                  <span className="showcase-old-price">{slides[currentSlide].oldPrice}</span>
+                  <span className="showcase-price">{slides[currentSlide].price}</span>
+                </div>
+                
+                <div className="showcase-rating">
+                  <span className="stars">{slides[currentSlide].stars}</span>
+                  <span className="rating-val">{slides[currentSlide].ratingVal}</span>
+                </div>
+                
+                <button 
+                  type="button" 
+                  className="btn btn-primary showcase-buy-btn" 
+                  onClick={slides[currentSlide].action}
+                >
+                  {slides[currentSlide].buttonText}
+                </button>
+                
+                <div className="delivery-pill">
+                  <span className="delivery-icon">🚚</span>
+                  <span className="delivery-text" dangerouslySetInnerHTML={{ __html: slides[currentSlide].deliveryText }}></span>
+                </div>
               </div>
-              
-              <div className="showcase-rating">
-                <span className="stars">★★★★★</span>
-                <span className="rating-val">4.9 (142 reviews)</span>
-              </div>
-              
-              <button 
-                type="button" 
-                className="btn btn-primary showcase-buy-btn" 
-                onClick={() => {
-                  const catalog = document.getElementById('catalogue');
-                  if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                Shop Now
-              </button>
-              
-              <div className="delivery-pill">
-                <span className="delivery-icon">🚚</span>
-                <span className="delivery-text">Same-day Nairobi <strong>Free Delivery</strong></span>
+
+              {/* Slider Navigation Controls */}
+              <div className="slider-nav">
+                <button 
+                  type="button" 
+                  className="slider-arrow prev" 
+                  onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+                  aria-label="Previous Slide"
+                >
+                  ‹
+                </button>
+                
+                <div className="slider-dots">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`slider-dot ${idx === currentSlide ? 'active' : ''}`}
+                      onClick={() => setCurrentSlide(idx)}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button 
+                  type="button" 
+                  className="slider-arrow next" 
+                  onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+                  aria-label="Next Slide"
+                >
+                  ›
+                </button>
               </div>
             </div>
           </div>

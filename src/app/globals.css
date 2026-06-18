@@ -615,7 +615,77 @@
     position: relative;
     display: flex;
     flex-direction: column;
+  }
+
+  .showcase-card-content {
+    width: 100%;
+    animation: slideFadeIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
+  }
+
+  @keyframes slideFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .slider-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .slider-arrow {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+    line-height: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+
+  .slider-arrow:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .slider-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: var(--transition-fast);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .slider-dot.active {
+    background: var(--color-primary);
+    transform: scale(1.25);
   }
 
   .showcase-tag {
