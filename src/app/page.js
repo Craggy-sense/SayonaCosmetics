@@ -75,7 +75,7 @@ export default function ShopPage() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    }, 45000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
