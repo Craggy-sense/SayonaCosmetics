@@ -235,6 +235,15 @@ export default function Header() {
                     Clearance
                   </button>
                 </li>
+                <li>
+                  <a 
+                    href="https://gifthaus-ke.vercel.app" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    Perfumes 🌸
+                  </a>
+                </li>
                 <li className="nav-separator">|</li>
                 <li>
                   <Link href="/about" className={pathname === '/about' ? 'active' : ''}>

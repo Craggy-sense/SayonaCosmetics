@@ -256,6 +256,15 @@ export default function ShopPage() {
                   <span className="item-label">✂️ Appliances &amp; Tools</span>
                   <span className="item-arrow">&rsaquo;</span>
                 </button>
+                <a 
+                  href="https://gifthaus-ke.vercel.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="sidebar-item"
+                >
+                  <span className="item-label">🌸 Perfumes</span>
+                  <span className="item-arrow">&rsaquo;</span>
+                </a>
                 <button 
                   className={`sidebar-item ${activeCategory === 'all' ? 'active' : ''}`}
                   onClick={() => {
