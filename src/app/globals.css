@@ -304,6 +304,58 @@
     text-transform: uppercase;
   }
 
+  /* World Cup Header Badge */
+  .world-cup-season-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    padding: 6px 14px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(253, 86, 30, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-right: auto;
+    margin-left: 10px;
+    animation: pulseGlow 2.5s infinite ease-in-out;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .wc-text {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.8px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .wc-soccer {
+    font-size: 0.9rem;
+    display: inline-block;
+    animation: rotateBall 4s linear infinite;
+  }
+
+  .wc-trophy {
+    font-size: 0.9rem;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 4px 12px rgba(253, 86, 30, 0.15);
+    }
+    50% {
+      transform: scale(1.04);
+      box-shadow: 0 4px 18px rgba(253, 86, 30, 0.35);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  @keyframes rotateBall {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
   /* Search Engine Styling */
   .search-wrapper {
     flex-grow: 1;
@@ -2393,6 +2445,10 @@
    11. MEDIA RESPONSIVE BREAKPOINTS (RESPONSIVE WEB)
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
+  .world-cup-season-badge {
+    display: none;
+  }
+
   .hero-split-grid {
     grid-template-columns: 1fr;
     gap: 20px;

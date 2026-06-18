@@ -90,7 +90,7 @@ export default function Header() {
     <>
       {/* Top Announcement Bar */}
       <div className="announcement-bar" id="announcement-bar">
-        <p>{settings.announcement}</p>
+        <p>🏆 WORLD CUP GROOMING SEASON IS ON! SCORE BIG DEALS! ⚽ &nbsp;|&nbsp; {settings.announcement}</p>
       </div>
 
       {/* Two-Tier Clean Brand Header */}
@@ -111,6 +111,13 @@ export default function Header() {
                 SAYONA<span className="brand-sub">COSMETICS</span>
               </span>
             </Link>
+
+            {/* World Cup Season Badge */}
+            <div className="world-cup-season-badge">
+              <span className="wc-soccer">⚽</span>
+              <span className="wc-text">WORLD CUP SEASON</span>
+              <span className="wc-trophy">🏆</span>
+            </div>
 
             {/* Central Search Wrapper */}
             <div className="search-wrapper" ref={searchContainerRef}>
