@@ -33,7 +33,9 @@ export default function ProductModal() {
       "styling": "Hair Styling",
       "appliances": "Appliance & Tool"
     };
-    return mapping[cat] || "Cosmetics";
+    if (mapping[cat]) return mapping[cat];
+    if (!cat) return "Cosmetics";
+    return cat.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   };
 
   const getProductSVG = (category) => {

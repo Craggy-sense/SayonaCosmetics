@@ -160,8 +160,45 @@ export default function ShopPage() {
       "new-arrivals": "New Arrivals",
       "clearance": "Clearance"
     };
-    return mapping[cat] || "All Categories";
+    if (mapping[cat]) return mapping[cat];
+    if (!cat || cat === 'all') return "All Categories";
+    return cat.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   };
+
+  const getCategoryEmoji = (cat) => {
+    const mapping = {
+      "shampoo-conditioner": "🧴",
+      "treatments": "🌿",
+      "styling": "👑",
+      "appliances": "✂️",
+      "offers": "🔥",
+      "new-arrivals": "✨",
+      "clearance": "🏷️"
+    };
+    return mapping[cat] || "✨";
+  };
+
+  const baseCategories = [
+    { slug: 'shampoo-conditioner', label: 'Shampoo & Conditioner', emoji: '🧴' },
+    { slug: 'treatments', label: 'Hair Treatments', emoji: '🌿' },
+    { slug: 'styling', label: 'Hair Styling', emoji: '👑' },
+    { slug: 'appliances', label: 'Appliances & Tools', emoji: '✂️' }
+  ];
+
+  // Build the list of categories dynamically from products
+  const customCats = [];
+  const defaultSlugs = ['shampoo-conditioner', 'treatments', 'styling', 'appliances'];
+  products.forEach(p => {
+    if (p.category && !defaultSlugs.includes(p.category) && !customCats.some(c => c.slug === p.category)) {
+      customCats.push({
+        slug: p.category,
+        label: getCategoryLabel(p.category),
+        emoji: getCategoryEmoji(p.category)
+      });
+    }
+  });
+
+  const categoriesList = [...baseCategories, ...customCats];
 
   return (
     <div className="shop-page-wrapper">
@@ -204,7 +241,6 @@ export default function ShopPage() {
 
         {/* Main Split Grid */}
         <div className="hero-split-grid">
-          {/* Left Column: Category Sidebar */}
           <div className="hero-sidebar-col">
             <div className="sidebar-card">
               <div className="sidebar-header">
@@ -212,50 +248,20 @@ export default function ShopPage() {
                 <p>Everything you need for beautiful hair.</p>
               </div>
               <div className="sidebar-list">
-                <button 
-                  className={`sidebar-item ${activeCategory === 'shampoo-conditioner' ? 'active' : ''}`}
-                  onClick={() => {
-                    setActiveCategory('shampoo-conditioner');
-                    const catalog = document.getElementById('catalogue');
-                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  <span className="item-label">🧴 Shampoo &amp; Conditioner</span>
-                  <span className="item-arrow">&rsaquo;</span>
-                </button>
-                <button 
-                  className={`sidebar-item ${activeCategory === 'treatments' ? 'active' : ''}`}
-                  onClick={() => {
-                    setActiveCategory('treatments');
-                    const catalog = document.getElementById('catalogue');
-                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  <span className="item-label">🌿 Hair Treatments</span>
-                  <span className="item-arrow">&rsaquo;</span>
-                </button>
-                <button 
-                  className={`sidebar-item ${activeCategory === 'styling' ? 'active' : ''}`}
-                  onClick={() => {
-                    setActiveCategory('styling');
-                    const catalog = document.getElementById('catalogue');
-                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  <span className="item-label">👑 Hair Styling</span>
-                  <span className="item-arrow">&rsaquo;</span>
-                </button>
-                <button 
-                  className={`sidebar-item ${activeCategory === 'appliances' ? 'active' : ''}`}
-                  onClick={() => {
-                    setActiveCategory('appliances');
-                    const catalog = document.getElementById('catalogue');
-                    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  <span className="item-label">✂️ Appliances &amp; Tools</span>
-                  <span className="item-arrow">&rsaquo;</span>
-                </button>
+                {categoriesList.map(cat => (
+                  <button 
+                    key={cat.slug}
+                    className={`sidebar-item ${activeCategory === cat.slug ? 'active' : ''}`}
+                    onClick={() => {
+                      setActiveCategory(cat.slug);
+                      const catalog = document.getElementById('catalogue');
+                      if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    <span className="item-label">{cat.emoji} {cat.label}</span>
+                    <span className="item-arrow">&rsaquo;</span>
+                  </button>
+                ))}
                 <a 
                   href="https://gifthaus.netlify.app" 
                   target="_blank" 
@@ -413,38 +419,17 @@ export default function ShopPage() {
               >
                 All Products
               </button>
-              <button 
-                className={`category-tab ${activeCategory === 'shampoo-conditioner' ? 'active' : ''}`}
-                onClick={() => setActiveCategory('shampoo-conditioner')}
-                role="tab" 
-                aria-selected={activeCategory === 'shampoo-conditioner'}
-              >
-                Shampoo &amp; Conditioner
-              </button>
-              <button 
-                className={`category-tab ${activeCategory === 'treatments' ? 'active' : ''}`}
-                onClick={() => setActiveCategory('treatments')}
-                role="tab" 
-                aria-selected={activeCategory === 'treatments'}
-              >
-                Hair Treatments
-              </button>
-              <button 
-                className={`category-tab ${activeCategory === 'styling' ? 'active' : ''}`}
-                onClick={() => setActiveCategory('styling')}
-                role="tab" 
-                aria-selected={activeCategory === 'styling'}
-              >
-                Hair Styling
-              </button>
-              <button 
-                className={`category-tab ${activeCategory === 'appliances' ? 'active' : ''}`}
-                onClick={() => setActiveCategory('appliances')}
-                role="tab" 
-                aria-selected={activeCategory === 'appliances'}
-              >
-                Appliances &amp; Tools
-              </button>
+              {categoriesList.map(cat => (
+                <button 
+                  key={cat.slug}
+                  className={`category-tab ${activeCategory === cat.slug ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(cat.slug)}
+                  role="tab" 
+                  aria-selected={activeCategory === cat.slug}
+                >
+                  {cat.label}
+                </button>
+              ))}
             </div>
 
             <div className="catalogue-utilities" id="catalogue-utilities">

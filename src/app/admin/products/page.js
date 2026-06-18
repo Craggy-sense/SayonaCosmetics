@@ -26,6 +26,15 @@ export default function AdminProductsPage() {
   const [inStock, setInStock] = useState(true);
   const [imagePreview, setImagePreview] = useState('');
   
+  const [categoriesList, setCategoriesList] = useState([
+    { slug: 'shampoo-conditioner', label: 'Shampoo & Conditioner' },
+    { slug: 'treatments', label: 'Hair Treatment' },
+    { slug: 'styling', label: 'Hair Styling' },
+    { slug: 'appliances', label: 'Appliance & Tool' }
+  ]);
+  const [isAddingNewCat, setIsAddingNewCat] = useState(false);
+  const [newCatName, setNewCatName] = useState('');
+  
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -48,6 +57,28 @@ export default function AdminProductsPage() {
   useEffect(() => {
     loadProducts();
   }, []);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const defaultSlugs = ['shampoo-conditioner', 'treatments', 'styling', 'appliances'];
+      const customCats = [];
+      products.forEach(p => {
+        if (p.category && !defaultSlugs.includes(p.category) && !customCats.some(c => c.slug === p.category)) {
+          customCats.push({
+            slug: p.category,
+            label: getCategoryName(p.category)
+          });
+        }
+      });
+      setCategoriesList([
+        { slug: 'shampoo-conditioner', label: 'Shampoo & Conditioner' },
+        { slug: 'treatments', label: 'Hair Treatment' },
+        { slug: 'styling', label: 'Hair Styling' },
+        { slug: 'appliances', label: 'Appliance & Tool' },
+        ...customCats
+      ]);
+    }
+  }, [products]);
 
   useEffect(() => {
     if (imageFile) {
@@ -73,6 +104,8 @@ export default function AdminProductsPage() {
     setImageUrl('');
     setSizes([{ size: '', price: '' }]);
     setInStock(true);
+    setIsAddingNewCat(false);
+    setNewCatName('');
     setError('');
     setIsModalOpen(true);
   };
@@ -89,6 +122,8 @@ export default function AdminProductsPage() {
     setImageUrl(product.image || '');
     setSizes(product.sizes && product.sizes.length > 0 ? product.sizes.map(s => ({ size: s.size, price: s.price.toString() })) : [{ size: '', price: '' }]);
     setInStock(product.inStock !== false);
+    setIsAddingNewCat(false);
+    setNewCatName('');
     setError('');
     setIsModalOpen(true);
   };
@@ -175,6 +210,18 @@ export default function AdminProductsPage() {
       return;
     }
 
+    // Determine category value
+    let finalCategory = category;
+    if (isAddingNewCat) {
+      const slug = newCatName.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      if (!slug) {
+        setError('Please enter a valid category name.');
+        setSaving(false);
+        return;
+      }
+      finalCategory = slug;
+    }
+
     try {
       let finalImageUrl = imageUrl;
 
@@ -187,7 +234,7 @@ export default function AdminProductsPage() {
 
       const productPayload = {
         title: title.trim(),
-        category,
+        category: finalCategory,
         desc: desc.trim(),
         benefits: benefitsText.split('\n').map(b => b.trim()).filter(b => b !== ''),
         usage: usage.trim(),
@@ -222,7 +269,9 @@ export default function AdminProductsPage() {
       "styling": "Hair Styling",
       "appliances": "Appliance & Tool"
     };
-    return mapping[cat] || cat;
+    if (mapping[cat]) return mapping[cat];
+    if (!cat) return "Cosmetics";
+    return cat.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   };
 
   const formatPrice = (num) => {
@@ -451,13 +500,21 @@ export default function AdminProductsPage() {
                   <select 
                     id="prod_cat" 
                     className="admin-select"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    value={isAddingNewCat ? '__new__' : category}
+                    onChange={(e) => {
+                      if (e.target.value === '__new__') {
+                        setIsAddingNewCat(true);
+                        setCategory('');
+                      } else {
+                        setIsAddingNewCat(false);
+                        setCategory(e.target.value);
+                      }
+                    }}
                   >
-                    <option value="shampoo-conditioner">Shampoo &amp; Conditioner</option>
-                    <option value="treatments">Hair Treatment</option>
-                    <option value="styling">Hair Styling</option>
-                    <option value="appliances">Appliance &amp; Tool</option>
+                    {categoriesList.map(c => (
+                      <option key={c.slug} value={c.slug}>{c.label}</option>
+                    ))}
+                    <option value="__new__">➕ Add New Category...</option>
                   </select>
                 </div>
 
@@ -474,6 +531,21 @@ export default function AdminProductsPage() {
                   </label>
                 </div>
               </div>
+
+              {isAddingNewCat && (
+                <div className="admin-form-group" style={{ marginTop: '-10px', marginBottom: '10px' }}>
+                  <label htmlFor="new_cat_name">New Category Name *</label>
+                  <input 
+                    type="text" 
+                    id="new_cat_name" 
+                    placeholder="e.g. Body Wash, Face Oils" 
+                    required 
+                    className="admin-input" 
+                    value={newCatName}
+                    onChange={(e) => setNewCatName(e.target.value)}
+                  />
+                </div>
+              )}
 
               <div className="admin-form-group">
                 <label htmlFor="prod_desc">Product Description *</label>
