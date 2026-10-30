@@ -44,7 +44,9 @@ export default function AdminProductsPage() {
       const querySnapshot = await getDocs(collection(db, 'products'));
       const loaded = [];
       querySnapshot.forEach((doc) => {
-        loaded.push({ id: doc.id, ...doc.data() });
+        const data = doc.data();
+        // Firestore doc ID must win over any stored `id` field, otherwise edit/delete target the wrong document.
+        loaded.push({ ...data, id: doc.id, catalogId: data.id || null });
       });
       setProducts(loaded);
     } catch (e) {
@@ -143,22 +145,46 @@ export default function AdminProductsPage() {
     setSizes(updated);
   };
 
+  // Older titles used before the 2026 catalogue sync, so existing products are matched and updated, not duplicated.
+  const LEGACY_TITLES = {
+    'corded-clippers': ['Sayona Corded Balding Clippers'],
+  };
+  const normTitle = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
   const handleSeedProducts = async () => {
     if (products.length > 0) {
-      if (!confirm('You already have products in the database. Are you sure you want to seed the default products? This will add them alongside existing ones.')) {
+      if (!confirm('Sync the catalogue products to the database?\n\nMatching products will be UPDATED (name, photo, description, sizes & prices) — their In Stock setting is kept. Catalogue products not yet in the database will be added. Nothing is deleted.')) {
         return;
       }
     }
-    
+
     try {
       setSeeding(true);
       const batch = writeBatch(db);
+      let updated = 0;
+      let added = 0;
+      const duplicates = [];
       FALLBACK_PRODUCTS.forEach((p) => {
-        const docRef = doc(collection(db, 'products'));
-        batch.set(docRef, p);
+        const titles = [p.title, ...(LEGACY_TITLES[p.id] || [])].map(normTitle);
+        const matches = products.filter(
+          (ex) => ex.catalogId === p.id || ex.id === p.id || titles.includes(normTitle(ex.title))
+        );
+        if (matches.length === 0) {
+          batch.set(doc(db, 'products', p.id), { ...p, inStock: true });
+          added++;
+        } else {
+          matches.forEach((ex) => {
+            batch.set(doc(db, 'products', ex.id), { ...p, inStock: ex.inStock !== false }, { merge: true });
+            updated++;
+          });
+          if (matches.length > 1) duplicates.push(`${p.title} (${matches.length} copies)`);
+        }
       });
       await batch.commit();
-      alert('Fallback products successfully seeded to Firestore database!');
+      alert(
+        `Catalogue synced: ${updated} updated, ${added} added.` +
+        (duplicates.length ? `\n\nDuplicates found — you may want to delete the extra copies:\n• ${duplicates.join('\n• ')}` : '')
+      );
       loadProducts();
     } catch (e) {
       console.error('Seeding error:', e);
@@ -289,7 +315,7 @@ export default function AdminProductsPage() {
             onClick={handleSeedProducts}
             disabled={seeding || loading}
           >
-            {seeding ? 'Seeding...' : '🌱 Seed Fallback Products'}
+            {seeding ? 'Syncing...' : '🌱 Sync Catalogue Products'}
           </button>
           <button 
             type="button" 

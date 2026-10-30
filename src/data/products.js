@@ -1,11 +1,13 @@
+// Product catalogue — mirrors the Sayona Cosmetics Product Catalogue 2026.
+// Prices are the RRP column of the catalogue price list (KSh).
 export const FALLBACK_PRODUCTS = [
   {
     id: "argan-shampoo",
-    image: "/product-images/argan-shampoo.png",
+    image: "/product-images/argan-shampoo.jpg",
     title: "Argan Oil Hair Shampoo",
     category: "shampoo-conditioner",
-    desc: "A premium 2-in-1 cleansing and moisturizing crystal shampoo formulated specifically for African hair. Restores life and luster to dull, dry, and tangled fibers while reducing split ends and frizz.",
-    benefits: ["Enriched with high-grade organic Argan Oil", "Restores natural shine and reduces split ends", "Cleansing & moisturizing 2-in-1 formula", "Perfect for frizzy, tangled, or chemical-damaged hair"],
+    desc: "Sayona Argan Oil cleansing and moisturizing 2-in-1 shampoo for dry or damaged hair. Suits frizzy, tangled and damaged hair perfectly — the unique formulation restores life and luster to dull, dry hair while reducing split ends and frizz.",
+    benefits: ["Argan Oil cleansing & moisturizing 2-in-1 formula", "For dry or damaged hair", "Restores life and luster to dull, dry hair", "Reduces split ends and frizz"],
     usage: "Apply a generous amount to wet hair. Massage gently into a rich lather from roots to ends. Rinse thoroughly.",
     tag: "BESTSELLER",
     sizes: [
@@ -17,12 +19,12 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "olive-shampoo",
-    image: "/product-images/olive-shampoo.png",
+    image: "/product-images/olive-shampoo.jpg",
     title: "Olive Oil Hair Shampoo",
     category: "shampoo-conditioner",
-    desc: "An advanced 2-in-1 crystal shampoo formulated specifically for dry or damaged African hair. Deeply cleanses and moisturizes the scalp, enriched with high-grade olive oil which acts as an excellent source of natural antioxidants.",
-    benefits: ["2-in-1 crystal formula for intense hydration", "Enriched with organic Olive Oil extracts", "Powerful source of natural antioxidants", "Soothes dry, tight, or flaking scalps"],
-    usage: "Apply to wet hair. Gently massage into the scalp to stimulate hair follicles and create a thick lather. Rinse thoroughly.",
+    desc: "Sayona Olive Oil cleansing and moisturizing 2-in-1 crystal shampoo for dry or damaged hair. Formulated for African hair and enriched with olive oil, an excellent source of antioxidants.",
+    benefits: ["Olive Oil cleansing & moisturizing 2-in-1 crystal shampoo", "For dry or damaged hair", "Enriched with olive oil — an excellent source of antioxidants", "Formulated for African hair"],
+    usage: "Apply to wet hair. Gently massage into the scalp to create a thick lather. Rinse thoroughly.",
     tag: "NEW",
     sizes: [
       { size: "250 ml", price: 55 },
@@ -33,11 +35,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "coconut-conditioner",
-    image: "/product-images/coconut-conditioner.png",
+    image: "/product-images/coconut-conditioner.jpg",
     title: "Coconut Oil Hair Conditioner",
     category: "shampoo-conditioner",
-    desc: "Sayona Moisture Boost Conditioner, enriched with pure coconut oil-derived fatty acids. Creamy formula designed to detangle, improve softness and manageability, prevent hair breakage, and restore elastic curls.",
-    benefits: ["Sayona Hair Coconut Oil Moisture Boost formula", "Restores elasticity and prevents fiber breakage", "Deeply hydrates dry, rough, or processed textures", "Creamy formula simplifies detangling and combing"],
+    desc: "Sayona Hair Coconut Oil Moisture Boost Hair Conditioner — conditions to restore moisture. Formulated with Coconut Oil–derived fatty acids, this rich conditioner helps prevent breakage, restore elasticity, and deeply hydrate dry or damaged hair. Its creamy formula detangles, improves softness and manageability, and leaves hair silky, shiny, and healthier.",
+    benefits: ["Coconut Oil Moisture Boost formula", "Helps prevent breakage and restore elasticity", "Deeply hydrates dry or damaged hair", "Creamy formula detangles and leaves hair silky and shiny"],
     usage: "After shampooing, apply evenly from mid-shaft to ends. Leave on for 3 to 5 minutes. Comb through gently and rinse thoroughly.",
     tag: "POPULAR",
     sizes: [
@@ -49,11 +51,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "olive-leave-in",
-    image: "/product-images/olive-leave-in.png",
+    image: "/product-images/olive-leave-in.jpg",
     title: "Olive Oil Leave-In Treatment",
     category: "treatments",
-    desc: "A lightweight formula collection enriched with organic Olive extracts. Richly moisturizes and nourishes dull, frizzy hair, while eliminating dryness, itching, and flaking to maximize volume and manageability.",
-    benefits: ["Lightweight, non-greasy no-rinse collection", "Enriched with highly active Olive Extract", "Soothes scalp tightness and supports healthy roots", "Maximizes fullness and volume on relaxed & natural hair"],
+    desc: "Sayona Olive Oil Leave-In Hair Treatment richly moisturizes. A lightweight formula collection that nourishes dull, frizzy hair and helps stop dryness, itching, and flaking of the scalp to maximize fullness and improve manageability. Olive oil also invigorates the skin and soothes tightness to support a healthy scalp foundation, delivering super-nourishing results for natural and relaxed hair.",
+    benefits: ["Lightweight, richly moisturizing formula", "Helps stop dryness, itching and flaking of the scalp", "Soothes scalp tightness for a healthy scalp foundation", "Maximizes fullness on natural and relaxed hair"],
     usage: "Apply a small amount to clean, damp or dry hair. Massage gently into the scalp and distribute evenly. Do not rinse out.",
     tag: "ESSENTIAL",
     sizes: [
@@ -66,11 +68,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "indian-hemp-pomade",
-    image: "/product-images/indian-hemp-pomade.png",
+    image: "/product-images/indian-hemp-pomade.jpg",
     title: "Indian Hemp Anti-Dandruff Pomade",
     category: "styling",
-    desc: "A soothing and cooling dry scalp glossifier formulated with medicinal herbs, vitamins, and a powerful blend of Indian Hemp, Argan, Castor, Coconut, Tea Tree, Eucalyptus, and Peppermint essential oils to eliminate dandruff.",
-    benefits: ["Formulated with authentic Indian Hemp & Mint Oil", "Cooling, soothing formula reduces itchiness instantly", "Enriched with Tea Tree, Eucalyptus, and Peppermint oils", "Specially targeted to stop the root cause of dandruff"],
+    desc: "Indian Hemp based anti-dandruff pomade — a Dry & Itchy Scalp Glossifier for sensitive and itchy scalps. Enriched with medicinal herbs, vitamins, Argan, Castor, Coconut and Tea Tree oils, with Eucalyptus and Peppermint essentials. Specially formulated to target the root cause of dandruff. Soothing & cooling formula with Mint Oil.",
+    benefits: ["Dry & Itchy Scalp Glossifier", "For sensitive & itchy scalp", "Soothing & cooling formula with Mint Oil", "Targets the root cause of dandruff"],
     usage: "Part hair in sections and apply a small amount directly to the scalp. Massage thoroughly. Brush or comb hair and style as usual.",
     tag: "HOT",
     sizes: [
@@ -83,11 +85,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "argan-hair-food",
-    image: "/product-images/argan-hair-food.png",
+    image: "/product-images/argan-hair-food.jpg",
     title: "Argan Oil Hair Food",
     category: "styling",
-    desc: "A daily nourishing and strengthening glossifier containing high-grade organic Argan Oil. Lock in intense moisture to repair fibers damaged by blow-drying and flat ironing, stimulating healthy hair growth and thickness.",
-    benefits: ["Protects hair from flat-ironing and blow-dry heat", "Argan Oil restores vital nutrients and moisture", "Strengthens hair shafts and minimizes hair fall", "Encourages healthy root stimulation and length growth"],
+    desc: "Nourish and strengthen. Argan oil is known for its ability to help hair restore, enhance, and grow. Its natural moisturizers help repair damage from blow-drying and flat ironing.",
+    benefits: ["Nourishes & strengthens", "Helps hair restore, enhance and grow", "Natural moisturizers help repair heat damage", "Ideal after blow-drying and flat ironing"],
     usage: "Apply directly to hair shafts and scalp. Massage gently. Ideal for use before styling or as a daily moisture sealant.",
     tag: "DAILY WEAR",
     sizes: [
@@ -100,11 +102,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "dreadlock-wax",
-    image: "https://images.unsplash.com/photo-1601612622752-b69b660f4a6a?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/dreadlock-wax.jpg",
     title: "Extra Hold Dreadlock Wax",
     category: "styling",
-    desc: "A professional-grade dreadlock gel wax crafted with precision. Non-flaking, long-lasting extra hold formula specifically designed to satisfy the unique locking and twisting needs of coily and coarse dreadlocks.",
-    benefits: ["Extra Hold non-flaking formula", "Enriched with organic holding resins and oils", "Leaves locks tight, neat, and highly hydrated", "Washes out cleanly without sticky residue"],
+    desc: "Sayona Extra Hold Dreadlock Wax is a non-flaking formula crafted with precision. Our dreadlock gel wax is designed to meet the unique needs of those with dreadlocks.",
+    benefits: ["Extra hold", "Non-flaking formula", "Gel wax crafted with precision", "Designed for the unique needs of dreadlocks"],
     usage: "Apply a small amount to the root section of locks. Twist or palm roll hair. Work down lock segments as needed.",
     tag: "PROFESSIONAL",
     sizes: [
@@ -117,11 +119,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "protein-treatment",
-    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/protein-treatment.jpg",
     title: "Hair Protein Treatment",
     category: "treatments",
-    desc: "A premium no-rinsing leave-in protein treatment enriched with patented Keravis Protein and Polyquaternium-7. Formulated to rebuild weak, fragile, over-processed, or shedding hair fibers to reduce breakage significantly.",
-    benefits: ["Enriched with Keravis Protein & Polyquaternium-7", "No-rinsing formula keeps working all day", "Rebuilds weak, processed, or relaxed fibers", "Reduces breakage and splits immediately"],
+    desc: "Sayona Hair Protein Treatment is a leave-in, no-rinsing treatment formulated to help reinforce weak, fragile, and over-processed hair. Enriched with Keravis, Polyquaternium-7, and conditioning ingredients, it helps improve the feel of the hair, reduce the appearance of breakage, and leave hair looking stronger, smoother, and more manageable.",
+    benefits: ["Leave-in, no rinsing", "Enriched with Keravis & Polyquaternium-7", "Reinforces weak, fragile and over-processed hair", "Strengthens • Rebuilds • Reduces breakage"],
     usage: "Shampoo hair and towel dry. Apply evenly throughout damp hair. Do not rinse out. Comb through and style.",
     tag: "THERAPY",
     sizes: [
@@ -134,11 +136,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "cholesterol-treatment",
-    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/cholesterol-treatment.jpg",
     title: "Hair Cholesterol Treatment",
     category: "treatments",
-    desc: "Sayona Deep Conditioning Cholesterol Treatment. Enriched with natural conditioning lipids and cholesterol to revive dry, rough, frizzy, and tired hair. Softens texture, locks in core moisture, and leaves hair feeling smooth.",
-    benefits: ["Infused with cholesterol and deep conditioning lipids", "Revives dry, damaged, or chemically relaxed hair", "Restores natural moisture barrier and luster", "Softens rough hair for effortless manageability"],
+    desc: "Sayona Hair Cholesterol Treatment is designed to deeply condition dry, rough, and tired-looking hair. Formulated with cholesterol, natural oils, and conditioning ingredients, it helps soften the hair, improve smoothness, and restore a healthier, nourished feel.",
+    benefits: ["With natural oils & cholesterol", "Deeply conditions dry, rough, tired-looking hair", "Restores moisture • Softens • Revives dry hair", "Leaves hair smoother with a nourished feel"],
     usage: "Shampoo and rinse hair. Apply treatment, massaging from roots to ends. Cover with cap for 15-20 mins. Rinse well.",
     tag: "RESTORE",
     sizes: [
@@ -151,11 +153,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "deep-penetrating-treatment",
-    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/deep-treatment.jpg",
     title: "Hair Deep Penetrating Treatment",
     category: "treatments",
-    desc: "A highly concentrated deep hydrating moisture treatment designed to replenish core moisture and improve the texture of dull, dry, and coarse hair. Softens, adds high luster, and facilitates easy detangling and combing.",
-    benefits: ["Concentrated moisture replenishment formula", "Leaves hair softer, shinier, and easier to comb", "Perfect for dry, dull, or hard-to-manage African hair", "Provides smooth hydration and deep cuticle repair"],
+    desc: "Sayona Hair Deep Treatment is formulated to help replenish moisture and improve the feel of dry, dull, or hard-to-manage hair. With hydrating and conditioning ingredients, it helps leave hair feeling softer, smoother, shinier, and easier to comb.",
+    benefits: ["Moisture-lock formula", "Replenishes moisture in dry, dull hair", "Deep hydration • Smoothness • Shine", "Leaves hair softer and easier to comb"],
     usage: "Apply to washed, towel-dried hair. Leave on for 10-15 minutes, preferably under heat. Rinse thoroughly.",
     tag: "HYDRATE",
     sizes: [
@@ -168,11 +170,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "foam-wrap",
-    image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/foam-wrap.jpg",
     title: "Olive Oil Hair Foam Wrap",
     category: "styling",
-    desc: "A super-wrap styling foam infused with organic Olive Oil, essential vitamins, and scalp-hydrating nutrients. Delivers balanced nutritional nourishment to locks, curls, and sets, leaving them soft, silky, and easy to shape.",
-    benefits: ["Infused with Olive Oil for deep scalp hydration", "Vitamins and essential oil nutritional enrichment", "Provides soft, silky, and bouncy long-lasting hold", "Non-sticky, non-flaking styling wrap formula"],
+    desc: "Sayona Foam Wrap is a super formula designed to impart conditioning and moisture to your scalp and hair. Infused with olive oil, essential oils and vitamin enrichment, Sayona Foam Wrap gives balanced nutritional nourishment to your hair, leaving it soft & silky, moisturized and easy to manage.",
+    benefits: ["Infused with Olive Oil for scalp and hair hydration", "Essential oils and vitamin enrichment", "Leaves hair soft, silky and moisturized", "Makes hair easy to manage"],
     usage: "Pump foam into palms. Distribute evenly through wet or dry hair. Wrap, mold, or set hair. Dry and style.",
     tag: "SALON PRO",
     sizes: [
@@ -181,11 +183,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "hair-dryer",
-    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/hair-dryer.jpg",
     title: "Sayona Professional Gold Hair Dryer",
     category: "appliances",
-    desc: "A professional-grade 2000W styling hair dryer featuring adjustable heat and speed control settings. Ergonomically designed with a comfortable soft-grip handle, including concentrator nozzles and styling comb attachments.",
-    benefits: ["2000W professional long-life AC motor", "Adjustable speed and heat temperature settings", "Ergonomic soft-grip handle with styling nozzles and comb", "Sayona SY-300 / SY-800 / SY-1000 Gold model"],
+    desc: "Experience effortless styling with this 2000W hair dryer. Adjustable speeds and heat settings, an ergonomic soft-grip handle, and included nozzles and comb make achieving salon-quality hair at home simple and precise. Available in models SY-300, SY-800 and SY-1000 Gold.",
+    benefits: ["2000W power", "Adjustable speed and heat settings", "Ergonomic soft-grip handle", "Nozzles and comb included"],
     usage: "Select nozzle/comb attachment. Adjust heat and speed. Blow dry sections maintaining safe styling distance.",
     tag: "ELECTRONIC",
     sizes: [
@@ -194,11 +196,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "cordless-clippers",
-    image: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/cordless-clipper.jpg",
     title: "Sayona Cordless Hair Clipper",
     category: "appliances",
-    desc: "A high-performance cordless hair clipper designed for barbershop-quality precision cuts at home. Comfortable and easy to handle, it trims smoothly through thick, coarse hair textures without snagging.",
-    benefits: ["High precision, self-sharpening blades", "Rechargeable battery with long cordless runtime", "Ergonomic cordless design for total maneuverability", "Model SC-9308 precision clippers"],
+    desc: "Achieve sharp, even cuts with this cordless hair clipper (model SC-9308). Comfortable and easy to handle, it trims smoothly without snagging, giving you barbershop-quality results at home.",
+    benefits: ["Cordless for easy handling", "Sharp, even cuts without snagging", "Barbershop-quality results at home", "Model SC-9308 with charging stand"],
     usage: "Ensure blades are clean and oiled. Select guide comb length. Power on and trim against hair growth.",
     tag: "BARBER CHOICE",
     sizes: [
@@ -207,11 +209,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "corded-clippers",
-    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80",
-    title: "Sayona Corded Balding Clippers",
+    image: "/product-images/corded-clippers.jpg",
+    title: "Sayona Corded Hair Clippers",
     category: "appliances",
-    desc: "Heavy-duty corded clippers specifically engineered for clean balding cuts and neat trims. Driven by a powerful electromagnetic motor, it delivers continuous cutting precision.",
-    benefits: ["Designed specifically for close balding cuts", "Powerful electromagnetic corded motor", "SBC-9210 / SH-9211 professional trimmer model", "Durable, heat-resistant housing with guides"],
+    desc: "Get neat, even cuts with these corded hair clippers. Comfortable and easy to use, they deliver precise results at home, keeping you looking sharp without a trip to the barber. Available as the SBC-9210 Balding Clipper and the SH-9211.",
+    benefits: ["Neat, even cuts", "Comfortable and easy to use", "Precise results at home", "Models SBC-9210 (Balding) and SH-9211"],
     usage: "Plug into power. Apply blade oil. Adjust taper lever and execute close cuts.",
     tag: "HEAVY DUTY",
     sizes: [
@@ -220,11 +222,11 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "straightener",
-    image: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=600&q=80",
+    image: "/product-images/straightener.jpg",
     title: "Sayona Pro Black Titanium Straightener",
     category: "appliances",
-    desc: "Sayona SS-X Pro Black professional straightener featuring premium Titanium and Ceramic heating plates. Rapid heat-up time and high thermal efficiency provide effortless sleek straightening.",
-    benefits: ["Sayona SS-X Pro Black salon edition", "Premium Titanium/Ceramic high heat plates", "Rapid temperature heat-up and uniform heat recovery", "Gentle ionic heating minimizes heat damage"],
+    desc: "Built for precision and performance, the Pro Black Titanium/Ceramic straightener heats up quickly and delivers high heat efficiency for faster styling and long-lasting sleekness. Perfect for those who want salon-level results with speed and control.",
+    benefits: ["Titanium/Ceramic plates", "Heats up quickly", "High heat efficiency for faster styling", "Long-lasting sleekness with salon-level results"],
     usage: "Plug in and heat. Section dry, clean hair. Clamp straightener close to roots and glide down to ends.",
     tag: "SALON FAVORITE",
     sizes: [
