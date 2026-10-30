@@ -13,13 +13,14 @@ export async function generateMetadata({ params }) {
     if (docSnap.exists()) {
       const blog = docSnap.data();
       return {
-        title: `${blog.title} | Sayona Beauty Journal`,
+        title: blog.title,
+        alternates: { canonical: `/blog/${id}` },
         description: blog.excerpt || "Read our latest article on Sayona Cosmetics.",
         openGraph: {
           title: blog.title,
           description: blog.excerpt,
           type: "article",
-          url: `https://sayonacosmetics.com/blog/${id}`,
+          url: `https://www.sayonacosmetics.com/blog/${id}`,
           images: blog.image ? [{ url: blog.image }] : [
             {
               url: "/SayonaCosmeticsLogo.png",
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }) {
     console.error("Error generating metadata:", e);
   }
   return {
-    title: "Sayona Beauty Blog",
+    title: "Hair Care Blog",
     description: "Read our latest beauty and hair care articles."
   };
 }

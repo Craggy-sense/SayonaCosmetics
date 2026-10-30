@@ -91,7 +91,7 @@ export default function BlogListingClient({ initialBlogs = [] }) {
           <div className="blog-empty-state">
             <span className="blog-empty-icon">📝</span>
             <h3>No Articles Found</h3>
-            <p>We couldn't find any articles matching your search query or selected category. Try checking other filters or clear your search term.</p>
+            <p>We couldn&apos;t find any articles matching your search query or selected category. Try checking other filters or clear your search term.</p>
             <button 
               onClick={() => { setActiveCategory('All'); setSearchQuery(''); }}
               className="btn btn-primary"

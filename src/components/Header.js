@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCart } from './CartContext';
+import { Countdown } from './ShopUI';
+import { useNow } from '@/lib/useNow';
+import { campaignPhase, headlinePercents } from '@/data/campaign';
 
 export default function Header() {
   const { 
@@ -20,22 +23,21 @@ export default function Header() {
   
   const pathname = usePathname();
   const router = useRouter();
-  const [suggestions, setSuggestions] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const searchContainerRef = useRef(null);
+  const now = useNow();
+  const phase = campaignPhase(now);
+  const pct = headlinePercents(now);
+  const campaignOn = phase === 'before' || phase === 'november' || phase === 'weekend';
 
-  // Filter suggestions when search query or products change
-  useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setSuggestions([]);
-      return;
-    }
+  // Search suggestions are derived from the query (no extra state)
+  const suggestions = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
-    const matches = products.filter(p => 
-      p.title.toLowerCase().includes(q) || 
-      p.desc.toLowerCase().includes(q)
+    if (q === '') return [];
+    return products.filter(p =>
+      (p.title || '').toLowerCase().includes(q) ||
+      (p.desc || '').toLowerCase().includes(q)
     ).slice(0, 5);
-    setSuggestions(matches);
   }, [searchQuery, products]);
 
   // Close suggestions box when clicking outside search container
@@ -89,8 +91,13 @@ export default function Header() {
   return (
     <>
       {/* Top Announcement Bar */}
-      <div className="announcement-bar" id="announcement-bar">
-        <p>🏆 WORLD CUP GROOMING SEASON IS ON! SCORE BIG DEALS! ⚽ &nbsp;|&nbsp; {settings.announcement}</p>
+      <div className={`announcement-bar ${campaignOn ? 'is-campaign' : ''}`} id="announcement-bar">
+        <p>
+          {phase === 'before' && (<><strong>🖤 BLACK NOVEMBER</strong> starts 1 Nov — {pct.hairCare}% off all hair care &nbsp;·&nbsp; </>)}
+          {phase === 'november' && (<><strong>🖤 BLACK NOVEMBER IS LIVE</strong> — {pct.hairCare}% off hair care, {pct.appliances}% off appliances &nbsp;·&nbsp; </>)}
+          {phase === 'weekend' && (<><strong>🖤 BLACK FRIDAY WEEKEND</strong> — {pct.hairCare}% off hair care, {pct.appliances}% off appliances, ends 30 Nov &nbsp;·&nbsp; </>)}
+          <span className="ann-extra">{settings.announcement}</span>
+        </p>
       </div>
 
       {/* Two-Tier Clean Brand Header */}
@@ -112,12 +119,13 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* World Cup Season Badge */}
-            <div className="world-cup-season-badge">
-              <span className="wc-soccer">⚽</span>
-              <span className="wc-text">WORLD CUP SEASON</span>
-              <span className="wc-trophy">🏆</span>
-            </div>
+            {/* Black November campaign badge */}
+            {campaignOn && (
+              <button type="button" className="campaign-badge" onClick={() => handleCategoryClick('offers')} aria-label="Shop Black November deals">
+                <span className="campaign-badge-title">BLACK NOVEMBER</span>
+                <span className="campaign-badge-sub"><Countdown variant="inline" /></span>
+              </button>
+            )}
 
             {/* Central Search Wrapper */}
             <div className="search-wrapper" ref={searchContainerRef}>
@@ -203,9 +211,9 @@ export default function Header() {
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('offers')}
-                    className={pathname === '/' && activeCategory === 'offers' ? 'active' : ''}
+                    className={`nav-deals ${pathname === '/' && activeCategory === 'offers' ? 'active' : ''}`}
                   >
-                    Offers
+                    {campaignOn ? '🖤 Black November Deals' : 'Offers'}
                   </button>
                 </li>
                 <li>
@@ -227,21 +235,12 @@ export default function Header() {
                   </button>
                 </li>
                 <li>
-                  <button 
-                    type="button" 
-                    onClick={() => handleCategoryClick('clearance')}
-                    className={pathname === '/' && activeCategory === 'clearance' ? 'active' : ''}
-                  >
-                    Clearance
-                  </button>
-                </li>
-                <li>
                   <a 
                     href="https://gifthaus.netlify.app" 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
-                    Perfumes 🌸
+                    Perfumes <span className="ext-arrow" aria-label="opens Gift Haus in a new tab">↗</span>
                   </a>
                 </li>
                 <li className="nav-separator">|</li>

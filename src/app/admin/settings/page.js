@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useCart } from '@/components/CartContext';
@@ -20,18 +20,18 @@ export default function AdminSettingsPage() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
-  useEffect(() => {
-    // Populate form states from context settings initially
-    if (settings) {
-      setAnnouncement(settings.announcement || '');
-      setWhatsappNumber(settings.whatsappNumber || '');
-      setHeroTitle(settings.heroTitle || '');
-      setHeroDesc(settings.heroDesc || '');
-      setAboutStory(settings.aboutStory || '');
-      setPhone(settings.phone || '');
-      setEmail(settings.email || '');
-    }
-  }, [settings]);
+  // Populate form states whenever the loaded settings change (adjust-state-during-render pattern, no effect needed)
+  const [syncedSettings, setSyncedSettings] = useState(null);
+  if (settings && settings !== syncedSettings) {
+    setSyncedSettings(settings);
+    setAnnouncement(settings.announcement || '');
+    setWhatsappNumber(settings.whatsappNumber || '');
+    setHeroTitle(settings.heroTitle || '');
+    setHeroDesc(settings.heroDesc || '');
+    setAboutStory(settings.aboutStory || '');
+    setPhone(settings.phone || '');
+    setEmail(settings.email || '');
+  }
 
   const handleSaveSettings = async (e) => {
     e.preventDefault();
@@ -127,7 +127,7 @@ export default function AdminSettingsPage() {
                 placeholder="e.g. 254745807623"
               />
               <small style={{ color: 'rgba(31, 27, 28, 0.5)', fontSize: '0.8rem', marginTop: '2px' }}>
-                Must include country code without "+" (e.g. 254 for Kenya).
+                Must include country code without &ldquo;+&rdquo; (e.g. 254 for Kenya).
               </small>
             </div>
           </div>

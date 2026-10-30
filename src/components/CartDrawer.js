@@ -44,7 +44,8 @@ export default function CartDrawer() {
     let listStr = "";
     cart.forEach((item, idx) => {
       const rowCost = item.price * item.qty;
-      listStr += `${idx + 1}. *${item.title}* (${item.size})\n   Qty: ${item.qty} x KSh ${formatPrice(item.price)} = *KSh ${formatPrice(rowCost)}*\n\n`;
+      const dealNote = item.rrp && item.rrp > item.price ? ` _(Black November price, was KSh ${formatPrice(item.rrp)})_` : '';
+      listStr += `${idx + 1}. *${item.title}* (${item.size})\n   Qty: ${item.qty} x KSh ${formatPrice(item.price)}${dealNote} = *KSh ${formatPrice(rowCost)}*\n\n`;
     });
 
     const limit = 3000;
@@ -60,7 +61,7 @@ export default function CartDrawer() {
     text += `${listStr}`;
     text += `--------------------------------------\n`;
     text += `Subtotal: KSh ${formatPrice(cartSubtotal)}\n`;
-    text += `Delivery Fee: ${isFree ? '*FREE (Nairobi)*' : 'Standard Rate (Country-wide)'}\n`;
+    text += `Delivery: ${isFree ? '*FREE within Nairobi* (courier fee confirmed for upcountry)' : 'Fee confirmed by our team based on your location'}\n`;
     text += `*TOTAL ORDER VALUE: ${isFree ? `KSh ${formatPrice(total)}` : `KSh ${formatPrice(cartSubtotal)} + Standard Delivery`}*\n\n`;
     text += `--------------------------------------\n`;
     text += `📞 *DELIVERY INFORMATION:*\n`;

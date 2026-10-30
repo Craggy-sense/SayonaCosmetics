@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '@/components/CartContext';
 import ProductCard from '@/components/ProductCard';
+import { Countdown } from '@/components/ShopUI';
+import { useNow } from '@/lib/useNow';
+import { CAMPAIGN, campaignPhase, dealPrice, formatKsh, headlinePercents, isComingSoon } from '@/data/campaign';
 
 export default function ShopPage() {
   const { 
@@ -17,67 +20,78 @@ export default function ShopPage() {
   } = useCart();
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const now = useNow();
+  const phase = campaignPhase(now);
+  const pct = headlinePercents(now);
+  const weekendPct = CAMPAIGN.discounts.weekend;
+  const live = phase === 'november' || phase === 'weekend';
+  const campaignOn = live || phase === 'before' || phase === null;
+  const hc = pct.hairCare;
+  const ap = pct.appliances;
+  const priceLabel = live ? 'Deal price' : 'Black November price from 1 Nov';
 
-  const slides = [
+  const goToCategory = (cat) => {
+    setActiveCategory(cat);
+    const catalog = document.getElementById('catalogue');
+    if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const alertsUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent('Hi Sayona Cosmetics! Please add me to your Black November deal alerts.')}`;
+
+  const campaignSlides = [
     {
-      tag: "🏆 WORLD CUP 2026 SPECIAL 🏆",
-      title: "CHAMPIONSHIP GROOMING ⚽",
-      subtitle: "Score big with KSh 700 off on our Pro-Clipper Series. Get the sharp, match-day fade like the pros.",
-      image: "/world_cup_grooming.png",
-      oldPrice: "KSh 3,500",
-      price: "KSh 2,800",
-      stars: "★★★★★",
-      ratingVal: "4.8 (114 reviews)",
-      buttonText: "Claim Clipper Deal",
-      action: () => {
-        setActiveCategory('appliances');
-        const catalog = document.getElementById('catalogue');
-        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-      },
-      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
+      key: 'black-november',
+      tag: phase === 'before' || phase === null ? 'STARTS 1 NOVEMBER' : phase === 'weekend' ? 'BLACK FRIDAY WEEKEND · LIVE' : 'LIVE ALL NOVEMBER',
+      title: phase === 'weekend' ? 'Black Friday Weekend' : 'Black November',
+      subtitle: phase === 'weekend'
+        ? `${hc}% off every Sayona hair-care formula and ${ap}% off pro appliances — this weekend only, until 30 November.`
+        : `${hc}% off every Sayona shampoo, conditioner, treatment and styling formula — all month. ${ap}% off pro appliances. Black Friday Weekend (27–30 Nov) goes deeper: up to ${weekendPct.hairCare}% off.`,
+      images: ['/product-images/argan-shampoo.jpg', '/product-images/olive-leave-in.jpg', '/product-images/argan-hair-food.jpg', '/product-images/protein-treatment.jpg'],
+      countdown: true,
+      cta: { label: live ? 'Shop the Deals' : 'Preview the Deals', onClick: () => goToCategory('offers') },
+      secondary: { label: 'Get deal alerts on WhatsApp', href: alertsUrl },
     },
     {
-      tag: "HAIR MAINTENANCE SPECIAL",
-      title: "DEEP MOISTURE ROUTINE",
-      subtitle: "Restore your scalp's health and maintain strong, hydrated locks with our organic Argan Deep Treatment.",
-      image: "/hair_maintenance.png",
-      oldPrice: "KSh 1,500",
-      price: "KSh 950",
-      stars: "★★★★★",
-      ratingVal: "4.9 (142 reviews)",
-      buttonText: "Shop Maintenance",
-      action: () => {
-        setActiveCategory('treatments');
-        const catalog = document.getElementById('catalogue');
-        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-      },
-      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
+      key: 'wash-day',
+      tag: 'WASH DAY DUO',
+      title: 'Wash Day, Sorted',
+      subtitle: 'Argan Oil Shampoo + Coconut Oil Conditioner — cleanse, moisturise and detangle, made for African hair.',
+      images: ['/product-images/argan-shampoo.jpg', '/product-images/coconut-conditioner.jpg'],
+      price: { label: `${priceLabel} · 1 ltr each`, was: 125 + 150, now: dealPrice(125, hc) + dealPrice(150, hc) },
+      cta: { label: 'Shop Shampoo & Conditioner', onClick: () => goToCategory('shampoo-conditioner') },
     },
     {
-      tag: "BESTSELLER FORMULA",
-      title: "HERBAL SCALP POMADE",
-      subtitle: "Nourishing organic tea tree and cooling mint formula. Promotes hair growth and smooth styling.",
-      image: "/scalp_pomade.png",
-      oldPrice: "KSh 600",
-      price: "KSh 450",
-      stars: "★★★★★",
-      ratingVal: "4.9 (96 reviews)",
-      buttonText: "Shop Styling",
-      action: () => {
-        setActiveCategory('styling');
-        const catalog = document.getElementById('catalogue');
-        if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
-      },
-      deliveryText: "Same-day Nairobi <strong>Free Delivery</strong>"
-    }
+      key: 'salon',
+      tag: 'FOR SALONS & BARBERS',
+      title: 'Salon Stock-Up',
+      subtitle: 'Our 5 ltr shampoos and conditioner are built for busy salons. Stock up for the festive rush at Black November prices.',
+      images: ['/product-images/olive-shampoo.jpg'],
+      price: { label: `${priceLabel} · 5 ltr shampoo`, was: 395, now: dealPrice(395, hc) },
+      cta: { label: 'Shop Salon Sizes', onClick: () => goToCategory('shampoo-conditioner') },
+      secondary: { label: 'Bulk & distributor orders', href: '/contact#contact' },
+    },
+    {
+      key: 'blowout',
+      tag: 'PRO APPLIANCES',
+      title: 'The Pro Blowout',
+      subtitle: '2000W Sayona hair dryer with adjustable heat and speed, nozzles and comb included. Three models to choose from.',
+      images: ['/product-images/hair-dryer.jpg'],
+      price: { label: `${priceLabel} · from`, was: 4300, now: dealPrice(4300, ap) },
+      cta: { label: 'Shop Appliances', onClick: () => goToCategory('appliances') },
+    },
   ];
+  const evergreenSlides = campaignSlides.slice(1).map((sl) => ({ ...sl, price: sl.price ? { label: sl.price.label.replace(priceLabel, 'Price'), now: sl.price.was } : undefined }));
+  const slides = campaignOn ? campaignSlides : evergreenSlides;
+  const slide = slides[currentSlide % slides.length];
 
   useEffect(() => {
+    if (paused) return undefined;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 45000);
+    }, 8000);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [slides.length, paused]);
 
   // Parse search/category query params from URL (e.g. on navigation redirect)
   useEffect(() => {
@@ -110,16 +124,12 @@ export default function ShopPage() {
     // 1. Category Filter
     if (activeCategory !== 'all') {
       if (activeCategory === 'offers') {
-        const isOffer = ['argan-shampoo', 'indian-hemp-pomade', 'coconut-conditioner', 'cordless-clippers', 'deep-penetrating-treatment'].includes(prod.id) || 
-                        ['BESTSELLER', 'HOT', 'POPULAR'].includes(prod.tag);
-        if (!isOffer) return false;
+        const dealEligible = !isComingSoon(prod) && prod.inStock !== false &&
+          ['shampoo-conditioner', 'treatments', 'styling', 'appliances'].includes(prod.category);
+        if (!dealEligible) return false;
       } else if (activeCategory === 'new-arrivals') {
-        const isNew = prod.tag === 'NEW' || ['olive-shampoo', 'foam-wrap', 'cordless-clippers'].includes(prod.id);
+        const isNew = prod.tag === 'NEW' || isComingSoon(prod) || ['olive-shampoo', 'foam-wrap'].includes(prod.id);
         if (!isNew) return false;
-      } else if (activeCategory === 'clearance') {
-        const isClearance = ['straightener', 'hair-dryer', 'corded-clippers'].includes(prod.id) || 
-                            ['HEAVY DUTY', 'ELECTRONIC'].includes(prod.tag);
-        if (!isClearance) return false;
       } else if (prod.category !== activeCategory) {
         return false;
       }
@@ -127,8 +137,8 @@ export default function ShopPage() {
     // 2. Search Query Filter
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase().trim();
-      const matchTitle = prod.title.toLowerCase().includes(q);
-      const matchDesc = prod.desc.toLowerCase().includes(q);
+      const matchTitle = (prod.title || '').toLowerCase().includes(q);
+      const matchDesc = (prod.desc || '').toLowerCase().includes(q);
       if (!matchTitle && !matchDesc) {
         return false;
       }
@@ -147,7 +157,7 @@ export default function ShopPage() {
     } else if (sortBy === 'alphabetical') {
       return a.title.localeCompare(b.title);
     }
-    return 0; // default sorting (preserve order)
+    return Number(isComingSoon(a)) - Number(isComingSoon(b)); // default: keep order, coming-soon last
   });
 
   const getCategoryLabel = (cat) => {
@@ -156,9 +166,8 @@ export default function ShopPage() {
       "treatments": "Hair Treatment",
       "styling": "Hair Styling",
       "appliances": "Appliance & Tool",
-      "offers": "Offers",
-      "new-arrivals": "New Arrivals",
-      "clearance": "Clearance"
+      "offers": "Black November Deals",
+      "new-arrivals": "New Arrivals"
     };
     if (mapping[cat]) return mapping[cat];
     if (!cat || cat === 'all') return "All Categories";
@@ -172,8 +181,7 @@ export default function ShopPage() {
       "styling": "👑",
       "appliances": "✂️",
       "offers": "🔥",
-      "new-arrivals": "✨",
-      "clearance": "🏷️"
+      "new-arrivals": "✨"
     };
     return mapping[cat] || "✨";
   };
@@ -268,7 +276,7 @@ export default function ShopPage() {
                   rel="noopener noreferrer"
                   className="sidebar-item"
                 >
-                  <span className="item-label">🌸 Perfumes</span>
+                  <span className="item-label">🌸 Perfumes <small className="ext-note">Gift Haus ↗</small></span>
                   <span className="item-arrow">&rsaquo;</span>
                 </a>
                 <button 
@@ -286,88 +294,93 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Right Column: Wide Showcase Banner Slider */}
+          {/* Right Column: Campaign Showcase Slider */}
           <div className="hero-banner-col">
-            <div className="wide-showcase-card">
-              {/* Fade content wrapper */}
-              <div className="showcase-card-content" key={currentSlide}>
-                {/* Left side text info */}
+            <div
+              className={`wide-showcase-card ${campaignOn ? 'theme-black' : ''}`}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              <div className="showcase-card-content" key={slide.key}>
                 <div className="showcase-card-left">
                   <div className="showcase-sponsor-logos">
                     <span className="sponsor-brand">SAYONA</span>
                     <div className="sponsor-divider" />
-                    <span className="sponsor-tag">OFFICIAL DEAL</span>
+                    <span className="sponsor-tag">{campaignOn ? 'BLACK NOVEMBER' : 'FEATURED'}</span>
                   </div>
-                  <span className="showcase-tag">{slides[currentSlide].tag}</span>
-                  <h2 className="showcase-title">{slides[currentSlide].title}</h2>
-                  <p className="showcase-subtitle">{slides[currentSlide].subtitle}</p>
-                  
-                  <div className="showcase-price-row">
-                    <span className="showcase-old-price">{slides[currentSlide].oldPrice}</span>
-                    <span className="showcase-price">{slides[currentSlide].price}</span>
-                  </div>
-                  
-                  <div className="showcase-rating">
-                    <span className="stars">{slides[currentSlide].stars}</span>
-                    <span className="rating-val">{slides[currentSlide].ratingVal}</span>
-                  </div>
-                  
-                  <div className="showcase-actions-row">
-                    <button 
-                      type="button" 
-                      className="btn btn-primary showcase-buy-btn" 
-                      onClick={slides[currentSlide].action}
-                    >
-                      {slides[currentSlide].buttonText}
-                    </button>
-                    
-                    <div className="delivery-pill">
-                      <span className="delivery-icon">🚚</span>
-                      <span className="delivery-text" dangerouslySetInnerHTML={{ __html: slides[currentSlide].deliveryText }}></span>
+                  <span className="showcase-tag">{slide.tag}</span>
+                  <h2 className="showcase-title">{slide.title}</h2>
+                  <p className="showcase-subtitle">{slide.subtitle}</p>
+
+                  {slide.countdown && <Countdown />}
+
+                  {slide.price && (
+                    <div className="showcase-price-block">
+                      <span className="showcase-price-label">{slide.price.label}</span>
+                      <div className="showcase-price-row">
+                        {slide.price.was && slide.price.was !== slide.price.now && (
+                          <span className="showcase-old-price">{formatKsh(slide.price.was)}</span>
+                        )}
+                        <span className="showcase-price">{formatKsh(slide.price.now)}</span>
+                      </div>
                     </div>
+                  )}
+
+                  <div className="showcase-actions-row">
+                    <button type="button" className="btn btn-primary showcase-buy-btn" onClick={slide.cta.onClick}>
+                      {slide.cta.label}
+                    </button>
+                    {slide.secondary ? (
+                      <a
+                        className="showcase-secondary-link"
+                        href={slide.secondary.href}
+                        {...(slide.secondary.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      >
+                        {slide.secondary.label} →
+                      </a>
+                    ) : (
+                      <div className="delivery-pill">
+                        <span className="delivery-icon">🚚</span>
+                        <span className="delivery-text">Free Nairobi delivery over <strong>KSh 3,000</strong></span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                {/* Right side banner image */}
-                {slides[currentSlide].image && (
-                  <div className="showcase-card-right">
-                    <img 
-                      src={slides[currentSlide].image} 
-                      alt={slides[currentSlide].title} 
-                      className="showcase-wide-img" 
-                    />
-                  </div>
-                )}
+                <div className={`showcase-card-right showcase-collage count-${slide.images.length}`}>
+                  {slide.images.map((src) => (
+                    <div className="collage-tile" key={src}>
+                      <img src={src} alt="" className="showcase-wide-img" />
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Slider Navigation Controls */}
               <div className="slider-nav">
-                <button 
-                  type="button" 
-                  className="slider-arrow prev" 
+                <button
+                  type="button"
+                  className="slider-arrow prev"
                   onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-                  aria-label="Previous Slide"
+                  aria-label="Previous slide"
                 >
                   ‹
                 </button>
-                
                 <div className="slider-dots">
-                  {slides.map((_, idx) => (
+                  {slides.map((sl, idx) => (
                     <button
-                      key={idx}
+                      key={sl.key}
                       type="button"
-                      className={`slider-dot ${idx === currentSlide ? 'active' : ''}`}
+                      className={`slider-dot ${idx === currentSlide % slides.length ? 'active' : ''}`}
                       onClick={() => setCurrentSlide(idx)}
-                      aria-label={`Go to slide ${idx + 1}`}
+                      aria-label={`Go to slide ${idx + 1}: ${sl.title}`}
                     />
                   ))}
                 </div>
-
-                <button 
-                  type="button" 
-                  className="slider-arrow next" 
+                <button
+                  type="button"
+                  className="slider-arrow next"
                   onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-                  aria-label="Next Slide"
+                  aria-label="Next slide"
                 >
                   ›
                 </button>
@@ -376,7 +389,7 @@ export default function ShopPage() {
           </div>
         </div>
       </section>
- 
+
       {/* Value Propositions */}
       <section className="value-props" id="value-props">
         <div className="container">
@@ -404,8 +417,12 @@ export default function ShopPage() {
       <section className="catalogue-section" id="catalogue">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">The Beauty Collection</h2>
-            <p className="section-subtitle">Discover our premium formulas and professional tools designed to manifest your ultimate hair goals.</p>
+            <span className="section-eyebrow">The Sayona Collection</span>
+            <h1 className="section-title">Hair Care &amp; Styling Made for African Hair</h1>
+            <p className="section-subtitle">
+              Shampoos, conditioners, deep treatments, anti-dandruff pomades, dreadlock wax and professional
+              appliances — enriched with argan, olive and coconut oils, made in Kenya and delivered across the country.
+            </p>
           </div>
 
           {/* Filter Controls */}
@@ -464,7 +481,7 @@ export default function ShopPage() {
                 )}
                 {searchQuery.trim() !== '' && (
                   <div className="active-filter-badge">
-                    <span>Search: "{searchQuery}"</span>
+                    <span>Search: &ldquo;{searchQuery}&rdquo;</span>
                     <button type="button" className="remove-filter-btn" onClick={() => setSearchQuery('')}>✕</button>
                   </div>
                 )}
@@ -501,6 +518,51 @@ export default function ShopPage() {
               </button>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Fragrance partner band — Gift Haus stays its own shop */}
+      <section className="fragrance-band" aria-labelledby="fragrance-title">
+        <div className="container fragrance-inner">
+          <div className="fragrance-copy">
+            <span className="section-eyebrow">Complete the look</span>
+            <h2 id="fragrance-title">Fragrance &amp; Gift Sets at Gift Haus</h2>
+            <p>
+              Finish your routine with a signature scent. Our perfumes live at Gift Haus — perfect gifting for
+              the festive season.
+            </p>
+            <a className="btn btn-primary" href="https://gifthaus.netlify.app" target="_blank" rel="noopener noreferrer">
+              Shop Perfumes at Gift Haus ↗
+            </a>
+            <small className="fragrance-note">Opens Gift Haus in a new tab. Perfume orders are placed there.</small>
+          </div>
+          <div className="fragrance-art" aria-hidden="true">
+            <span className="bottle b1" />
+            <span className="bottle b2" />
+            <span className="bottle b3" />
+          </div>
+        </div>
+      </section>
+
+      {/* SEO / trust copy */}
+      <section className="seo-copy">
+        <div className="container seo-copy-grid">
+          <div>
+            <h2>Why Sayona hair care?</h2>
+            <p>
+              Sayona Cosmetics formulates hair care for the needs of African hair textures — natural, relaxed, locs and
+              coils. Our Argan Oil and Olive Oil shampoos cleanse without stripping, the Coconut Oil conditioner restores
+              moisture and elasticity, and treatments like Hair Protein, Cholesterol and Deep Penetrating Treatment help
+              repair dry, damaged hair.
+            </p>
+          </div>
+          <div>
+            <h2>Delivery across Kenya</h2>
+            <p>
+              Order online or on WhatsApp. We offer free delivery within Nairobi on orders above KSh 3,000 and
+              countrywide courier delivery. Read our <a href="/delivery-returns">Delivery &amp; Returns policy</a>.
+            </p>
+          </div>
         </div>
       </section>
     </div>

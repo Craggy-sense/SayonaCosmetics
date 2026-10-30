@@ -41,6 +41,21 @@ const SAMPLE_BLOGS = [
   }
 ];
 
+async function fetchBlogs() {
+  const querySnapshot = await getDocs(collection(db, 'blogs'));
+  const loaded = [];
+  querySnapshot.forEach((doc) => {
+    loaded.push({ id: doc.id, ...doc.data() });
+  });
+  // Sort client-side by date descending
+  loaded.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return loaded;
+}
+
+function uniqueStoragePath(folder, fileName) {
+  return `${folder}/${Date.now()}_${fileName}`;
+}
+
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,14 +80,7 @@ export default function AdminBlogsPage() {
   const loadBlogs = async () => {
     try {
       setLoading(true);
-      const querySnapshot = await getDocs(collection(db, 'blogs'));
-      const loaded = [];
-      querySnapshot.forEach((doc) => {
-        loaded.push({ id: doc.id, ...doc.data() });
-      });
-      // Sort client-side by date descending
-      loaded.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setBlogs(loaded);
+      setBlogs(await fetchBlogs());
     } catch (e) {
       console.error('Error fetching blogs:', e);
     } finally {
@@ -80,8 +88,14 @@ export default function AdminBlogsPage() {
     }
   };
 
+  // Initial load: state is only set inside the async callbacks.
   useEffect(() => {
-    loadBlogs();
+    let active = true;
+    fetchBlogs()
+      .then((loaded) => { if (active) setBlogs(loaded); })
+      .catch((e) => console.error('Error fetching blogs:', e))
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const openAddModal = () => {
@@ -178,7 +192,7 @@ export default function AdminBlogsPage() {
       let finalImageUrl = imageUrl;
 
       if (imageFile) {
-        const fileRef = ref(storage, `blogs/${Date.now()}_${imageFile.name}`);
+        const fileRef = ref(storage, uniqueStoragePath('blogs', imageFile.name));
         const snapshot = await uploadBytes(fileRef, imageFile);
         finalImageUrl = await getDownloadURL(snapshot.ref);
       }
@@ -609,7 +623,7 @@ export default function AdminBlogsPage() {
                       onChange={(e) => setFocusKeyword(e.target.value)}
                     />
                     <span style={{ fontSize: '0.8rem', color: 'rgba(31, 27, 28, 0.6)', marginTop: '4px', display: 'block' }}>
-                      Define a primary search term to audit this post's optimization levels.
+                      Define a primary search term to audit this post&apos;s optimization levels.
                     </span>
                   </div>
 

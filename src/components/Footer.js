@@ -82,7 +82,8 @@ export default function Footer() {
               <li><Link href="/blog">Our Beauty Blog</Link></li>
               <li><Link href="/contact">Contact Support</Link></li>
               <li><Link href="/contact#contact">Bulk Distributor Orders</Link></li>
-              <li><Link href="/#announcement-bar">Delivery &amp; Returns</Link></li>
+              <li><Link href="/delivery-returns">Delivery &amp; Returns</Link></li>
+              <li><a href="https://gifthaus.netlify.app" target="_blank" rel="noopener noreferrer">Perfumes at Gift Haus ↗</a></li>
             </ul>
           </div>
 

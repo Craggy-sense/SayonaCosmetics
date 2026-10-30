@@ -1,10 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { db, storage } from '@/lib/firebase';
 import { collection, getDocs, doc, addDoc, updateDoc, deleteDoc, writeBatch } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FALLBACK_PRODUCTS } from '@/data/products';
+
+function getCategoryName(cat) {
+  const mapping = {
+    "shampoo-conditioner": "Shampoo & Conditioner",
+    "treatments": "Hair Treatment",
+    "styling": "Hair Styling",
+    "appliances": "Appliance & Tool"
+  };
+  if (mapping[cat]) return mapping[cat];
+  if (!cat) return "Cosmetics";
+  return cat.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([]);
@@ -24,31 +36,28 @@ export default function AdminProductsPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [sizes, setSizes] = useState([{ size: '', price: '' }]);
   const [inStock, setInStock] = useState(true);
-  const [imagePreview, setImagePreview] = useState('');
-  
-  const [categoriesList, setCategoriesList] = useState([
-    { slug: 'shampoo-conditioner', label: 'Shampoo & Conditioner' },
-    { slug: 'treatments', label: 'Hair Treatment' },
-    { slug: 'styling', label: 'Hair Styling' },
-    { slug: 'appliances', label: 'Appliance & Tool' }
-  ]);
+  const [comingSoon, setComingSoon] = useState(false);
   const [isAddingNewCat, setIsAddingNewCat] = useState(false);
   const [newCatName, setNewCatName] = useState('');
   
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  const fetchProducts = async () => {
+    const querySnapshot = await getDocs(collection(db, 'products'));
+    const loaded = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      // Firestore doc ID must win over any stored `id` field, otherwise edit/delete target the wrong document.
+      loaded.push({ ...data, id: doc.id, catalogId: data.id || null });
+    });
+    return loaded;
+  };
+
   const loadProducts = async () => {
     try {
       setLoading(true);
-      const querySnapshot = await getDocs(collection(db, 'products'));
-      const loaded = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        // Firestore doc ID must win over any stored `id` field, otherwise edit/delete target the wrong document.
-        loaded.push({ ...data, id: doc.id, catalogId: data.id || null });
-      });
-      setProducts(loaded);
+      setProducts(await fetchProducts());
     } catch (e) {
       console.error('Error fetching products:', e);
     } finally {
@@ -56,43 +65,37 @@ export default function AdminProductsPage() {
     }
   };
 
+  // Initial load: state is only set inside the async callbacks.
   useEffect(() => {
-    loadProducts();
+    let active = true;
+    fetchProducts()
+      .then((loaded) => { if (active) setProducts(loaded); })
+      .catch((e) => console.error('Error fetching products:', e))
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, []);
 
-  useEffect(() => {
-    if (products.length > 0) {
-      const defaultSlugs = ['shampoo-conditioner', 'treatments', 'styling', 'appliances'];
-      const customCats = [];
-      products.forEach(p => {
-        if (p.category && !defaultSlugs.includes(p.category) && !customCats.some(c => c.slug === p.category)) {
-          customCats.push({
-            slug: p.category,
-            label: getCategoryName(p.category)
-          });
-        }
-      });
-      setCategoriesList([
-        { slug: 'shampoo-conditioner', label: 'Shampoo & Conditioner' },
-        { slug: 'treatments', label: 'Hair Treatment' },
-        { slug: 'styling', label: 'Hair Styling' },
-        { slug: 'appliances', label: 'Appliance & Tool' },
-        ...customCats
-      ]);
-    }
+  // Category options = defaults + any custom categories already used by products (derived, not stored).
+  const categoriesList = useMemo(() => {
+    const defaults = [
+      { slug: 'shampoo-conditioner', label: 'Shampoo & Conditioner' },
+      { slug: 'treatments', label: 'Hair Treatment' },
+      { slug: 'styling', label: 'Hair Styling' },
+      { slug: 'appliances', label: 'Appliance & Tool' }
+    ];
+    const custom = [];
+    products.forEach(p => {
+      if (p.category && !defaults.some(d => d.slug === p.category) && !custom.some(c => c.slug === p.category)) {
+        custom.push({ slug: p.category, label: getCategoryName(p.category) });
+      }
+    });
+    return [...defaults, ...custom];
   }, [products]);
 
-  useEffect(() => {
-    if (imageFile) {
-      const objectUrl = URL.createObjectURL(imageFile);
-      setImagePreview(objectUrl);
-      return () => URL.revokeObjectURL(objectUrl);
-    } else if (imageUrl) {
-      setImagePreview(imageUrl);
-    } else {
-      setImagePreview('');
-    }
-  }, [imageFile, imageUrl]);
+  // Image preview: a blob URL for a newly chosen file, otherwise the saved/pasted URL.
+  const fileObjectUrl = useMemo(() => (imageFile ? URL.createObjectURL(imageFile) : ''), [imageFile]);
+  useEffect(() => () => { if (fileObjectUrl) URL.revokeObjectURL(fileObjectUrl); }, [fileObjectUrl]);
+  const imagePreview = fileObjectUrl || imageUrl;
 
   const openAddModal = () => {
     setEditingProduct(null);
@@ -106,6 +109,7 @@ export default function AdminProductsPage() {
     setImageUrl('');
     setSizes([{ size: '', price: '' }]);
     setInStock(true);
+    setComingSoon(false);
     setIsAddingNewCat(false);
     setNewCatName('');
     setError('');
@@ -124,6 +128,7 @@ export default function AdminProductsPage() {
     setImageUrl(product.image || '');
     setSizes(product.sizes && product.sizes.length > 0 ? product.sizes.map(s => ({ size: s.size, price: s.price.toString() })) : [{ size: '', price: '' }]);
     setInStock(product.inStock !== false);
+    setComingSoon(product.comingSoon === true);
     setIsAddingNewCat(false);
     setNewCatName('');
     setError('');
@@ -170,11 +175,11 @@ export default function AdminProductsPage() {
           (ex) => ex.catalogId === p.id || ex.id === p.id || titles.includes(normTitle(ex.title))
         );
         if (matches.length === 0) {
-          batch.set(doc(db, 'products', p.id), { ...p, inStock: true });
+          batch.set(doc(db, 'products', p.id), { ...p, comingSoon: p.comingSoon === true, inStock: true });
           added++;
         } else {
           matches.forEach((ex) => {
-            batch.set(doc(db, 'products', ex.id), { ...p, inStock: ex.inStock !== false }, { merge: true });
+            batch.set(doc(db, 'products', ex.id), { ...p, comingSoon: p.comingSoon === true, inStock: ex.inStock !== false }, { merge: true });
             updated++;
           });
           if (matches.length > 1) duplicates.push(`${p.title} (${matches.length} copies)`);
@@ -267,7 +272,8 @@ export default function AdminProductsPage() {
         tag: tag.trim(),
         image: finalImageUrl,
         sizes: validSizes,
-        inStock
+        inStock,
+        comingSoon
       };
 
       if (editingProduct) {
@@ -288,17 +294,6 @@ export default function AdminProductsPage() {
     }
   };
 
-  const getCategoryName = (cat) => {
-    const mapping = {
-      "shampoo-conditioner": "Shampoo & Conditioner",
-      "treatments": "Hair Treatment",
-      "styling": "Hair Styling",
-      "appliances": "Appliance & Tool"
-    };
-    if (mapping[cat]) return mapping[cat];
-    if (!cat) return "Cosmetics";
-    return cat.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  };
 
   const formatPrice = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -431,6 +426,11 @@ export default function AdminProductsPage() {
                       >
                         {product.inStock !== false ? 'In Stock' : 'Out of Stock'}
                       </span>
+                      {product.comingSoon === true && (
+                        <span style={{ fontSize: '0.75rem', fontWeight: 'bold', backgroundColor: 'rgba(212,175,55,0.15)', color: '#8a6d00', padding: '4px 8px', borderRadius: '10px', display: 'inline-block', marginLeft: '6px' }}>
+                          Coming Soon
+                        </span>
+                      )}
                     </td>
                     <td style={{ textAlign: 'right' }}>
                       <button 
@@ -554,6 +554,16 @@ export default function AdminProductsPage() {
                       style={{ width: '18px', height: '18px', accentColor: 'var(--color-primary)', cursor: 'pointer' }}
                     />
                     <span>In Stock</span>
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: '600', color: 'var(--color-primary)', marginTop: '8px' }}>
+                    <input 
+                      type="checkbox" 
+                      id="prod_comingsoon" 
+                      checked={comingSoon}
+                      onChange={(e) => setComingSoon(e.target.checked)}
+                      style={{ width: '18px', height: '18px', accentColor: 'var(--color-primary)', cursor: 'pointer' }}
+                    />
+                    <span>Coming Soon (shows a WhatsApp &ldquo;notify me&rdquo; button instead of Add to Cart)</span>
                   </label>
                 </div>
               </div>

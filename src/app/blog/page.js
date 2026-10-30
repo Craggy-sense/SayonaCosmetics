@@ -5,13 +5,14 @@ import BlogListingClient from './BlogListingClient';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: "Sayona Beauty Blog | Hair Care Secrets & Styling Tips",
+  title: "Hair Care Blog: Tips for African Hair & Styling",
+  alternates: { canonical: "/blog" },
   description: "Unlock the secrets to healthy hair growth and perfect fades. Read expert guides, product tutorials, and styling tips from Sayona Cosmetics.",
   openGraph: {
     title: "Sayona Beauty Blog | Hair Care Secrets & Styling Tips",
     description: "Unlock the secrets to healthy hair growth and perfect fades. Read expert guides, product tutorials, and styling tips from Sayona Cosmetics.",
     type: "website",
-    url: "https://sayonacosmetics.com/blog",
+    url: "https://www.sayonacosmetics.com/blog",
     images: [
       {
         url: "/SayonaCosmeticsLogo.png",

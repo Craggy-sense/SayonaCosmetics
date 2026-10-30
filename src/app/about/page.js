@@ -124,7 +124,7 @@ export default function AboutPage() {
                 Nairobi CBD Outlet
               </h3>
               <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "rgba(31, 27, 28, 0.8)", marginBottom: "20px" }}>
-                Conveniently located in Nairobi's Central Business District along Koinange Street, perfect for quick pick-ups and professional retail support.
+                Conveniently located in Nairobi&apos;s Central Business District along Koinange Street, perfect for quick pick-ups and professional retail support.
               </p>
               <ul style={{ listStyle: "none", padding: 0, fontSize: "0.9rem", color: "rgba(31, 27, 28, 0.7)", display: "flex", flexDirection: "column", gap: "8px" }}>
                 <li>📍 Koinange Street, Central Business District, Nairobi</li>

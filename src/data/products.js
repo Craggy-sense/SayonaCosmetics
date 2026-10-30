@@ -184,14 +184,16 @@ export const FALLBACK_PRODUCTS = [
   {
     id: "hair-dryer",
     image: "/product-images/hair-dryer.jpg",
-    title: "Sayona Professional Gold Hair Dryer",
+    title: "Sayona Professional Hair Dryer",
     category: "appliances",
-    desc: "Experience effortless styling with this 2000W hair dryer. Adjustable speeds and heat settings, an ergonomic soft-grip handle, and included nozzles and comb make achieving salon-quality hair at home simple and precise. Available in models SY-300, SY-800 and SY-1000 Gold.",
+    desc: "Experience effortless styling with this 2000W hair dryer. Adjustable speeds and heat settings, an ergonomic soft-grip handle, and included nozzles and comb make achieving salon-quality hair at home simple and precise. Available in three models: SY-300 Gold, SY-800 and SY-1000.",
     benefits: ["2000W power", "Adjustable speed and heat settings", "Ergonomic soft-grip handle", "Nozzles and comb included"],
     usage: "Select nozzle/comb attachment. Adjust heat and speed. Blow dry sections maintaining safe styling distance.",
     tag: "ELECTRONIC",
     sizes: [
-      { size: "Standard (SY-300 Gold)", price: 4500 }
+      { size: "SY-300 Gold", price: 4500 },
+      { size: "SY-800", price: 4400 },
+      { size: "SY-1000", price: 4300 }
     ]
   },
   {
@@ -202,7 +204,8 @@ export const FALLBACK_PRODUCTS = [
     desc: "Achieve sharp, even cuts with this cordless hair clipper (model SC-9308). Comfortable and easy to handle, it trims smoothly without snagging, giving you barbershop-quality results at home.",
     benefits: ["Cordless for easy handling", "Sharp, even cuts without snagging", "Barbershop-quality results at home", "Model SC-9308 with charging stand"],
     usage: "Ensure blades are clean and oiled. Select guide comb length. Power on and trim against hair growth.",
-    tag: "BARBER CHOICE",
+    tag: "COMING SOON",
+    comingSoon: true,
     sizes: [
       { size: "Model SC-9308", price: 3800 }
     ]
@@ -215,7 +218,8 @@ export const FALLBACK_PRODUCTS = [
     desc: "Get neat, even cuts with these corded hair clippers. Comfortable and easy to use, they deliver precise results at home, keeping you looking sharp without a trip to the barber. Available as the SBC-9210 Balding Clipper and the SH-9211.",
     benefits: ["Neat, even cuts", "Comfortable and easy to use", "Precise results at home", "Models SBC-9210 (Balding) and SH-9211"],
     usage: "Plug into power. Apply blade oil. Adjust taper lever and execute close cuts.",
-    tag: "HEAVY DUTY",
+    tag: "COMING SOON",
+    comingSoon: true,
     sizes: [
       { size: "Model SBC-9210", price: 3200 }
     ]

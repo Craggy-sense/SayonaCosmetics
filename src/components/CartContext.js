@@ -1,20 +1,54 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useSyncExternalStore } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { FALLBACK_PRODUCTS } from '@/data/products';
 
 const CartContext = createContext();
 
+// ── Cart store backed by localStorage (server render sees an empty cart; syncs across tabs) ──
+const CART_KEY = 'sayona_cart';
+const EMPTY_CART = [];
+let cachedRaw = null;
+let cachedCart = EMPTY_CART;
+const cartListeners = new Set();
+
+function readCart() {
+  let raw = null;
+  try { raw = window.localStorage.getItem(CART_KEY); } catch { raw = null; }
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+    try { cachedCart = raw ? JSON.parse(raw) : EMPTY_CART; } catch { cachedCart = EMPTY_CART; }
+    if (!Array.isArray(cachedCart)) cachedCart = EMPTY_CART;
+  }
+  return cachedCart;
+}
+
+function subscribeCart(callback) {
+  cartListeners.add(callback);
+  const onStorage = (e) => { if (e.key === CART_KEY) callback(); };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    cartListeners.delete(callback);
+    window.removeEventListener('storage', onStorage);
+  };
+}
+
+function writeCart(newCart) {
+  try { window.localStorage.setItem(CART_KEY, JSON.stringify(newCart)); } catch (e) { console.error('Could not save cart:', e); }
+  cartListeners.forEach((l) => l());
+}
+
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const cart = useSyncExternalStore(subscribeCart, readCart, () => EMPTY_CART);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('default');
-  const [products, setProducts] = useState([]); // Loaded from Firebase or Fallback
+  // Start from the catalogue so the server-rendered HTML lists every product (SEO); Firestore data replaces it on load.
+  const [products, setProducts] = useState(FALLBACK_PRODUCTS);
   const [settings, setSettings] = useState({
     announcement: "🚚 Free delivery across Nairobi on orders above KSh 3,000! Country-wide courier service available.",
     whatsappNumber: "254745807623",
@@ -64,33 +98,18 @@ export function CartProvider({ children }) {
     fetchSettings();
   }, []);
 
-  // Load cart from localStorage on client-side mount
-  useEffect(() => {
-    const storedCart = localStorage.getItem('sayona_cart');
-    if (storedCart) {
-      try {
-        setCart(JSON.parse(storedCart));
-      } catch (e) {
-        console.error('Error parsing stored cart:', e);
-        setCart([]);
-      }
-    }
-  }, []);
-
   // Save cart to localStorage whenever it changes
-  const saveCart = (newCart) => {
-    setCart(newCart);
-    localStorage.setItem('sayona_cart', JSON.stringify(newCart));
-  };
+  const saveCart = (newCart) => writeCart(newCart);
 
   const addToCart = (product, size, qty) => {
     const existingIdx = cart.findIndex(
       (item) => item.id === product.id && item.size === size.size
     );
 
-    let newCart = [...cart];
+    let newCart = cart.map((item) => ({ ...item }));
     if (existingIdx !== -1) {
       newCart[existingIdx].qty += qty;
+      newCart[existingIdx].price = size.price;
     } else {
       newCart.push({
         id: product.id,
@@ -99,6 +118,7 @@ export function CartProvider({ children }) {
         image: product.image || "",
         size: size.size,
         price: size.price,
+        rrp: size.rrp || size.price,
         qty: qty,
       });
     }
@@ -109,7 +129,7 @@ export function CartProvider({ children }) {
   const updateQty = (id, sizeName, delta) => {
     const idx = cart.findIndex((item) => item.id === id && item.size === sizeName);
     if (idx !== -1) {
-      let newCart = [...cart];
+      let newCart = cart.map((item) => ({ ...item }));
       newCart[idx].qty += delta;
       if (newCart[idx].qty <= 0) {
         newCart.splice(idx, 1);

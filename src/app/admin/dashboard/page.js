@@ -146,7 +146,7 @@ export default function AdminDashboard() {
           <div className="admin-table-container">
             {filteredOrders.length === 0 ? (
               <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(31, 27, 28, 0.5)' }}>
-                No checkout logs found matching "{searchQuery}"
+                No checkout logs found matching &ldquo;{searchQuery}&rdquo;
               </div>
             ) : (
               <table className="admin-table">
