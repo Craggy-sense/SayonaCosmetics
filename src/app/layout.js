@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductModal from "@/components/ProductModal";
 import { SITE, absoluteUrl } from "@/lib/site";
+import Analytics from "@/components/Analytics";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -105,6 +106,7 @@ export default function RootLayout({ children }) {
           <ProductModal />
           <Footer />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );

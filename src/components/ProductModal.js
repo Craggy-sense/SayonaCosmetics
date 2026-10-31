@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { track } from '@/lib/track';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCart } from './CartContext';
@@ -22,6 +23,11 @@ function ModalContent({ product }) {
   const { setSelectedProduct } = useCart();
   const [sizeIdx, setSizeIdx] = useState(() => product.initialSize ?? defaultSizeIdx(product));
   const close = () => setSelectedProduct(null);
+
+  useEffect(() => {
+    const s = product.sizes?.[defaultSizeIdx(product)];
+    track('view_item', { value: s?.price || 0, items: [{ id: product.id, title: product.title, size: s?.size, price: s?.price || 0 }] });
+  }, [product]);
 
   return (
     <div className="product-modal-wrapper" onClick={close}>

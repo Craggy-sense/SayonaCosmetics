@@ -1,6 +1,8 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
+import { track } from '@/lib/track';
+import { DELIVERY_ZONES, FREE_DELIVERY_FROM, deliveryFor } from '@/data/delivery';
 import { usePathname } from 'next/navigation';
 import { useCart } from './CartContext';
 import { db } from '@/lib/firebase';
@@ -19,6 +21,9 @@ export default function CartDrawer() {
   } = useCart();
 
   const pathname = usePathname();
+  const [zoneId, setZoneId] = useState(DELIVERY_ZONES[0].id);
+  const delivery = deliveryFor(zoneId, cartSubtotal);
+  const orderTotal = cartSubtotal + delivery.fee;
 
   if (pathname.startsWith('/admin')) return null;
 
@@ -48,10 +53,6 @@ export default function CartDrawer() {
       listStr += `${idx + 1}. *${item.title}* (${item.size})\n   Qty: ${item.qty} x KSh ${formatPrice(item.price)}${dealNote} = *KSh ${formatPrice(rowCost)}*\n\n`;
     });
 
-    const limit = 3000;
-    const isFree = cartSubtotal >= limit;
-    const deliveryFee = isFree ? 0 : 300;
-    const total = cartSubtotal + deliveryFee;
     const dateStr = new Date().toLocaleString("en-KE", { timeZone: "Africa/Nairobi" });
 
     let text = `*NEW ORDER - SAYONA COSMETICS STOREFRONT*\n`;
@@ -61,8 +62,8 @@ export default function CartDrawer() {
     text += `${listStr}`;
     text += `--------------------------------------\n`;
     text += `Subtotal: KSh ${formatPrice(cartSubtotal)}\n`;
-    text += `Delivery: ${isFree ? '*FREE within Nairobi* (courier fee confirmed for upcountry)' : 'Fee confirmed by our team based on your location'}\n`;
-    text += `*TOTAL ORDER VALUE: ${isFree ? `KSh ${formatPrice(total)}` : `KSh ${formatPrice(cartSubtotal)} + Standard Delivery`}*\n\n`;
+    text += `Delivery (${delivery.zone.label}): ${delivery.free ? '*FREE*' : `KSh ${formatPrice(delivery.fee)}`}\n`;
+    text += `*TOTAL: KSh ${formatPrice(orderTotal)}*\n\n`;
     text += `--------------------------------------\n`;
     text += `📞 *DELIVERY INFORMATION:*\n`;
     text += `Name: [Enter Your Name]\n`;
@@ -71,6 +72,7 @@ export default function CartDrawer() {
     text += `_Please complete your contact info above and press send._`;
 
     const whatsAppUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    track('begin_checkout', { value: orderTotal, items: cart.map((i) => ({ id: i.id, title: i.title, size: i.size, price: i.price, qty: i.qty })) });
 
     // Unconditional redirect wrapped in try-catch database logger
     try {
@@ -84,8 +86,10 @@ export default function CartDrawer() {
           qty: item.qty
         })),
         subtotal: cartSubtotal,
-        totalValue: total,
-        deliveryType: isFree ? 'Free Nairobi' : 'Standard Delivery',
+        deliveryZone: delivery.zone.id,
+        deliveryFee: delivery.fee,
+        totalValue: orderTotal,
+        deliveryType: delivery.free ? `Free ${delivery.zone.label}` : delivery.zone.label,
         status: 'pending',
         createdAt: new Date().toISOString()
       });
@@ -99,7 +103,7 @@ export default function CartDrawer() {
     }
   };
 
-  const limit = 3000;
+  const limit = FREE_DELIVERY_FROM;
   const percent = Math.min((cartSubtotal / limit) * 100, 100);
   const balance = limit - cartSubtotal;
 
@@ -216,9 +220,30 @@ export default function CartDrawer() {
 
             {/* Cart Footer */}
             <div className="cart-footer">
+              <fieldset className="delivery-zones">
+                <legend>Deliver to</legend>
+                {DELIVERY_ZONES.map((z) => {
+                  const d = deliveryFor(z.id, cartSubtotal);
+                  return (
+                    <label key={z.id} className={`delivery-zone ${zoneId === z.id ? 'active' : ''}`}>
+                      <input type="radio" name="delivery-zone" value={z.id} checked={zoneId === z.id} onChange={() => setZoneId(z.id)} />
+                      <span className="dz-text"><strong>{z.label}</strong><small>{z.note}</small></span>
+                      <span className="dz-fee">{d.free ? 'FREE' : `KSh ${formatPrice(z.fee)}`}</span>
+                    </label>
+                  );
+                })}
+              </fieldset>
               <div className="subtotal-row">
                 <span className="subtotal-label">Subtotal:</span>
                 <span className="subtotal-price">KSh {formatPrice(cartSubtotal)}</span>
+              </div>
+              <div className="subtotal-row delivery-row">
+                <span className="subtotal-label">Delivery:</span>
+                <span className="subtotal-price">{delivery.free ? 'FREE' : `KSh ${formatPrice(delivery.fee)}`}</span>
+              </div>
+              <div className="subtotal-row total-row">
+                <span className="subtotal-label">Total:</span>
+                <span className="subtotal-price">KSh {formatPrice(orderTotal)}</span>
               </div>
               <p className="cart-vat-note">Prices inclusive of VAT where applicable.</p>
               

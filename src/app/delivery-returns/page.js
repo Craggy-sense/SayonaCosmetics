@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SITE } from '@/lib/site';
+import { DELIVERY_ZONES, FREE_DELIVERY_FROM } from '@/data/delivery';
 
 export const metadata = {
   title: 'Delivery & Returns',
@@ -10,7 +11,7 @@ export const metadata = {
 
 // ── Policy settings (edit here) ─────────────────────────────
 const POLICY = {
-  freeNairobiFrom: 3000,
+  freeNairobiFrom: FREE_DELIVERY_FROM,
   returnDays: 7,
   reportDamageHours: 48,
   refundWorkingDays: 5,
@@ -22,7 +23,7 @@ const ksh = (n) => 'KSh ' + n.toLocaleString('en-KE');
 const FAQS = [
   {
     q: 'How much is delivery?',
-    a: `Delivery within Nairobi is free on orders above ${ksh(POLICY.freeNairobiFrom)}. For smaller Nairobi orders and for deliveries outside Nairobi, a delivery or courier fee applies based on your location — we confirm it on WhatsApp before your order is dispatched, so there are no surprises.`,
+    a: `Delivery within Nairobi is free on orders of ${ksh(POLICY.freeNairobiFrom)} or more. Otherwise: ${DELIVERY_ZONES.map((z) => `${z.label} ${ksh(z.fee)}`).join(', ')}. The fee is shown in your cart before you order.`,
   },
   {
     q: 'How long does delivery take?',
@@ -88,16 +89,16 @@ export default function DeliveryReturnsPage() {
             <div className="policy-row policy-head" role="row">
               <span role="columnheader">Where</span><span role="columnheader">Delivery time</span><span role="columnheader">Cost</span>
             </div>
-            <div className="policy-row" role="row">
-              <span role="cell"><strong>Nairobi</strong></span>
-              <span role="cell">Same or next working day</span>
-              <span role="cell"><strong>FREE</strong> over {ksh(POLICY.freeNairobiFrom)}; small fee below, confirmed on WhatsApp</span>
-            </div>
-            <div className="policy-row" role="row">
-              <span role="cell"><strong>Rest of Kenya</strong></span>
-              <span role="cell">{POLICY.upcountryDays} by courier</span>
-              <span role="cell">Courier fee by town, confirmed before dispatch</span>
-            </div>
+            {DELIVERY_ZONES.map((z) => (
+              <div className="policy-row" role="row" key={z.id}>
+                <span role="cell"><strong>{z.label}</strong></span>
+                <span role="cell">{z.note}</span>
+                <span role="cell">
+                  {ksh(z.fee)}
+                  {z.freeFrom != null && <> · <strong>FREE</strong> on orders of {ksh(z.freeFrom)}+</>}
+                </span>
+              </div>
+            ))}
           </div>
           <ul className="policy-list">
             <li><strong>How to order:</strong> add products to your cart and check out on WhatsApp, or message us directly. Our team confirms stock, the total and delivery details before dispatch.</li>

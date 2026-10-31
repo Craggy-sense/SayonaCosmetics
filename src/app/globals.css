@@ -4467,3 +4467,20 @@
 @layer components {
   .regular-price-note { font-size: 0.75rem; color: #8c817d; margin: -4px 0 12px; }
 }
+
+/* ── Cart delivery zones ─────────────────────────────────────── */
+@layer components {
+  .delivery-zones { border: 0; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; }
+  .delivery-zones legend { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .delivery-zone { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #eee1db; border-radius: 12px; cursor: pointer; background: #fff; transition: var(--transition-fast); }
+  .delivery-zone.active { border-color: var(--color-primary); background: #fff6f1; }
+  .delivery-zone input { accent-color: var(--color-primary); width: 16px; height: 16px; flex-shrink: 0; }
+  .dz-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .dz-text strong { font-size: 0.86rem; }
+  .dz-text small { font-size: 0.72rem; color: #8c817d; }
+  .dz-fee { font-weight: 800; font-size: 0.85rem; white-space: nowrap; }
+  .delivery-zone.active .dz-fee { color: var(--color-primary-dark); }
+  .cart-footer .delivery-row { margin-top: -4px; }
+  .cart-footer .total-row { border-top: 1px dashed #e6d6cf; padding-top: 8px; margin-bottom: 6px; }
+  .cart-footer .total-row .subtotal-price { font-size: 1.25rem; color: var(--color-primary-dark); }
+}

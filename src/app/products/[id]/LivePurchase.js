@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { track } from '@/lib/track';
 import { useCart } from '@/components/CartContext';
 import { ProductGallery, ProductPurchase, defaultSizeIdx } from '@/components/ShopUI';
 
@@ -15,6 +16,10 @@ function useLiveProduct(product) {
 
 export function SizeScope({ product, children }) {
   const state = useState(() => defaultSizeIdx(product));
+  useEffect(() => {
+    const s = product.sizes?.[defaultSizeIdx(product)];
+    track('view_item', { value: s?.price || 0, items: [{ id: product.id, title: product.title, size: s?.size, price: s?.price || 0 }] });
+  }, [product]);
   return <SizeCtx.Provider value={state}>{children}</SizeCtx.Provider>;
 }
 

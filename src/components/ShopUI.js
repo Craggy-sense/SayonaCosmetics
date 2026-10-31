@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { track } from '@/lib/track';
 import { useCart } from './CartContext';
 import { useNow } from '@/lib/useNow';
 import {
@@ -202,7 +203,8 @@ export function ProductPurchase({ product, onAdded, sizeIdx: controlledIdx, onSi
   const handleAdd = () => {
     if (!selected) return;
     const price = dealPrice(selected.price, percent);
-    addToCart(product, { ...selected, price, rrp: selected.price }, qty);
+    addToCart({ ...product, image: sizeImage(product, sizeIdx) }, { ...selected, price, rrp: selected.price }, qty);
+    track('add_to_cart', { value: price * qty, items: [{ id: product.id, title: product.title, size: selected.size, price, qty }] });
     if (onAdded) onAdded();
   };
 
