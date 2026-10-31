@@ -19,7 +19,7 @@ export const FALLBACK_PRODUCTS = [
       { size: "250 ml", price: 199, image: "/product-images/argan-shampoo-250ml.jpg" },
       { size: "500 ml", price: 349, image: "/product-images/argan-shampoo-500ml.jpg" },
       { size: "1 ltr", price: 449, image: "/product-images/argan-shampoo-1l.jpg" },
-      { size: "5 ltr", price: 899 }
+      { size: "5 ltr", price: 899, image: "/product-images/argan-shampoo-5l.jpg" }
     ]
   },
   {
@@ -42,9 +42,9 @@ export const FALLBACK_PRODUCTS = [
   },
   {
     id: "coconut-conditioner",
-    defaultSize: 1,
+    defaultSize: 2,
     groupImage: "/product-images/coconut-conditioner.jpg",
-    image: "/product-images/coconut-conditioner-500ml.jpg",
+    image: "/product-images/coconut-conditioner-1l.jpg",
     title: "Coconut Oil Hair Conditioner",
     category: "shampoo-conditioner",
     desc: "Sayona Hair Coconut Oil Moisture Boost Hair Conditioner — conditions to restore moisture. Formulated with Coconut Oil–derived fatty acids, this rich conditioner helps prevent breakage, restore elasticity, and deeply hydrate dry or damaged hair. Its creamy formula detangles, improves softness and manageability, and leaves hair silky, shiny, and healthier.",
@@ -54,8 +54,8 @@ export const FALLBACK_PRODUCTS = [
     sizes: [
       { size: "250 ml", price: 219, image: "/product-images/coconut-conditioner-250ml.jpg" },
       { size: "500 ml", price: 379, image: "/product-images/coconut-conditioner-500ml.jpg" },
-      { size: "1 ltr", price: 499 },
-      { size: "5 ltr", price: 1099 }
+      { size: "1 ltr", price: 499, image: "/product-images/coconut-conditioner-1l.jpg" },
+      { size: "5 ltr", price: 1099, image: "/product-images/coconut-conditioner-5l.jpg" }
     ]
   },
   {
@@ -71,7 +71,7 @@ export const FALLBACK_PRODUCTS = [
     tag: "ESSENTIAL",
     sizes: [
       { size: "60 ml", price: 149, image: "/product-images/olive-leave-in-60ml.jpg" },
-      { size: "120 ml", price: 249 },
+      { size: "120 ml", price: 249, image: "/product-images/olive-leave-in-120ml.jpg" },
       { size: "250 ml", price: 499 },
       { size: "500 ml", price: 699, image: "/product-images/olive-leave-in-500ml.jpg" },
       { size: "1 ltr", price: 999, image: "/product-images/olive-leave-in-1l.jpg" }
@@ -80,7 +80,8 @@ export const FALLBACK_PRODUCTS = [
   {
     id: "indian-hemp-pomade",
     defaultSize: 2,
-    image: "/product-images/indian-hemp-pomade.jpg",
+    groupImage: "/product-images/indian-hemp-pomade.jpg",
+    image: "/product-images/indian-hemp-pomade-250ml.jpg",
     title: "Indian Hemp Anti-Dandruff Pomade",
     category: "styling",
     desc: "Indian Hemp based anti-dandruff pomade — a Dry & Itchy Scalp Glossifier for sensitive and itchy scalps. Enriched with medicinal herbs, vitamins, Argan, Castor, Coconut and Tea Tree oils, with Eucalyptus and Peppermint essentials. Specially formulated to target the root cause of dandruff. Soothing & cooling formula with Mint Oil.",
@@ -89,16 +90,17 @@ export const FALLBACK_PRODUCTS = [
     tag: "HOT",
     sizes: [
       { size: "60 ml", price: 149 },
-      { size: "120 ml", price: 249 },
-      { size: "250 ml", price: 479 },
-      { size: "500 ml", price: 699 },
+      { size: "120 ml", price: 249, image: "/product-images/indian-hemp-pomade-120ml.jpg" },
+      { size: "250 ml", price: 479, image: "/product-images/indian-hemp-pomade-250ml.jpg" },
+      { size: "500 ml", price: 699, image: "/product-images/indian-hemp-pomade-500ml.jpg" },
       { size: "600 ml", price: 749 }
     ]
   },
   {
     id: "argan-hair-food",
     defaultSize: 2,
-    image: "/product-images/argan-hair-food.jpg",
+    groupImage: "/product-images/argan-hair-food.jpg",
+    image: "/product-images/argan-hair-food-250ml.jpg",
     title: "Argan Oil Hair Food",
     category: "styling",
     desc: "Nourish and strengthen. Argan oil is known for its ability to help hair restore, enhance, and grow. Its natural moisturizers help repair damage from blow-drying and flat ironing.",
@@ -106,17 +108,18 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply directly to hair shafts and scalp. Massage gently. Ideal for use before styling or as a daily moisture sealant.",
     tag: "DAILY WEAR",
     sizes: [
-      { size: "60 ml", price: 149 },
-      { size: "120 ml", price: 249 },
-      { size: "250 ml", price: 479 },
-      { size: "500 ml", price: 699 },
+      { size: "60 ml", price: 149, image: "/product-images/argan-hair-food-60ml.jpg" },
+      { size: "120 ml", price: 249, image: "/product-images/argan-hair-food-120ml.jpg" },
+      { size: "250 ml", price: 479, image: "/product-images/argan-hair-food-250ml.jpg" },
+      { size: "500 ml", price: 699, image: "/product-images/argan-hair-food-500ml.jpg" },
       { size: "600 ml", price: 749 }
     ]
   },
   {
     id: "dreadlock-wax",
     defaultSize: 2,
-    image: "/product-images/dreadlock-wax.jpg",
+    groupImage: "/product-images/dreadlock-wax.jpg",
+    image: "/product-images/dreadlock-wax-250ml.jpg",
     title: "Extra Hold Dreadlock Wax",
     category: "styling",
     desc: "Sayona Extra Hold Dreadlock Wax is a non-flaking formula crafted with precision. Our dreadlock gel wax is designed to meet the unique needs of those with dreadlocks.",
@@ -125,10 +128,10 @@ export const FALLBACK_PRODUCTS = [
     tag: "PROFESSIONAL",
     sizes: [
       { size: "60 ml", price: 249 },
-      { size: "120 ml", price: 399 },
-      { size: "250 ml", price: 749 },
+      { size: "120 ml", price: 399, image: "/product-images/dreadlock-wax-120ml.jpg" },
+      { size: "250 ml", price: 749, image: "/product-images/dreadlock-wax-250ml.jpg" },
       { size: "500 ml", price: 1099 },
-      { size: "600 ml", price: 1199 }
+      { size: "600 ml", price: 1199, image: "/product-images/dreadlock-wax-600ml.jpg" }
     ]
   },
   {
