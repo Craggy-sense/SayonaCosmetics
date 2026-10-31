@@ -140,7 +140,12 @@ export function PriceTag({ product, basePrice, prefix = '', size = 'md' }) {
     <span className={`price-tag price-tag-${size}`}>
       {prefix && <span className="price-prefix">{prefix}</span>}
       <span className={`price-now ${percent ? 'is-deal' : ''}`}>{formatKsh(price)}</span>
-      {percent > 0 && <span className="price-off">-{percent}%</span>}
+      {percent > 0 && (
+        <>
+          <s className="price-was" title="Our regular online price, charged again from 1 December">{formatKsh(basePrice)}</s>
+          <span className="price-off">-{percent}%</span>
+        </>
+      )}
     </span>
   );
 }
@@ -207,6 +212,7 @@ export function ProductPurchase({ product, onAdded, sizeIdx: controlledIdx, onSi
         <span className="modal-rrp-label">{percent ? 'Black November price:' : 'Price:'}</span>
         {selected && <PriceTag product={product} basePrice={selected.price} size="lg" />}
       </div>
+      {percent > 0 && <p className="regular-price-note">Crossed-out price is our regular online price, which returns on 1 December.</p>}
 
       {comingSoon ? (
         <div className="coming-soon-panel">

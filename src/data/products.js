@@ -16,10 +16,10 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a generous amount to wet hair. Massage gently into a rich lather from roots to ends. Rinse thoroughly.",
     tag: "BESTSELLER",
     sizes: [
-      { size: "250 ml", price: 99, image: "/product-images/argan-shampoo-250ml.jpg" },
-      { size: "500 ml", price: 149, image: "/product-images/argan-shampoo-500ml.jpg" },
-      { size: "1 ltr", price: 249, image: "/product-images/argan-shampoo-1l.jpg" },
-      { size: "5 ltr", price: 699 }
+      { size: "250 ml", price: 299, image: "/product-images/argan-shampoo-250ml.jpg" },
+      { size: "500 ml", price: 349, image: "/product-images/argan-shampoo-500ml.jpg" },
+      { size: "1 ltr", price: 449, image: "/product-images/argan-shampoo-1l.jpg" },
+      { size: "5 ltr", price: 899 }
     ]
   },
   {
@@ -34,10 +34,10 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply to wet hair. Gently massage into the scalp to create a thick lather. Rinse thoroughly.",
     tag: "NEW",
     sizes: [
-      { size: "250 ml", price: 99, image: "/product-images/olive-shampoo-250ml.jpg" },
-      { size: "500 ml", price: 149 },
-      { size: "1 ltr", price: 249, image: "/product-images/olive-shampoo-1l.jpg" },
-      { size: "5 ltr", price: 699 }
+      { size: "250 ml", price: 299, image: "/product-images/olive-shampoo-250ml.jpg" },
+      { size: "500 ml", price: 349 },
+      { size: "1 ltr", price: 449, image: "/product-images/olive-shampoo-1l.jpg" },
+      { size: "5 ltr", price: 899 }
     ]
   },
   {
@@ -52,10 +52,10 @@ export const FALLBACK_PRODUCTS = [
     usage: "After shampooing, apply evenly from mid-shaft to ends. Leave on for 3 to 5 minutes. Comb through gently and rinse thoroughly.",
     tag: "POPULAR",
     sizes: [
-      { size: "250 ml", price: 119, image: "/product-images/coconut-conditioner-250ml.jpg" },
-      { size: "500 ml", price: 179, image: "/product-images/coconut-conditioner-500ml.jpg" },
-      { size: "1 ltr", price: 299 },
-      { size: "5 ltr", price: 899 }
+      { size: "250 ml", price: 319, image: "/product-images/coconut-conditioner-250ml.jpg" },
+      { size: "500 ml", price: 379, image: "/product-images/coconut-conditioner-500ml.jpg" },
+      { size: "1 ltr", price: 499 },
+      { size: "5 ltr", price: 1099 }
     ]
   },
   {
@@ -70,11 +70,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a small amount to clean, damp or dry hair. Massage gently into the scalp and distribute evenly. Do not rinse out.",
     tag: "ESSENTIAL",
     sizes: [
-      { size: "60 ml", price: 89, image: "/product-images/olive-leave-in-60ml.jpg" },
-      { size: "120 ml", price: 149 },
-      { size: "250 ml", price: 299 },
-      { size: "500 ml", price: 499, image: "/product-images/olive-leave-in-500ml.jpg" },
-      { size: "1 ltr", price: 799, image: "/product-images/olive-leave-in-1l.jpg" }
+      { size: "60 ml", price: 289, image: "/product-images/olive-leave-in-60ml.jpg" },
+      { size: "120 ml", price: 349 },
+      { size: "250 ml", price: 499 },
+      { size: "500 ml", price: 699, image: "/product-images/olive-leave-in-500ml.jpg" },
+      { size: "1 ltr", price: 999, image: "/product-images/olive-leave-in-1l.jpg" }
     ]
   },
   {
@@ -88,11 +88,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Part hair in sections and apply a small amount directly to the scalp. Massage thoroughly. Brush or comb hair and style as usual.",
     tag: "HOT",
     sizes: [
-      { size: "60 ml", price: 99 },
-      { size: "120 ml", price: 159 },
-      { size: "250 ml", price: 279 },
-      { size: "500 ml", price: 499 },
-      { size: "600 ml", price: 549 }
+      { size: "60 ml", price: 299 },
+      { size: "120 ml", price: 359 },
+      { size: "250 ml", price: 479 },
+      { size: "500 ml", price: 699 },
+      { size: "600 ml", price: 749 }
     ]
   },
   {
@@ -106,11 +106,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply directly to hair shafts and scalp. Massage gently. Ideal for use before styling or as a daily moisture sealant.",
     tag: "DAILY WEAR",
     sizes: [
-      { size: "60 ml", price: 99 },
-      { size: "120 ml", price: 159 },
-      { size: "250 ml", price: 279 },
-      { size: "500 ml", price: 499 },
-      { size: "600 ml", price: 549 }
+      { size: "60 ml", price: 299 },
+      { size: "120 ml", price: 359 },
+      { size: "250 ml", price: 479 },
+      { size: "500 ml", price: 699 },
+      { size: "600 ml", price: 749 }
     ]
   },
   {
@@ -124,11 +124,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a small amount to the root section of locks. Twist or palm roll hair. Work down lock segments as needed.",
     tag: "PROFESSIONAL",
     sizes: [
-      { size: "60 ml", price: 179 },
-      { size: "120 ml", price: 299 },
-      { size: "250 ml", price: 549 },
-      { size: "500 ml", price: 899 },
-      { size: "600 ml", price: 999 }
+      { size: "60 ml", price: 379 },
+      { size: "120 ml", price: 499 },
+      { size: "250 ml", price: 749 },
+      { size: "500 ml", price: 1099 },
+      { size: "600 ml", price: 1199 }
     ]
   },
   {
@@ -142,11 +142,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Shampoo hair and towel dry. Apply evenly throughout damp hair. Do not rinse out. Comb through and style.",
     tag: "THERAPY",
     sizes: [
-      { size: "60 ml", price: 149 },
-      { size: "120 ml", price: 249 },
-      { size: "250 ml", price: 399 },
-      { size: "500 ml", price: 649 },
-      { size: "600 ml", price: 699 }
+      { size: "60 ml", price: 349 },
+      { size: "120 ml", price: 449 },
+      { size: "250 ml", price: 599 },
+      { size: "500 ml", price: 849 },
+      { size: "600 ml", price: 899 }
     ]
   },
   {
@@ -160,11 +160,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Shampoo and rinse hair. Apply treatment, massaging from roots to ends. Cover with cap for 15-20 mins. Rinse well.",
     tag: "RESTORE",
     sizes: [
-      { size: "60 ml", price: 149 },
-      { size: "120 ml", price: 249 },
-      { size: "250 ml", price: 399 },
-      { size: "500 ml", price: 649 },
-      { size: "600 ml", price: 699 }
+      { size: "60 ml", price: 349 },
+      { size: "120 ml", price: 449 },
+      { size: "250 ml", price: 599 },
+      { size: "500 ml", price: 849 },
+      { size: "600 ml", price: 899 }
     ]
   },
   {
@@ -178,11 +178,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply to washed, towel-dried hair. Leave on for 10-15 minutes, preferably under heat. Rinse thoroughly.",
     tag: "HYDRATE",
     sizes: [
-      { size: "60 ml", price: 149 },
-      { size: "120 ml", price: 249 },
-      { size: "250 ml", price: 399 },
-      { size: "500 ml", price: 649 },
-      { size: "600 ml", price: 699 }
+      { size: "60 ml", price: 349 },
+      { size: "120 ml", price: 449 },
+      { size: "250 ml", price: 599 },
+      { size: "500 ml", price: 849 },
+      { size: "600 ml", price: 899 }
     ]
   },
   {

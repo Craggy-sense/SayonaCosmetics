@@ -4463,3 +4463,7 @@
 @layer components {
   .modal-image-panel { aspect-ratio: auto; align-items: flex-start; overflow: visible; background: transparent; border: 0; }
 }
+
+@layer components {
+  .regular-price-note { font-size: 0.75rem; color: #8c817d; margin: -4px 0 12px; }
+}
