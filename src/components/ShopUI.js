@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { track } from '@/lib/track';
 import { useCart } from './CartContext';
 import { useNow } from '@/lib/useNow';
@@ -100,9 +100,19 @@ export function ProductGallery({ product, sizeIdx, onSelectSize, badge }) {
 /** Size buttons (pills). */
 export function SizePills({ product, sizeIdx, onSelect, compact = false }) {
   const sizes = product?.sizes || [];
+  const rowRef = useRef(null);
+  // Keep the selected size visible when the row scrolls sideways (phones). Only moves the row, never the page.
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row || row.scrollWidth <= row.clientWidth) return;
+    const active = row.querySelector('.size-pill.active');
+    if (!active) return;
+    const target = active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2;
+    row.scrollLeft = Math.max(0, target);
+  }, [sizeIdx]);
   if (sizes.length < 2) return null;
   return (
-    <div className={`size-pills ${compact ? 'compact' : ''}`} role="radiogroup" aria-label="Choose size">
+    <div ref={rowRef} className={`size-pills ${compact ? 'compact' : ''}`} role="radiogroup" aria-label="Choose size">
       {sizes.map((s, idx) => (
         <button
           key={`${product.id}-pill-${idx}`}

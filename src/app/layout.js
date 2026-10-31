@@ -7,6 +7,7 @@ import CartDrawer from "@/components/CartDrawer";
 import ProductModal from "@/components/ProductModal";
 import { SITE, absoluteUrl } from "@/lib/site";
 import Analytics from "@/components/Analytics";
+import MobileBar from "@/components/MobileBar";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -57,7 +58,10 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#e14a12",
+  themeColor: "#b41a00",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 const siteJsonLd = {
@@ -104,6 +108,7 @@ export default function RootLayout({ children }) {
           </main>
           <CartDrawer />
           <ProductModal />
+          <MobileBar />
           <Footer />
         </CartProvider>
         <Analytics />

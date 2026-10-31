@@ -32,7 +32,8 @@ export default function Bundles() {
     addToCart(
       { id: b.id, title: b.title, category: 'bundle', image: b.image },
       { size: contents, price: priced.price, rrp: priced.separate },
-      1
+      1,
+      { open: false }
     );
     track('add_to_cart', { value: priced.price, items: [{ id: b.id, title: b.title, size: 'Kit', price: priced.price, qty: 1 }] });
   };

@@ -101,7 +101,9 @@ export function CartProvider({ children }) {
   // Save cart to localStorage whenever it changes
   const saveCart = (newCart) => writeCart(newCart);
 
-  const addToCart = (product, size, qty) => {
+  const [toast, setToast] = useState(null); // { id, title, size } shown briefly after a quick add
+
+  const addToCart = (product, size, qty, { open = true } = {}) => {
     const existingIdx = cart.findIndex(
       (item) => item.id === product.id && item.size === size.size
     );
@@ -123,7 +125,11 @@ export function CartProvider({ children }) {
       });
     }
     saveCart(newCart);
-    setIsCartOpen(true); // Automatically slide open cart drawer
+    if (open) {
+      setIsCartOpen(true); // Automatically slide open cart drawer
+    } else {
+      setToast({ id: Date.now(), title: product.title, size: size.size });
+    }
   };
 
   const updateQty = (id, sizeName, delta) => {
@@ -174,6 +180,8 @@ export function CartProvider({ children }) {
         updateQty,
         removeFromCart,
         clearCart,
+        toast,
+        setToast,
       }}
     >
       {children}
