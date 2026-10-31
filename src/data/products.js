@@ -149,7 +149,7 @@ export const FALLBACK_PRODUCTS = [
       { size: "120 ml", price: 429 },
       { size: "250 ml", price: 699 },
       { size: "500 ml", price: 949 },
-      { size: "600 ml", price: 999 }
+      { size: "600 ml", price: 999, image: "/product-images/protein-treatment-600ml.jpg" }
     ]
   },
   {
@@ -166,7 +166,7 @@ export const FALLBACK_PRODUCTS = [
       { size: "60 ml", price: 299 },
       { size: "120 ml", price: 429 },
       { size: "250 ml", price: 699 },
-      { size: "500 ml", price: 949 },
+      { size: "500 ml", price: 949, image: "/product-images/cholesterol-treatment-500ml.jpg" },
       { size: "600 ml", price: 999 }
     ]
   },
