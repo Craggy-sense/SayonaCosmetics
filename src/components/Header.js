@@ -226,6 +226,9 @@ export default function Header() {
                   </button>
                 </li>
                 <li>
+                  <Link href="/#bundles">Kits &amp; Bundles</Link>
+                </li>
+                <li>
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('new-arrivals')}

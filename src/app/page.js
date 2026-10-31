@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from '@/components/CartContext';
 import ProductCard from '@/components/ProductCard';
 import { Countdown } from '@/components/ShopUI';
+import Bundles from '@/components/Bundles';
 import { useNow } from '@/lib/useNow';
 import { CAMPAIGN, campaignPhase, dealPrice, formatKsh, headlinePercents, isComingSoon } from '@/data/campaign';
 
@@ -413,6 +414,8 @@ export default function ShopPage() {
         </div>
       </section>
  
+      <Bundles />
+
       {/* Main Catalogue Section */}
       <section className="catalogue-section" id="catalogue">
         <div className="container">

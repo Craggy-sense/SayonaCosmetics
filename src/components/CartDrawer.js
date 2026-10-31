@@ -178,7 +178,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="cart-item-details">
                     <h4 className="cart-item-title">{item.title}</h4>
-                    <span className="cart-item-meta">Size: {item.size}</span>
+                    <span className="cart-item-meta">{item.category === 'bundle' ? 'Includes' : 'Size'}: {item.size}</span>
                     <div className="cart-item-actions-row">
                       <div className="qty-controller qty-mini">
                         <button 
