@@ -146,7 +146,7 @@ export default async function ProductPage({ params }) {
                     {product.sizes.map((s) => (
                       <tr key={s.size}>
                         <th scope="row">{s.size}</th>
-                        <td>{product.comingSoon ? 'Coming soon' : `KSh ${s.price.toLocaleString('en-KE')} RRP`}</td>
+                        <td>{product.comingSoon ? 'Coming soon' : `KSh ${s.price.toLocaleString('en-KE')}`}</td>
                       </tr>
                     ))}
                   </tbody>

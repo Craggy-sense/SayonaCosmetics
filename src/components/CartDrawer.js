@@ -44,7 +44,7 @@ export default function CartDrawer() {
     let listStr = "";
     cart.forEach((item, idx) => {
       const rowCost = item.price * item.qty;
-      const dealNote = item.rrp && item.rrp > item.price ? ` _(Black November price, was KSh ${formatPrice(item.rrp)})_` : '';
+      const dealNote = item.rrp && item.rrp > item.price ? ' _(Black November price)_' : '';
       listStr += `${idx + 1}. *${item.title}* (${item.size})\n   Qty: ${item.qty} x KSh ${formatPrice(item.price)}${dealNote} = *KSh ${formatPrice(rowCost)}*\n\n`;
     });
 
@@ -220,7 +220,7 @@ export default function CartDrawer() {
                 <span className="subtotal-label">Subtotal:</span>
                 <span className="subtotal-price">KSh {formatPrice(cartSubtotal)}</span>
               </div>
-              <p className="cart-vat-note">Recommended Retail Prices (RRP) inclusive of VAT where applicable.</p>
+              <p className="cart-vat-note">Prices inclusive of VAT where applicable.</p>
               
               <button 
                 type="button" 

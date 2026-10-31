@@ -2,7 +2,7 @@
 // sizes[].image (optional): photo of that exact size; product.image is the default (shown first).
 // groupImage (optional): photo of the whole range, used for sizes without their own photo.
 // defaultSize: index of the size shown first on the card (its photo + price).
-// Prices are the RRP column of the catalogue price list (KSh).
+// Prices: online retail prices set Oct 2026 (hair care); appliances & foam wrap = catalogue RRP (KSh).
 export const FALLBACK_PRODUCTS = [
   {
     id: "argan-shampoo",
@@ -16,10 +16,10 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a generous amount to wet hair. Massage gently into a rich lather from roots to ends. Rinse thoroughly.",
     tag: "BESTSELLER",
     sizes: [
-      { size: "250 ml", price: 55, image: "/product-images/argan-shampoo-250ml.jpg" },
-      { size: "500 ml", price: 85, image: "/product-images/argan-shampoo-500ml.jpg" },
-      { size: "1 ltr", price: 125, image: "/product-images/argan-shampoo-1l.jpg" },
-      { size: "5 ltr", price: 395 }
+      { size: "250 ml", price: 99, image: "/product-images/argan-shampoo-250ml.jpg" },
+      { size: "500 ml", price: 149, image: "/product-images/argan-shampoo-500ml.jpg" },
+      { size: "1 ltr", price: 249, image: "/product-images/argan-shampoo-1l.jpg" },
+      { size: "5 ltr", price: 699 }
     ]
   },
   {
@@ -34,10 +34,10 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply to wet hair. Gently massage into the scalp to create a thick lather. Rinse thoroughly.",
     tag: "NEW",
     sizes: [
-      { size: "250 ml", price: 55, image: "/product-images/olive-shampoo-250ml.jpg" },
-      { size: "500 ml", price: 85 },
-      { size: "1 ltr", price: 125, image: "/product-images/olive-shampoo-1l.jpg" },
-      { size: "5 ltr", price: 395 }
+      { size: "250 ml", price: 99, image: "/product-images/olive-shampoo-250ml.jpg" },
+      { size: "500 ml", price: 149 },
+      { size: "1 ltr", price: 249, image: "/product-images/olive-shampoo-1l.jpg" },
+      { size: "5 ltr", price: 699 }
     ]
   },
   {
@@ -52,10 +52,10 @@ export const FALLBACK_PRODUCTS = [
     usage: "After shampooing, apply evenly from mid-shaft to ends. Leave on for 3 to 5 minutes. Comb through gently and rinse thoroughly.",
     tag: "POPULAR",
     sizes: [
-      { size: "250 ml", price: 65, image: "/product-images/coconut-conditioner-250ml.jpg" },
-      { size: "500 ml", price: 95, image: "/product-images/coconut-conditioner-500ml.jpg" },
-      { size: "1 ltr", price: 150 },
-      { size: "5 ltr", price: 540 }
+      { size: "250 ml", price: 119, image: "/product-images/coconut-conditioner-250ml.jpg" },
+      { size: "500 ml", price: 179, image: "/product-images/coconut-conditioner-500ml.jpg" },
+      { size: "1 ltr", price: 299 },
+      { size: "5 ltr", price: 899 }
     ]
   },
   {
@@ -70,15 +70,16 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a small amount to clean, damp or dry hair. Massage gently into the scalp and distribute evenly. Do not rinse out.",
     tag: "ESSENTIAL",
     sizes: [
-      { size: "60 ml", price: 50, image: "/product-images/olive-leave-in-60ml.jpg" },
-      { size: "120 ml", price: 85 },
-      { size: "250 ml", price: 170 },
-      { size: "500 ml", price: 305, image: "/product-images/olive-leave-in-500ml.jpg" },
-      { size: "1 ltr", price: 470, image: "/product-images/olive-leave-in-1l.jpg" }
+      { size: "60 ml", price: 89, image: "/product-images/olive-leave-in-60ml.jpg" },
+      { size: "120 ml", price: 149 },
+      { size: "250 ml", price: 299 },
+      { size: "500 ml", price: 499, image: "/product-images/olive-leave-in-500ml.jpg" },
+      { size: "1 ltr", price: 799, image: "/product-images/olive-leave-in-1l.jpg" }
     ]
   },
   {
     id: "indian-hemp-pomade",
+    defaultSize: 2,
     image: "/product-images/indian-hemp-pomade.jpg",
     title: "Indian Hemp Anti-Dandruff Pomade",
     category: "styling",
@@ -87,15 +88,16 @@ export const FALLBACK_PRODUCTS = [
     usage: "Part hair in sections and apply a small amount directly to the scalp. Massage thoroughly. Brush or comb hair and style as usual.",
     tag: "HOT",
     sizes: [
-      { size: "60 ml", price: 65 },
-      { size: "120 ml", price: 100 },
-      { size: "250 ml", price: 185 },
-      { size: "500 ml", price: 420 },
-      { size: "600 ml", price: 455 }
+      { size: "60 ml", price: 99 },
+      { size: "120 ml", price: 159 },
+      { size: "250 ml", price: 279 },
+      { size: "500 ml", price: 499 },
+      { size: "600 ml", price: 549 }
     ]
   },
   {
     id: "argan-hair-food",
+    defaultSize: 2,
     image: "/product-images/argan-hair-food.jpg",
     title: "Argan Oil Hair Food",
     category: "styling",
@@ -104,15 +106,16 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply directly to hair shafts and scalp. Massage gently. Ideal for use before styling or as a daily moisture sealant.",
     tag: "DAILY WEAR",
     sizes: [
-      { size: "60 ml", price: 60 },
-      { size: "120 ml", price: 95 },
-      { size: "250 ml", price: 180 },
-      { size: "500 ml", price: 385 },
-      { size: "600 ml", price: 410 }
+      { size: "60 ml", price: 99 },
+      { size: "120 ml", price: 159 },
+      { size: "250 ml", price: 279 },
+      { size: "500 ml", price: 499 },
+      { size: "600 ml", price: 549 }
     ]
   },
   {
     id: "dreadlock-wax",
+    defaultSize: 2,
     image: "/product-images/dreadlock-wax.jpg",
     title: "Extra Hold Dreadlock Wax",
     category: "styling",
@@ -121,15 +124,16 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a small amount to the root section of locks. Twist or palm roll hair. Work down lock segments as needed.",
     tag: "PROFESSIONAL",
     sizes: [
-      { size: "60 ml", price: 120 },
-      { size: "120 ml", price: 180 },
-      { size: "250 ml", price: 300 },
-      { size: "500 ml", price: 540 },
-      { size: "600 ml", price: 575 }
+      { size: "60 ml", price: 179 },
+      { size: "120 ml", price: 299 },
+      { size: "250 ml", price: 549 },
+      { size: "500 ml", price: 899 },
+      { size: "600 ml", price: 999 }
     ]
   },
   {
     id: "protein-treatment",
+    defaultSize: 2,
     image: "/product-images/protein-treatment.jpg",
     title: "Hair Protein Treatment",
     category: "treatments",
@@ -138,15 +142,16 @@ export const FALLBACK_PRODUCTS = [
     usage: "Shampoo hair and towel dry. Apply evenly throughout damp hair. Do not rinse out. Comb through and style.",
     tag: "THERAPY",
     sizes: [
-      { size: "60 ml", price: 110 },
-      { size: "120 ml", price: 180 },
-      { size: "250 ml", price: 300 },
-      { size: "500 ml", price: 455 },
-      { size: "600 ml", price: 470 }
+      { size: "60 ml", price: 149 },
+      { size: "120 ml", price: 249 },
+      { size: "250 ml", price: 399 },
+      { size: "500 ml", price: 649 },
+      { size: "600 ml", price: 699 }
     ]
   },
   {
     id: "cholesterol-treatment",
+    defaultSize: 2,
     image: "/product-images/cholesterol-treatment.jpg",
     title: "Hair Cholesterol Treatment",
     category: "treatments",
@@ -155,15 +160,16 @@ export const FALLBACK_PRODUCTS = [
     usage: "Shampoo and rinse hair. Apply treatment, massaging from roots to ends. Cover with cap for 15-20 mins. Rinse well.",
     tag: "RESTORE",
     sizes: [
-      { size: "60 ml", price: 110 },
-      { size: "120 ml", price: 180 },
-      { size: "250 ml", price: 300 },
-      { size: "500 ml", price: 455 },
-      { size: "600 ml", price: 470 }
+      { size: "60 ml", price: 149 },
+      { size: "120 ml", price: 249 },
+      { size: "250 ml", price: 399 },
+      { size: "500 ml", price: 649 },
+      { size: "600 ml", price: 699 }
     ]
   },
   {
     id: "deep-penetrating-treatment",
+    defaultSize: 2,
     image: "/product-images/deep-treatment.jpg",
     title: "Hair Deep Penetrating Treatment",
     category: "treatments",
@@ -172,11 +178,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply to washed, towel-dried hair. Leave on for 10-15 minutes, preferably under heat. Rinse thoroughly.",
     tag: "HYDRATE",
     sizes: [
-      { size: "60 ml", price: 95 },
-      { size: "120 ml", price: 170 },
-      { size: "250 ml", price: 290 },
-      { size: "500 ml", price: 445 },
-      { size: "600 ml", price: 460 }
+      { size: "60 ml", price: 149 },
+      { size: "120 ml", price: 249 },
+      { size: "250 ml", price: 399 },
+      { size: "500 ml", price: 649 },
+      { size: "600 ml", price: 699 }
     ]
   },
   {

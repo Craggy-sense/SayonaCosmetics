@@ -66,7 +66,7 @@ export function ProductGallery({ product, sizeIdx, onSelectSize, badge }) {
       <div className="gallery-main">
         {badge}
         {current && <img src={current} alt={`${product.title}${selectedSize && !manual ? ` ${selectedSize}` : ''}`} className="modal-product-image" />}
-        {selectedSize && !manual && (
+        {selectedSize && !manual && (hasOwnPhoto || product.groupImage) && (
           <span className="gallery-size-chip">{hasOwnPhoto ? selectedSize : `${selectedSize} · range photo`}</span>
         )}
       </div>
@@ -140,12 +140,7 @@ export function PriceTag({ product, basePrice, prefix = '', size = 'md' }) {
     <span className={`price-tag price-tag-${size}`}>
       {prefix && <span className="price-prefix">{prefix}</span>}
       <span className={`price-now ${percent ? 'is-deal' : ''}`}>{formatKsh(price)}</span>
-      {percent > 0 && (
-        <>
-          <s className="price-was">{formatKsh(basePrice)}</s>
-          <span className="price-off">-{percent}%</span>
-        </>
-      )}
+      {percent > 0 && <span className="price-off">-{percent}%</span>}
     </span>
   );
 }
@@ -209,7 +204,7 @@ export function ProductPurchase({ product, onAdded, sizeIdx: controlledIdx, onSi
   return (
     <div className="purchase-block">
       <div className="modal-price-row">
-        <span className="modal-rrp-label">{percent ? 'Black November price:' : 'RRP Price:'}</span>
+        <span className="modal-rrp-label">{percent ? 'Black November price:' : 'Price:'}</span>
         {selected && <PriceTag product={product} basePrice={selected.price} size="lg" />}
       </div>
 

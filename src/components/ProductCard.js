@@ -53,7 +53,7 @@ export default function ProductCard({ product }) {
             decoding="async"
           />
         )}
-        {selected && sizes.length > 1 && !comingSoon && (
+        {selected && sizes.length > 1 && !comingSoon && (selected.image || product.groupImage) && (
           <span className="card-size-chip">{selected.size}{selected.image ? '' : ' · range photo'}</span>
         )}
         <span className="card-quickview">Quick view</span>
