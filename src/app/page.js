@@ -59,7 +59,7 @@ export default function ShopPage() {
       title: 'Wash Day, Sorted',
       subtitle: 'Argan Oil Shampoo + Coconut Oil Conditioner — cleanse, moisturise and detangle, made for African hair.',
       images: ['/product-images/argan-shampoo.jpg', '/product-images/coconut-conditioner.jpg'],
-      price: { label: `${priceLabel} · 1 ltr each`, was: 449 + 499, now: dealPrice(449, hc) + dealPrice(499, hc) },
+      price: { label: `${priceLabel} · 1 ltr each`, was: 549 + 599, now: dealPrice(549, hc) + dealPrice(599, hc) },
       cta: { label: 'Shop Shampoo & Conditioner', onClick: () => goToCategory('shampoo-conditioner') },
     },
     {
@@ -68,7 +68,7 @@ export default function ShopPage() {
       title: 'Salon Stock-Up',
       subtitle: 'Our 5 ltr shampoos and conditioner are built for busy salons. Stock up for the festive rush at Black November prices.',
       images: ['/product-images/olive-shampoo.jpg'],
-      price: { label: `${priceLabel} · 5 ltr shampoo`, was: 899, now: dealPrice(899, hc) },
+      price: { label: `${priceLabel} · 5 ltr shampoo`, was: 999, now: dealPrice(999, hc) },
       cta: { label: 'Shop Salon Sizes', onClick: () => goToCategory('shampoo-conditioner') },
       secondary: { label: 'Bulk & distributor orders', href: '/contact#contact' },
     },
