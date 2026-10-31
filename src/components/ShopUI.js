@@ -24,6 +24,100 @@ export function categoryLabel(cat) {
   return cat.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
 
+/** Index of the size shown first (card photo + price). */
+export function defaultSizeIdx(product) {
+  const n = product?.sizes?.length || 0;
+  const d = Number.isInteger(product?.defaultSize) ? product.defaultSize : 0;
+  return d >= 0 && d < n ? d : 0;
+}
+
+/** Photo for a given size: its own photo, else the range photo, else the main photo. */
+export function sizeImage(product, idx) {
+  const s = product?.sizes?.[idx];
+  return s?.image || product?.groupImage || product?.image || '';
+}
+
+/** Distinct photos for a product: each size photo (with its size label), then the range photo. */
+export function productPhotos(product) {
+  const out = [];
+  const seen = new Set();
+  (product?.sizes || []).forEach((s, idx) => {
+    if (s.image && !seen.has(s.image)) { seen.add(s.image); out.push({ src: s.image, label: s.size, sizeIdx: idx }); }
+  });
+  [product?.groupImage, product?.image].forEach((src) => {
+    if (src && !seen.has(src)) { seen.add(src); out.push({ src, label: out.length ? 'All sizes' : '', sizeIdx: null }); }
+  });
+  return out;
+}
+
+/** Main photo + thumbnails. Clicking a size thumbnail selects that size. */
+export function ProductGallery({ product, sizeIdx, onSelectSize, badge }) {
+  const photos = productPhotos(product);
+  // A non-size photo the user tapped; cleared automatically when the size changes.
+  const [manualPick, setManualPick] = useState(null);
+  const manual = manualPick && manualPick.idx === sizeIdx ? manualPick.src : null;
+  const setManual = (src) => setManualPick(src ? { src, idx: sizeIdx } : null);
+  const current = manual || sizeImage(product, sizeIdx);
+  const selectedSize = product?.sizes?.[sizeIdx]?.size;
+  const hasOwnPhoto = !!product?.sizes?.[sizeIdx]?.image;
+
+  return (
+    <div className="gallery">
+      <div className="gallery-main">
+        {badge}
+        {current && <img src={current} alt={`${product.title}${selectedSize && !manual ? ` ${selectedSize}` : ''}`} className="modal-product-image" />}
+        {selectedSize && !manual && (
+          <span className="gallery-size-chip">{hasOwnPhoto ? selectedSize : `${selectedSize} · range photo`}</span>
+        )}
+      </div>
+      {photos.length > 1 && (
+        <div className="gallery-thumbs" role="list">
+          {photos.map((ph) => {
+            const active = manual ? manual === ph.src : ph.sizeIdx === sizeIdx || (ph.sizeIdx === null && !hasOwnPhoto && current === ph.src);
+            return (
+              <button
+                key={ph.src}
+                type="button"
+                role="listitem"
+                className={`gallery-thumb ${active ? 'active' : ''}`}
+                onClick={() => {
+                  if (ph.sizeIdx !== null) { setManual(null); onSelectSize(ph.sizeIdx); } else { setManual(ph.src); }
+                }}
+                aria-label={ph.label ? `Show ${ph.label}` : 'Show photo'}
+              >
+                <img src={ph.src} alt="" loading="lazy" />
+                {ph.label && <small>{ph.label}</small>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Size buttons (pills). */
+export function SizePills({ product, sizeIdx, onSelect, compact = false }) {
+  const sizes = product?.sizes || [];
+  if (sizes.length < 2) return null;
+  return (
+    <div className={`size-pills ${compact ? 'compact' : ''}`} role="radiogroup" aria-label="Choose size">
+      {sizes.map((s, idx) => (
+        <button
+          key={`${product.id}-pill-${idx}`}
+          type="button"
+          role="radio"
+          aria-checked={idx === sizeIdx}
+          className={`size-pill ${idx === sizeIdx ? 'active' : ''}`}
+          onClick={(e) => { e.stopPropagation(); onSelect(idx); }}
+        >
+          {s.size}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function whatsappNotifyUrl(number, product) {
   const text = `Hi Sayona Cosmetics! Please notify me when the ${product.title} is available.`;
   return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
@@ -91,9 +185,11 @@ export function Countdown({ variant = 'boxes' }) {
 }
 
 /** Size picker, quantity and Add to Cart / Notify / Out of stock. Used by quick view and product pages. */
-export function ProductPurchase({ product, onAdded }) {
+export function ProductPurchase({ product, onAdded, sizeIdx: controlledIdx, onSizeChange }) {
   const { addToCart, settings } = useCart();
-  const [sizeIdx, setSizeIdx] = useState(0);
+  const [ownIdx, setOwnIdx] = useState(() => defaultSizeIdx(product));
+  const sizeIdx = controlledIdx ?? ownIdx;
+  const setSizeIdx = (i) => { setOwnIdx(i); if (onSizeChange) onSizeChange(i); };
   const [qty, setQty] = useState(1);
   const now = useNow();
 
@@ -133,22 +229,25 @@ export function ProductPurchase({ product, onAdded }) {
         <div className="modal-purchase-controls">
           {sizes.length > 0 && (
             <div className="picker-group">
-              <label htmlFor={`size-${product.id}`}>Select {product.category === 'appliances' ? 'Model' : 'Size'}:</label>
-              <div className="select-wrapper">
-                <select
-                  id={`size-${product.id}`}
-                  value={sizeIdx}
-                  onChange={(e) => setSizeIdx(parseInt(e.target.value, 10))}
-                  disabled={outOfStock}
-                >
+              <span className="picker-label">{product.category === 'appliances' ? 'Model' : 'Size'}: <strong>{selected?.size}</strong></span>
+              {sizes.length > 1 ? (
+                <div className="size-options" role="radiogroup" aria-label={product.category === 'appliances' ? 'Choose model' : 'Choose size'}>
                   {sizes.map((s, idx) => (
-                    <option key={`${product.id}-opt-${idx}`} value={idx}>
-                      {s.size} - {formatKsh(dealPrice(s.price, percent))}
-                      {percent ? ` (was ${formatKsh(s.price)})` : ''}
-                    </option>
+                    <button
+                      key={`${product.id}-opt-${idx}`}
+                      type="button"
+                      role="radio"
+                      aria-checked={idx === sizeIdx}
+                      className={`size-option ${idx === sizeIdx ? 'active' : ''}`}
+                      onClick={() => setSizeIdx(idx)}
+                      disabled={outOfStock}
+                    >
+                      <span className="size-option-name">{s.size}</span>
+                      <span className="size-option-price">{formatKsh(dealPrice(s.price, percent))}</span>
+                    </button>
                   ))}
-                </select>
-              </div>
+                </div>
+              ) : null}
             </div>
           )}
 

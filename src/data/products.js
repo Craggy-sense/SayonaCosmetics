@@ -1,9 +1,14 @@
 // Product catalogue — mirrors the Sayona Cosmetics Product Catalogue 2026.
+// sizes[].image (optional): photo of that exact size; product.image is the default (shown first).
+// groupImage (optional): photo of the whole range, used for sizes without their own photo.
+// defaultSize: index of the size shown first on the card (its photo + price).
 // Prices are the RRP column of the catalogue price list (KSh).
 export const FALLBACK_PRODUCTS = [
   {
     id: "argan-shampoo",
-    image: "/product-images/argan-shampoo.jpg",
+    defaultSize: 2,
+    groupImage: "/product-images/argan-shampoo.jpg",
+    image: "/product-images/argan-shampoo-1l.jpg",
     title: "Argan Oil Hair Shampoo",
     category: "shampoo-conditioner",
     desc: "Sayona Argan Oil cleansing and moisturizing 2-in-1 shampoo for dry or damaged hair. Suits frizzy, tangled and damaged hair perfectly — the unique formulation restores life and luster to dull, dry hair while reducing split ends and frizz.",
@@ -11,15 +16,17 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a generous amount to wet hair. Massage gently into a rich lather from roots to ends. Rinse thoroughly.",
     tag: "BESTSELLER",
     sizes: [
-      { size: "250 ml", price: 55 },
-      { size: "500 ml", price: 85 },
-      { size: "1 ltr", price: 125 },
+      { size: "250 ml", price: 55, image: "/product-images/argan-shampoo-250ml.jpg" },
+      { size: "500 ml", price: 85, image: "/product-images/argan-shampoo-500ml.jpg" },
+      { size: "1 ltr", price: 125, image: "/product-images/argan-shampoo-1l.jpg" },
       { size: "5 ltr", price: 395 }
     ]
   },
   {
     id: "olive-shampoo",
-    image: "/product-images/olive-shampoo.jpg",
+    defaultSize: 2,
+    groupImage: "/product-images/olive-shampoo.jpg",
+    image: "/product-images/olive-shampoo-1l.jpg",
     title: "Olive Oil Hair Shampoo",
     category: "shampoo-conditioner",
     desc: "Sayona Olive Oil cleansing and moisturizing 2-in-1 crystal shampoo for dry or damaged hair. Formulated for African hair and enriched with olive oil, an excellent source of antioxidants.",
@@ -27,15 +34,17 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply to wet hair. Gently massage into the scalp to create a thick lather. Rinse thoroughly.",
     tag: "NEW",
     sizes: [
-      { size: "250 ml", price: 55 },
+      { size: "250 ml", price: 55, image: "/product-images/olive-shampoo-250ml.jpg" },
       { size: "500 ml", price: 85 },
-      { size: "1 ltr", price: 125 },
+      { size: "1 ltr", price: 125, image: "/product-images/olive-shampoo-1l.jpg" },
       { size: "5 ltr", price: 395 }
     ]
   },
   {
     id: "coconut-conditioner",
-    image: "/product-images/coconut-conditioner.jpg",
+    defaultSize: 1,
+    groupImage: "/product-images/coconut-conditioner.jpg",
+    image: "/product-images/coconut-conditioner-500ml.jpg",
     title: "Coconut Oil Hair Conditioner",
     category: "shampoo-conditioner",
     desc: "Sayona Hair Coconut Oil Moisture Boost Hair Conditioner — conditions to restore moisture. Formulated with Coconut Oil–derived fatty acids, this rich conditioner helps prevent breakage, restore elasticity, and deeply hydrate dry or damaged hair. Its creamy formula detangles, improves softness and manageability, and leaves hair silky, shiny, and healthier.",
@@ -43,15 +52,17 @@ export const FALLBACK_PRODUCTS = [
     usage: "After shampooing, apply evenly from mid-shaft to ends. Leave on for 3 to 5 minutes. Comb through gently and rinse thoroughly.",
     tag: "POPULAR",
     sizes: [
-      { size: "250 ml", price: 65 },
-      { size: "500 ml", price: 95 },
+      { size: "250 ml", price: 65, image: "/product-images/coconut-conditioner-250ml.jpg" },
+      { size: "500 ml", price: 95, image: "/product-images/coconut-conditioner-500ml.jpg" },
       { size: "1 ltr", price: 150 },
       { size: "5 ltr", price: 540 }
     ]
   },
   {
     id: "olive-leave-in",
-    image: "/product-images/olive-leave-in.jpg",
+    defaultSize: 3,
+    groupImage: "/product-images/olive-leave-in.jpg",
+    image: "/product-images/olive-leave-in-500ml.jpg",
     title: "Olive Oil Leave-In Treatment",
     category: "treatments",
     desc: "Sayona Olive Oil Leave-In Hair Treatment richly moisturizes. A lightweight formula collection that nourishes dull, frizzy hair and helps stop dryness, itching, and flaking of the scalp to maximize fullness and improve manageability. Olive oil also invigorates the skin and soothes tightness to support a healthy scalp foundation, delivering super-nourishing results for natural and relaxed hair.",
@@ -59,11 +70,11 @@ export const FALLBACK_PRODUCTS = [
     usage: "Apply a small amount to clean, damp or dry hair. Massage gently into the scalp and distribute evenly. Do not rinse out.",
     tag: "ESSENTIAL",
     sizes: [
-      { size: "60 ml", price: 50 },
+      { size: "60 ml", price: 50, image: "/product-images/olive-leave-in-60ml.jpg" },
       { size: "120 ml", price: 85 },
       { size: "250 ml", price: 170 },
-      { size: "500 ml", price: 305 },
-      { size: "1 ltr", price: 470 }
+      { size: "500 ml", price: 305, image: "/product-images/olive-leave-in-500ml.jpg" },
+      { size: "1 ltr", price: 470, image: "/product-images/olive-leave-in-1l.jpg" }
     ]
   },
   {

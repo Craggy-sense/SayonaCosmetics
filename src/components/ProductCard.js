@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from './CartContext';
-import { PriceTag, categoryLabel, useDeal, whatsappNotifyUrl } from './ShopUI';
+import { PriceTag, SizePills, categoryLabel, defaultSizeIdx, sizeImage, useDeal, whatsappNotifyUrl } from './ShopUI';
 import { isComingSoon } from '@/data/campaign';
 import { FALLBACK_PRODUCTS } from '@/data/products';
 
@@ -12,13 +12,16 @@ const PAGE_IDS = new Set(FALLBACK_PRODUCTS.map((p) => p.id));
 export default function ProductCard({ product }) {
   const { setSelectedProduct, settings } = useCart();
 
-  const startingPrice = product.sizes && product.sizes.length > 0
-    ? Math.min(...product.sizes.map((s) => Number(s.price) || 0))
-    : 0;
-  const { percent } = useDeal(product, startingPrice);
+  const [sizeIdx, setSizeIdx] = useState(() => defaultSizeIdx(product));
+  const sizes = product.sizes || [];
+  const selected = sizes[sizeIdx] || sizes[0];
+  const shownPrice = selected ? Number(selected.price) || 0 : 0;
+  const { percent } = useDeal(product, shownPrice);
   const comingSoon = isComingSoon(product);
   const outOfStock = product.inStock === false;
-  const open = () => setSelectedProduct(product);
+  const photo = sizeImage(product, sizeIdx);
+  // Quick view opens on the size the shopper picked on the card
+  const open = () => setSelectedProduct({ ...product, initialSize: sizeIdx });
   const hasPage = PAGE_IDS.has(product.id);
 
   return (
@@ -40,8 +43,18 @@ export default function ProductCard({ product }) {
           <div className="out-of-stock-overlay"><span className="out-of-stock-text">Out of Stock</span></div>
         )}
         {comingSoon && <div className="coming-soon-ribbon">Coming Soon</div>}
-        {product.image && (
-          <img src={product.image} alt={product.title} className="card-product-image" loading="lazy" decoding="async" />
+        {photo && (
+          <img
+            key={photo}
+            src={photo}
+            alt={`${product.title}${selected && sizes.length > 1 ? ` ${selected.size}` : ''}`}
+            className="card-product-image"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+        {selected && sizes.length > 1 && !comingSoon && (
+          <span className="card-size-chip">{selected.size}{selected.image ? '' : ' · range photo'}</span>
         )}
         <span className="card-quickview">Quick view</span>
       </div>
@@ -57,18 +70,17 @@ export default function ProductCard({ product }) {
         </h3>
         <p className="card-desc" onClick={open}>{product.desc}</p>
 
-        {product.sizes && product.sizes.length > 0 && !comingSoon && (
-          <div className="card-sizes-pills">
-            {product.sizes.map((s, idx) => (
-              <span key={`${product.id}-size-${idx}`} className="size-pill">{s.size}</span>
-            ))}
-          </div>
+        {!comingSoon && sizes.length > 1 && (
+          <SizePills product={product} sizeIdx={sizeIdx} onSelect={setSizeIdx} compact />
+        )}
+        {!comingSoon && sizes.length === 1 && (
+          <div className="card-sizes-pills"><span className="size-pill">{sizes[0].size}</span></div>
         )}
 
         <div className="card-footer">
           <div className="card-price-col">
-            <span className="card-price-label">{product.sizes && product.sizes.length > 1 ? 'From' : 'Price'}</span>
-            <PriceTag product={product} basePrice={startingPrice} />
+            <span className="card-price-label">{selected && sizes.length > 1 ? selected.size : 'Price'}</span>
+            <PriceTag product={product} basePrice={shownPrice} />
           </div>
         </div>
 

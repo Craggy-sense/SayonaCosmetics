@@ -126,7 +126,7 @@ export default function AdminProductsPage() {
     setTag(product.tag || '');
     setImageFile(null);
     setImageUrl(product.image || '');
-    setSizes(product.sizes && product.sizes.length > 0 ? product.sizes.map(s => ({ size: s.size, price: s.price.toString() })) : [{ size: '', price: '' }]);
+    setSizes(product.sizes && product.sizes.length > 0 ? product.sizes.map(s => ({ size: s.size, price: s.price.toString(), ...(s.image ? { image: s.image } : {}) })) : [{ size: '', price: '' }]);
     setInStock(product.inStock !== false);
     setComingSoon(product.comingSoon === true);
     setIsAddingNewCat(false);
@@ -232,7 +232,8 @@ export default function AdminProductsPage() {
       .filter(s => s.size.trim() !== '' && s.price.trim() !== '')
       .map(s => ({
         size: s.size.trim(),
-        price: parseFloat(s.price)
+        price: parseFloat(s.price),
+        ...(s.image ? { image: s.image } : {})
       }));
 
     if (validSizes.length === 0) {

@@ -1,22 +1,26 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCart } from './CartContext';
-import { ProductPurchase, categoryLabel } from './ShopUI';
+import { ProductGallery, ProductPurchase, categoryLabel, defaultSizeIdx } from './ShopUI';
 import { FALLBACK_PRODUCTS } from '@/data/products';
 
 const PAGE_IDS = new Set(FALLBACK_PRODUCTS.map((p) => p.id));
 
 export default function ProductModal() {
-  const { selectedProduct, setSelectedProduct } = useCart();
+  const { selectedProduct } = useCart();
   const pathname = usePathname();
-
   if (pathname.startsWith('/admin')) return null;
   if (!selectedProduct) return null;
+  // key: fresh size state for every product opened
+  return <ModalContent key={selectedProduct.id + (selectedProduct.initialSize ?? '')} product={selectedProduct} />;
+}
 
-  const product = selectedProduct;
+function ModalContent({ product }) {
+  const { setSelectedProduct } = useCart();
+  const [sizeIdx, setSizeIdx] = useState(() => product.initialSize ?? defaultSizeIdx(product));
   const close = () => setSelectedProduct(null);
 
   return (
@@ -32,18 +36,19 @@ export default function ProductModal() {
 
         <div className="modal-body-grid">
           <div className="modal-image-panel">
-            {product.tag && <span className="modal-badge-new">{product.tag}</span>}
-            {product.image && (
-              <img src={product.image} alt={product.title} className="modal-product-image" />
-            )}
+            <ProductGallery
+              product={product}
+              sizeIdx={sizeIdx}
+              onSelectSize={setSizeIdx}
+              badge={product.tag ? <span className="modal-badge-new">{product.tag}</span> : null}
+            />
           </div>
 
           <div className="modal-details-panel">
             <span className="modal-category-tag">{categoryLabel(product.category)}</span>
             <h2 className="modal-product-title">{product.title}</h2>
 
-            {/* key resets size/qty whenever a different product opens */}
-            <ProductPurchase key={product.id} product={product} onAdded={close} />
+            <ProductPurchase product={product} sizeIdx={sizeIdx} onSizeChange={setSizeIdx} onAdded={close} />
 
             <p className="modal-product-desc">{product.desc}</p>
 

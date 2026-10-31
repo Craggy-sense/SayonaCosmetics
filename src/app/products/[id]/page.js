@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FALLBACK_PRODUCTS } from '@/data/products';
 import { SITE, absoluteUrl } from '@/lib/site';
-import LivePurchase from './LivePurchase';
+import LivePurchase, { LiveGallery, SizeScope } from './LivePurchase';
 
 const CATEGORY_LABELS = {
   'shampoo-conditioner': 'Shampoo & Conditioner',
@@ -63,7 +63,7 @@ export default async function ProductPage({ params }) {
     '@type': 'Product',
     name: product.title,
     description: product.desc,
-    image: product.image ? absoluteUrl(product.image) : undefined,
+    image: [...new Set([product.image, ...(product.sizes || []).map((s) => s.image), product.groupImage].filter(Boolean))].map(absoluteUrl),
     sku: product.id,
     brand: { '@type': 'Brand', name: 'Sayona' },
     category: categoryName,
@@ -105,12 +105,10 @@ export default async function ProductPage({ params }) {
           <span aria-current="page">{product.title}</span>
         </nav>
 
+        <SizeScope product={product}>
         <div className="product-page-grid">
           <div className="product-page-media">
-            {product.tag && <span className="modal-badge-new">{product.tag}</span>}
-            {product.image && (
-              <img src={product.image} alt={`${product.title} by Sayona Cosmetics`} width="1000" height="1000" />
-            )}
+            <LiveGallery product={product} />
           </div>
 
           <div className="product-page-info">
@@ -157,6 +155,7 @@ export default async function ProductPage({ params }) {
             )}
           </div>
         </div>
+        </SizeScope>
 
         {related.length > 0 && (
           <section className="related-products">
