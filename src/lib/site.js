@@ -18,7 +18,7 @@ export const SITE = {
 // Paste your IDs here (or set the matching NEXT_PUBLIC_* environment variables on your host).
 // Leave empty to keep a tracker switched off.
 export const TRACKING = {
-  ga4: process.env.NEXT_PUBLIC_GA4_ID || '',               // Google Analytics 4, e.g. 'G-ABC123XYZ9'
+  ga4: process.env.NEXT_PUBLIC_GA4_ID || 'G-7TG02B6M56',   // Google Analytics 4
   metaPixel: process.env.NEXT_PUBLIC_META_PIXEL_ID || '',   // Meta (Facebook/Instagram) Pixel, e.g. '1234567890123456'
   tiktokPixel: process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || '', // TikTok Pixel, e.g. 'CABCDEFG123456789'
 };
